@@ -10,6 +10,7 @@
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
   <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/noselect.css">
   <link rel="stylesheet" href="./assets/css/dashboard.css">
   <title>Document</title>
 
@@ -19,83 +20,83 @@
 
 <body>
   <header>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <!-- Container wrapper -->
-      <div class="container">
-        <!-- Navbar brand -->
-        <a class="navbar-brand me-2" href="./index.html">
-          <img src="./assets/images/Pink Beauty Feminine Fashion and Beauty Logo.gif" height="100"
-            alt="Image of Habitab Logo" loading="lazy" style="margin-top: -1px;" />
-        </a>
 
-        <!-- Toggle button -->
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
-          aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
+    <nav>
+      <div class="container-fluid navigation py-3">
+        <div class="row">
+          <div class="col-4">
+            <a href="./index.html">
+              <img src="./assets/images/animated-logo.gif" alt="Image of Habitab Logo" loading="lazy" />
+            </a>
+          </div>
 
-        <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse" id="navbarButtonsExample">
-          <!-- Left links -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-          </ul>
-          <!-- Left links -->
-          <div class="d-flex align-items-center">
+          <div class="col-2">
             <button type="button" class="btn btn-secondary me-3">
               Logout
             </button>
           </div>
         </div>
-        <!-- Collapsible wrapper -->
       </div>
-      <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->
-  </header>
 
+  </header>
 
   <!-- The info body -->
   <section class="info">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row my-5">
         <div class="col-12 col-md-5 col-lg-4">
-          <div id="habit_tab"
-            class=" d-flex flex-column justify-content-start align-items-stretch badge bg-light align-self-stretch border border-dark">
-            <!-- habit selector box container -->
-            <div id="all_habit_box"
-              class="d-flex flex-column justify-content-between align-items-stretch border border-dark">
-              <!-- single habit selector contatiner-->
-              <div class="single_habit_box d-flex flex-row justify-content-start border border-dark">
-                <!-- single habit selector contatiner-->
+          <div class="box">
+
+            <div class="task">
+              <div class="circle">
               </div>
-              <div id="habit_edit_bar" class="d-flex flex-row justify-content-start border border-dark"></div>
-              <!-- habit selector box container -->
+
+              <div class="task-name">Drink Water</div>
+
+              <div class="streak">
+                <div class="number noselect">4</div>
+              </div>
+
+              <div class="options noselect">
+                •••
+              </div>
             </div>
-            <!-- habit selector container -->
+
+            <div class="task">
+              <div class="circle">
+              </div>
+
+              <div class="task-name">Exercise</div>
+
+              <div class="streak">
+                <div class="number noselect">2</div>
+              </div>
+
+              <div class="options noselect">
+                •••
+              </div>
+            </div>
+
+            <div class="add-task">
+              <div class="add-icon">
+                <i class="fas fa-plus"></i>
+                <span class="noselect">Create</span>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <div class="col-12 col-md-7 col-lg-8">
-          <div id="habit_tab_zoom" class="badge bg-light text-dark border border-dark align-self-stretch ">Flex item 2
+          <div class="box">
+            PLACEHOLDER
           </div>
         </div>
       </div>
     </div>
   </section>
 
-
-  <section class="info">
-    <div class="h-100 d-flex flex-row justify-content-center align-items-stretch">
-      <!-- habit selector container -->
-
-
-    </div>
-  </section>
-  <!-- The info body -->
 
 
   <!-- Footer -->
@@ -123,10 +124,7 @@
       <!-- Section: CTA -->
       <section class="">
         <p class="d-flex justify-content-center align-items-center">
-          <span class="me-3">Register for free</span>
-          <button type="button" class="btn btn-outline-light btn-rounded">
-            Sign up!
-          </button>
+          By ajefej fjeifjw ejfhejw
         </p>
       </section>
       <!-- Section: CTA -->
