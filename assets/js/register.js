@@ -16,9 +16,15 @@
 //     return re.test(String(email).toLowerCase());
 // };
 
+// This function displays the errors on the form to warn the user
+// const displayError = (errors) => {
+
+// };
+
 // This function validates the username
 const validateUsername = (username) => {
     // Removing leading and trailing whitespaces from the username
+    // Should be removed on form submission too
     const cleanUsername = username.trim();
 
     // Only alpha-numeric characters are allowed
@@ -29,8 +35,21 @@ const validateUsername = (username) => {
     if (!re.test(String(cleanUsername).toLowerCase()))
         errors.push("Username must be alphanumeric");
 
-    if (cleanUsername.length < 5)
-        errors.push("Username must be at least 5 characters");
+    if (cleanUsername.length < 6)
+        errors.push("Username must be at least 6 characters");
+
+    return errors;
+};
+
+// This function validates the password
+const validatePassword = (password, confirmedPassword) => {
+    const errors = [];
+
+    if (password != confirmedPassword)
+        errors.push("Password does not match");
+
+    if (password.length < 6)
+        errors.push("Password must be at least 6 characters");
 
     return errors;
 };
@@ -58,7 +77,15 @@ const registerHandler = (event) => {
     // Check if the username is valid and add errors if there are any
     errors.push(...validateUsername(registerUsername));
 
-    console.log(errors);
+    // Check if the password is valid and add errors if there are any
+    errors.push(...validatePassword(registerPassword, registerConfirmPassword));
+
+    // If errors is empty, inputs are valid and can proceed with API call
+    // Otherwise, print errors on page
+    if (!(errors.length == 0)) {
+        displayError(errors)
+    }
+
 };
 
 // Adding the event handler to the listener

@@ -13,4 +13,3 @@ const loginHandler = (event) => {
 
 // Adding the event handler to the listener
 loginButton.addEventListener("click", loginHandler);
-
