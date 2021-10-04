@@ -17,9 +17,9 @@
 // };
 
 // This function displays the errors on the form to warn the user
-// const displayError = (errors) => {
-
-// };
+const displayError = (errors) => {
+    errors.forEach(error =>console.log(error))
+};
 
 // This function validates the username
 const validateUsername = (username) => {
@@ -63,14 +63,14 @@ const validatePassword = (password, confirmedPassword) => {
 const registerButton = document.getElementById("register");
 
 // This function handles the registration process
-const registerHandler = (event) => {
+const registerHandler = async (event) => {
     event.preventDefault();
 
     // Getting the values from the form
     const registerUsername = document.getElementById("register-username").value;
     const registerPassword = document.getElementById("register-password").value;
     const registerConfirmPassword = document.getElementById("register-confirm-password").value;
-
+    const registerEmail = document.getElementById("register-email").value
     // Errors will be added here to give the user useful messages
     const errors = [];
 
@@ -85,6 +85,24 @@ const registerHandler = (event) => {
     if (!(errors.length == 0)) {
         displayError(errors)
     }
+    const options = {
+        'method': 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "name": registerUsername,
+            "email": registerEmail,
+            "password": registerPassword
+
+        })
+    }
+    const result = await fetch("http://localhost:3000/api/user/register", options)
+    if (result.status!==200 || result.status === 400) {
+        const errorResult = await result.json()
+        console.log(errorResult.error)
+        return
+    }
+    console.log('success')
+    console.log(await result.json())
 
 };
 
