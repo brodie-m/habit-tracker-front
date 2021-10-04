@@ -29,7 +29,7 @@ const loginHandler = async (event) => {
     const token = await result.json();
     
     localStorage.setItem("token", token.token);
-    window.location.href = "../dashboard.html"
+    window.location.href = "./dashboard.html"
 
 };
 
