@@ -102,6 +102,9 @@
     color: var(--text-colour-light);
 }
 
+.footer_style {
+    background-color: var(--bg-colour-light) ;
+}
 /* .task .streak:after {
     content: '';
     position: absolute;
