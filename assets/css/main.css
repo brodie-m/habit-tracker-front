@@ -1,5 +1,12 @@
 :root {
     --bg-colour-light: #f6f6f6;
+    --text-colour-light: white;
+
+    --bg-colour-dark-transparent: #252525a6;
+    --bg-colour-dark-transparent-hover: #252525e3;
+    --text-colour-dark: black;
+
+    --bg-colour-submit: rgb(16, 130, 211);
 }
 
 body {
@@ -8,5 +15,74 @@ body {
 
 .animated-logo {
     width: 100%;
-    border-radius: 100%;
+}
+
+/* LOGIN AND REGISTER BUTTON RELATED IN THE LANDING PAGE */
+
+.buttons button {
+    background-color: var(--bg-colour-dark-transparent);
+    border-radius: 25px;
+    border: none;
+
+    width: 100%;
+    margin: 10px;
+    padding: 10px 0px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    color: var(--text-colour-light);
+}
+
+.buttons button:hover {
+    background-color: var(--bg-colour-dark-transparent-hover);
+}
+
+/* FORM RELATED CSS */
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+
+    margin: 15px;
+}
+
+.form-item label {
+    text-align: center;
+    font-size: 17px;
+}
+
+.form-item input {
+    background-color: var(--bg-colour-dark-transparent);
+    color: var(--text-colour-light);
+
+    border: none;
+    border-radius: 25px;
+    
+    font-size: 20px;
+
+    padding: 10px;
+    padding-left: 15px;
+}
+
+.form-item input::placeholder {
+    color: var(--text-colour-light);
+}
+
+.form-item input:focus {
+    outline: none;
+
+    background-color: var(--bg-colour-dark-transparent-hover);
+}
+
+.form-item button {
+    border: none;
+    border-radius: 25px;
+
+    color: var(--bg-colour-light);
+
+    font-size: 20px;
+    padding: 10px;
+
+    background-color: var(--bg-colour-submit);
 }

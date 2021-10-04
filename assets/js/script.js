@@ -1,0 +1,1 @@
+// Grabbing the login and registration button from the landing page
