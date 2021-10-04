@@ -17,9 +17,23 @@
 // };
 
 // This function displays the errors on the form to warn the user
-// const displayError = (errors) => {
+const displayError = (errors) => {
+    // Getting the errors element to append the errors
+    const errorsElement = document.querySelector(".register-errors");
 
-// };
+    // Clearing previous errors
+    errorsElement.textContent = "";
+
+    for (const error of errors) {
+        const element = document.createElement("p");
+        element.textContent = error;
+        element.style.color = "red";
+        element.style.textAlign = "center";
+
+        // Appending the error
+        errorsElement.appendChild(element);
+    }
+};
 
 // This function validates the username
 const validateUsername = (username) => {
@@ -84,7 +98,10 @@ const registerHandler = (event) => {
     // Otherwise, print errors on page
     if (!(errors.length == 0)) {
         displayError(errors)
+        return;
     }
+
+    // API call here
 
 };
 
