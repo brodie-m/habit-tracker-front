@@ -86,3 +86,35 @@ body {
 
     background-color: var(--bg-colour-submit);
 }
+
+/* LOGIN MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 130px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--bg-colour-light);
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+
+    margin-top: -90px;
+    margin-right: 50px;
+
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
