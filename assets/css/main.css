@@ -1,0 +1,12 @@
+:root {
+    --bg-colour-light: #f6f6f6;
+}
+
+body {
+    background-color: var(--bg-colour-light);
+}
+
+.animated-logo {
+    width: 100%;
+    border-radius: 100%;
+}
