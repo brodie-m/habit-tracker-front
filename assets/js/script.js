@@ -40,3 +40,12 @@ const closeModal = () => {
 for (const button of closeButtons) {
     button.addEventListener("click", closeModal);
 }
+
+/**
+ * PARTICLES JS
+ */
+
+/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+particlesJS.load('particles-js', './assets/json/futureproof.json', function () {
+    console.log('callback - particles.js config loaded');
+});

@@ -18,7 +18,21 @@
 
 // This function displays the errors on the form to warn the user
 const displayError = (errors) => {
-    errors.forEach(error =>console.log(error))
+    // Getting the errors element to append the errors
+    const errorsElement = document.querySelector(".register-errors");
+
+    // Clearing previous errors
+    errorsElement.textContent = "";
+
+    for (const error of errors) {
+        const element = document.createElement("p");
+        element.textContent = error;
+        element.style.color = "red";
+        element.style.textAlign = "center";
+
+        // Appending the error
+        errorsElement.appendChild(element);
+    }
 };
 
 // This function validates the username
@@ -84,6 +98,7 @@ const registerHandler = async (event) => {
     // Otherwise, print errors on page
     if (!(errors.length == 0)) {
         displayError(errors)
+        return;
     }
     const options = {
         'method': 'POST',
@@ -103,6 +118,8 @@ const registerHandler = async (event) => {
     }
     console.log('success')
     console.log(await result.json())
+
+    // API call here
 
 };
 
