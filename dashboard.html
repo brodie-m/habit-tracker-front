@@ -1,155 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./assets/css/dashboard.css">
-    <title>Document</title>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <title>Document</title>
 
-    <!-- font awesome-->
-    <script
-      src="https://kit.fontawesome.com/2d1fe27aec.js"
-      crossorigin="anonymous"
-    ></script>
+  <!-- font awesome-->
+  <script src="https://kit.fontawesome.com/2d1fe27aec.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <header>
-        <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="./index.html">
-      <img
-        src="./assets/images/Pink Beauty Feminine Fashion and Beauty Logo.gif"
-        height="100"
-        alt="Image of Habitab Logo"
-        loading="lazy"
-        style="margin-top: -1px;"
-      />
-    </a>
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- Container wrapper -->
+      <div class="container">
+        <!-- Navbar brand -->
+        <a class="navbar-brand me-2" href="./index.html">
+          <img src="./assets/images/Pink Beauty Feminine Fashion and Beauty Logo.gif" height="100"
+            alt="Image of Habitab Logo" loading="lazy" style="margin-top: -1px;" />
+        </a>
 
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarButtonsExample"
-      aria-controls="navbarButtonsExample"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-      </ul>
-      <!-- Left links -->
-      <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-secondary me-3">
-          Logout
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
+          aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
         </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+          </ul>
+          <!-- Left links -->
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-secondary me-3">
+              Logout
+            </button>
+          </div>
+        </div>
+        <!-- Collapsible wrapper -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+
+
+  <!-- The info body -->
+  <section class="info">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-md-5 col-lg-4">
+          <div id="habit_tab"
+            class=" d-flex flex-column justify-content-start align-items-stretch badge bg-light align-self-stretch border border-dark">
+            <!-- habit selector box container -->
+            <div id="all_habit_box"
+              class="d-flex flex-column justify-content-between align-items-stretch border border-dark">
+              <!-- single habit selector contatiner-->
+              <div class="single_habit_box d-flex flex-row justify-content-start border border-dark">
+                <!-- single habit selector contatiner-->
+              </div>
+              <div id="habit_edit_bar" class="d-flex flex-row justify-content-start border border-dark"></div>
+              <!-- habit selector box container -->
+            </div>
+            <!-- habit selector container -->
+          </div>
+        </div>
+
+        <div class="col-12 col-md-7 col-lg-8">
+          <div id="habit_tab_zoom" class="badge bg-light text-dark border border-dark align-self-stretch ">Flex item 2
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Collapsible wrapper -->
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
-    </header>
+  </section>
 
 
-<!-- The info body -->
-<section class="info">
+  <section class="info">
     <div class="h-100 d-flex flex-row justify-content-center align-items-stretch">
-        <!-- habit selector container -->
-        <div id="habit_tab" class=" d-flex flex-column justify-content-start align-items-stretch badge bg-light align-self-stretch border border-dark">
-            <!-- habit selector box container -->
-            <div id= "all_habit_box" class= "d-flex flex-column justify-content-between align-items-stretch border border-dark">
-                <!-- single habit selector contatiner-->
-                <div class="single_habit_box d-flex flex-row justify-content-start border border-dark">
-                <!-- single habit selector contatiner-->
-                </div>
-                <div id="habit_edit_bar" class="d-flex flex-row justify-content-start border border-dark"></div>
-            <!-- habit selector box container -->
-            </div>
-          <!-- habit selector container -->  
-        </div>
-        <div id="habit_tab_zoom"class="badge bg-light text-dark border border-dark align-self-stretch ">Flex item 2</div>
-      </div>
-</section>
-<!-- The info body -->
+      <!-- habit selector container -->
 
 
-<!-- Footer -->
-<footer class="text-center text-white bg-secondary">
-            <div class="container p-4 pb-0">
-                <!-- Section: Social media -->
-                <section class="mb-4">
-                  <!-- Facebook -->
-                  <a
-                    class="btn btn-primary btn-floating m-1"
-                    style="background-color: #3b5998;"
-                    href="#!"
-                    role="button"
-                    ><i class="fab fa-facebook-f"></i
-                  ></a>
-            
-                  <!-- Twitter -->
-                  <a
-                    class="btn btn-primary btn-floating m-1"
-                    style="background-color: #55acee;"
-                    href="#!"
-                    role="button"
-                    ><i class="fab fa-twitter"></i
-                  ></a>
+    </div>
+  </section>
+  <!-- The info body -->
 
-                  <!-- Instagram -->
-                  <a
-                    class="btn btn-primary btn-floating m-1"
-                    style="background-color: #ac2bac;"
-                    href="#!"
-                    role="button"
-                    ><i class="fab fa-instagram"></i
-                  ></a>
-                </section>
-                <!-- Section: Social media -->
-              </div>
-              <!-- Grid container -->
-          <!-- Grid container -->
-          <div class="container p-4 pb-0">
-            <!-- Section: CTA -->
-            <section class="">
-              <p class="d-flex justify-content-center align-items-center">
-                <span class="me-3">Register for free</span>
-                <button type="button" class="btn btn-outline-light btn-rounded">
-                  Sign up!
-                </button>
-              </p>
-            </section>
-            <!-- Section: CTA -->
-          </div>
-          <!-- Grid container -->
-      
-          <!-- Copyright -->
-          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2021 Copyright:
-            <a class="text-white" href="./index.html">habitab.com</a>
-          </div>
-          <!-- Copyright -->
-        </footer>
-        <!-- Footer -->
+
+  <!-- Footer -->
+  <footer class="text-center text-white bg-secondary">
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;" href="#!" role="button"><i
+            class="fab fa-facebook-f"></i></a>
+
+        <!-- Twitter -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee;" href="#!" role="button"><i
+            class="fab fa-twitter"></i></a>
+
+        <!-- Instagram -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button"><i
+            class="fab fa-instagram"></i></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: CTA -->
+      <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+          <span class="me-3">Register for free</span>
+          <button type="button" class="btn btn-outline-light btn-rounded">
+            Sign up!
+          </button>
+        </p>
+      </section>
+      <!-- Section: CTA -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2021 Copyright:
+      <a class="text-white" href="./index.html">habitab.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
 </body>
+
 </html>
