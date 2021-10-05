@@ -1,5 +1,6 @@
 :root {
     --bg-colour-light: #f6f6f6;
+    --bg-colour-light-ish: rgba(0,0,0,0.1);
     --text-colour-light: white;
 
     --bg-colour-dark-transparent: #252525a6;
@@ -135,7 +136,8 @@
 */
 
 .footer_style {
-    background-color: var(--bg-colour-light) ;
+    background-color: var(--bg-colour-light);
+    padding: 0.2rem;
 }
 
 footer {
