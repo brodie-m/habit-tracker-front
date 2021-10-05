@@ -1,4 +1,7 @@
 Team Habitab Lap 2 Project-Front End
+
+Installation & Usage
+
 Installation
 -Site has been deployed on netlify, therefore if using for viewing purposes, to be accessed on the following address
 -Otherwise, please fork and clone repo
@@ -8,7 +11,6 @@ Usage
 -npm test, to launch all test suites (use npm run coverage to obtain coverage)
 
 Changelog
-
 Index.html
 [x] Adding habitab logo
 [x] Adding particle animation in background using javascript
@@ -30,11 +32,12 @@ Login.js & Register.js
 Script.js and Dashboard.js
 [x] Needs completing
 
+
 Bugs
+[x] Getting the graph and percentage completed to update when incrementing, without having to connect with the server
 [x] Needs Completing
 
 Wins & Challenges
-
 Wins
 -Managed to implement all features in the spec
 -Extra features include: - Bar fill displaying percentrage of target completed
@@ -50,6 +53,3 @@ Challenges
 -Getting the progress percentage bar to update without having to wait for server to load
 -Incorporating the fire svg which displays the streak into newly created habits
 -Finding working style which suited the team best
-
-
-
