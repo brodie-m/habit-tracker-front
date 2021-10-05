@@ -487,34 +487,6 @@ async function displayAllHabitInfo() {
     title.textContent = "Welcome to Habitab!"
 }
 async function displaySingleHabit(_id) {
-<<<<<<< HEAD
-  const singleHabit = await getHabitById(_id);
-  const habitObj = singleHabit.singleHabit[0];
-
-  const holder = document.getElementById("habit-info-holder");
-
-  const title = document.getElementById("habit-title");
-  title.textContent = habitObj.name;
-
-  const currentStreak = document.getElementById("current-streak-number");
-  currentStreak.textContent = getStreak(0, habitObj.completion.daysComplete);
-
-  const daysCompleteNumber = document.getElementById("days-completed-number");
-  const daysComplete = habitObj.completion.daysComplete.filter(
-    (x) => x === 1
-  ).length;
-  daysCompleteNumber.textContent = daysComplete;
-
-  const bestStreakNumber = document.getElementById("best-streak-number");
-  const bestStreak = habitObj.completion.daysComplete.join("").split("0");
-  let max = 0;
-  for (streak of bestStreak) {
-    if (streak.length > max) {
-      max = streak.length;
-    }
-  }
-  bestStreakNumber.textContent = max;
-=======
     const singleHabit = await getHabitById(_id)
     const habitObj = singleHabit.singleHabit[0]
     
@@ -557,10 +529,8 @@ async function displaySingleHabit(_id) {
     
     daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
     daysTrackedText.textContent = "🕑 days tracked"
->>>>>>> b5a2817e13e88e08cb39a476ae732ae379edfb8d
 
-  const daysTrackedNumber = document.getElementById("days-tracked-number");
-  daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
+  
 }
 
 function getStreak(i, arr) {
