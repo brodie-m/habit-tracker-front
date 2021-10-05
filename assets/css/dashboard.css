@@ -1,42 +1,244 @@
-.info {
-    height: 100vh;
+:root {
+    --bg-colour-light: #f6f6f6;
+    --bg-colour-light-ish: rgba(0,0,0,0.1);
+    --text-colour-light: white;
+
+    --bg-colour-dark-transparent: #252525a6;
+    --bg-colour-dark-transparent-hover: #252525e3;
+    --text-colour-dark: black;
+
+    --bg-colour-submit: rgba(16, 130, 211, 0.637);
+}
+
+/*
+ * NAVBAR
+*/
+
+.navigation {
+    background-color: var(--bg-colour-light);
+}
+
+.navigation .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navigation img {
+    height: 55px;
+}
+
+/*
+ * DASHBOARD
+*/
+
+.box {
+    border-radius: 25px;
+    padding: 10px 15px;
+    margin: 5px;
+    /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.158); */
+    /* alt shadow style */
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.15);
+
+    height: 100%;
+}
+
+/*
+ * TASKS
+*/
+
+.task {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    margin: 10px 0px;
+    background-color: var(--bg-colour-light);
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.task .circle {
+    height: 30px;
+    width: 30px;
+
+    margin: 0px 5px;
+
+    border-radius: 100%;
+
+    background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(255, 145, 0) 100%);
+
+    box-shadow: 0px 0px 5px 5px rgba(255, 251, 0, 0.1)
+}
+
+.task .selected {
+    animation-name: gradient;
+    animation-duration: 0.1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+   
+}
+
+@keyframes gradient {
+    from {background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(255, 145, 0) 100%);
+
+        box-shadow: 0px 0px 5px 5px rgba(255, 251, 0, 0.1)}
+    to { background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(21, 255, 0) 100%);
+        box-shadow: 0px 0px 5px 5px rgba(0, 174, 255, 0.1);
+    transform: scale(1.25)}
+}
+
+.task .task-name {
+    width: 48%;
+}
+
+.task-gradient {
+    background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
+}
+
+/* .task .streak {
+    width: 25px;
+    height: 25px;
+
+    background-color: red;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(45deg);
+} */
+
+.task .streak {
+    /* display: flex;
+    align-items: center; */
+    transform: translateY(-15px)
+}
+
+.task .streak-number {
+    position: relative;
+    text-align: center;
+    width: 33px; /* Same width as the fire */
+    top: 40px;
+}
+
+.task .options {
+    font-size: 25px;
+}
+
+.add-task {
+    margin-top: 23px;
+    background-color: var(--bg-colour-submit);
+    padding: 10px;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-task .add-icon {
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--text-colour-light);
+}
+
+/*
+ * CHART
+*/
+
+.chart {
+    background-color: rgba(255, 247, 213, 0.5);
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+/* #myChart {
+    height: 100%;
+} */
+
+
+/*
+ * FOOTER
+*/
+
+.footer_style {
+    background-color: var(--bg-colour-light);
+    padding: 0.2rem;
 }
 
 footer {
     position: relative;
-    bottom:0;
-    width:100%;
+    bottom: 0;
+    width: 100%;
     /* height:60px;   Height of the footer */
- }
+}
 
-#habit_tab {
-    margin: 50px 0px;
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 130px;
+    left: 0;
+    top: 0;
     width: 100%;
-    border-radius: 20px  
-    
+    height: 100%;
+    overflow: auto;
+    background-color: var(--bg-colour-light);
 }
 
-#habit_tab_zoom {
-    margin: 50px 0px;
-    width: 100%;
-    border-radius: 20px  
+.close {
+    color: #aaaaaa;
+    float: right;
 
-} 
+    margin-top: -90px;
+    margin-right: 50px;
 
-#all_habit_box {
-    margin: 30px;
-    min-height: 400px;
-    border-radius: 20px  
+    font-size: 35px;
+    font-weight: bold;
 }
 
-.single_habit_box {
-    margin: 25px;
-    height: 60px;
-    border-radius: 15px;
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-#habit_edit_bar {
-    height: 70px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+.habit-info-holder {
+    margin-top: 10%
+}
+
+#habit-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.habit-info-holder .col div {
+    text-align: center;
+    padding: 5px;
+}
+
+.increments {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.increments i {
+    margin-top: 5px;
+}
+
+.increments input{
+    width: 35%;
+    height: 3%;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.task .task-name {
+    text-align: center;
+    font-weight: bolder;
 }

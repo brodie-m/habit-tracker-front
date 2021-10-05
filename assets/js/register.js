@@ -125,7 +125,7 @@ const registerHandler = async (event) => {
   const data = await result.json();
   console.log(data);
   localStorage.setItem("registerToken", data.token);
-  //window.location.href = "./dashboard.html";
+  window.location.href = "./dashboard.html";
 
   // API call here
 };
