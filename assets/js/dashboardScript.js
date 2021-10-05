@@ -365,6 +365,7 @@ function circleHandler(e) {
         circle.classList.remove('selected');
     }
     this.classList.add('selected')
+    if(!this.getAttribute('habit-id')) {return displayAllHabitInfo()}
     displaySingleHabit(this.getAttribute('habit-id'))
 }
 
@@ -427,24 +428,66 @@ async function minusHandler(e) {
 
     const result = await fetch(`http://localhost:3000/api/habits/updatecurrent/${index}`, options)
 }
+async function displayAllHabitInfo() {
+    //constants 
+    const title = document.getElementById('habit-title')
+    const currentStreak = document.getElementById('current-streak-number')
+    const currentStreakText = document.getElementById('current-streak-text')
+    
+    currentStreak.textContent = ""
+    currentStreakText.textContent = ""
 
+    const daysCompleteNumber = document.getElementById('days-completed-number')
+    const daysCompleteText = document.getElementById('days-completed-text')
+
+    daysCompleteNumber.textContent = ""
+    daysCompleteText.textContent = ""
+
+    const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text')
+
+    bestStreakNumber.textContent = ""
+    bestStreakText.textContent = ""
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
+
+    daysTrackedNumber.textContent = ""
+    daysTrackedText.textContent = ""
+    
+    title.textContent = "Welcome to Habitab!"
+}
 async function displaySingleHabit(_id) {
     const singleHabit = await getHabitById(_id)
     const habitObj = singleHabit.singleHabit[0]
-
+    
     const holder = document.getElementById('habit-info-holder')
-
+    //constants 
     const title = document.getElementById('habit-title')
-    title.textContent = habitObj.name
-
     const currentStreak = document.getElementById('current-streak-number')
-    currentStreak.textContent = getStreak(0,habitObj.completion.daysComplete)
-
+    const currentStreakText = document.getElementById('current-streak-text')
+    
     const daysCompleteNumber = document.getElementById('days-completed-number')
-    const daysComplete = habitObj.completion.daysComplete.filter(x=> x===1).length;
-    daysCompleteNumber.textContent = daysComplete
+    const daysCompleteText = document.getElementById('days-completed-text')
+
 
     const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text')
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
+    
+    //check if habitObj is there (select all vs single task) - if not, display info for all tasks
+    title.textContent = habitObj.name
+
+    currentStreakText.textContent = " 🔥 current streak  "
+    currentStreak.textContent = getStreak(0,habitObj.completion.daysComplete)
+
+   
+    const daysComplete = habitObj.completion.daysComplete.filter(x=> x===1).length;
+    daysCompleteNumber.textContent = daysComplete
+    daysCompleteText.textContent = " ✔ days completed"
+    
     const bestStreak = habitObj.completion.daysComplete.join('').split('0')
     let max = 0
     for (streak of bestStreak) {
@@ -453,10 +496,10 @@ async function displaySingleHabit(_id) {
         }
     }
     bestStreakNumber.textContent = max
-
-    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    bestStreakText.textContent = "💎 best streak"
+    
     daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
-
+    daysTrackedText.textContent = "🕑 days tracked"
 
 }
 
