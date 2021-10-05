@@ -211,19 +211,19 @@
                     <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
                       <p>Frequency</p>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio1" checked>
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio1" value="daily" checked>
                         <label class="form-check-label" for="flexRadioDefault1">
                           Daily
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio2">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio2" value="weekly">
                         <label class="form-check-label" for="flexRadioDefault2">
                           Weekly
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio3" >
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="freqRadio3" value="monthly" >
                         <label class="form-check-label" for="flexRadioDefault3">
                           Monthly
                         </label>
@@ -257,22 +257,42 @@
               <canvas id="myChart"></canvas>
             </div>
 
-            <div class="habit-info-holder container">
+            <div class="habit-info-holder container" id="habit-info-holder">
               <h1>habit info here</h1>
               <div class="row">
                 <div class="col">
-                  current streak
+                  <div class="current-streak">
+                    current streak
+                  </div>
+                  <div class="streak-number" id="current-streak-number">
+
+                  </div>
                 </div>
                 <div class="col">
-                  best streak
+                  <div class="streak-text">
+                    best streak
+                  </div>
+                  <div class="streak-number" id="best-streak-number">
+
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
-                  days completed
+                  <div class="days-completed">
+                    days completed
+                  </div>
+                  <div class="completed-number" id="days-completed-number">
+
+                  </div>
                 </div>
                 <div class="col">
-                  total days tracked
+                  <div class="days-tracked">
+                    days tracked
+                  </div>
+                  <div class="tracked-number" id="days-tracked-number">
+
+                  </div>
                 </div>
               </div>
             </div>
