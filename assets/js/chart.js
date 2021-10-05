@@ -21,7 +21,30 @@
 //     return data;
 // }
 
-const updateChart = (values, frequencies) => {
+async function getHabits() {
+    //route is protected, need to send token as header
+    const token =
+        localStorage.getItem("token") || localStorage.getItem("registerToken");
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+        },
+    };
+    const result = await fetch("http://localhost:3000/api/habits/show", options);
+    const data = await result.json()
+    return data;
+}
+
+const updateChart =async (values, frequencies) => {
+    const habitsData = await getHabits()
+    const habitLabels = []
+    const habitDataset = []
+    for (habit of habitsData) {
+        habitLabels.push(habit.name)
+        habitDataset.push(100*habit.completion.currentVal/habit.completion.targetVal)
+    }
     // Grabbing the chart from the DOM
     const ctx = document.getElementById("myChart").getContext("2d");
 
@@ -31,10 +54,13 @@ const updateChart = (values, frequencies) => {
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: habitLabels,
+            // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: "percent of task completed",
+                // label: '# of Votes',
+                // data: [12, 19, 3, 5, 2, 3],
+                data: habitDataset,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -57,7 +83,8 @@ const updateChart = (values, frequencies) => {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    min: 0,
+                    max: 100
                 }
             }
         }

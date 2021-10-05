@@ -102,10 +102,16 @@ function drawHabits(data) {
         newTaskName.textContent = habit.name
         newOptions.textContent = "•••"
 
-
-
+        //background colour
+        
+        const completionFrac = habit.completion.currentVal / habit.completion.targetVal;
+        
         //append 
+        
         taskHolder.appendChild(newTask)
+        newTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.15) ${completionFrac*100-5}%, rgba(73,192,203,0.15) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
+
+        // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
         newTask.appendChild(newCircle)
         newTask.appendChild(newTaskName)
 
@@ -118,6 +124,8 @@ function drawHabits(data) {
         newTask.appendChild(newStreak);
         newTask.appendChild(newOptions);
         newStreak.appendChild(newStreakNumber);
+        //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
+        
     });
 
     const circles = document.getElementsByClassName("circle");
@@ -303,6 +311,11 @@ async function submitHabitHandler(event) {
 
 function circleHandler(e) {
     e.preventDefault();
+    const circles = document.getElementsByClassName("circle");
+    for (const circle of circles) {
+        circle.classList.remove('selected');
+    }
+    this.classList.add('selected')
     displaySingleHabit(this.getAttribute('habit-id'))
 }
 
