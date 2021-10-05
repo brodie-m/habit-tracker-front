@@ -1,6 +1,8 @@
 //check for valid token in local storage
 //either from login or registration
 //if its not there (i.e, not "good token"), redirect to index.html
+
+let looking = false;
 window.addEventListener("load", async () => {
   const token = localStorage.getItem("token");
   const registerToken = localStorage.getItem("registerToken");
@@ -163,14 +165,77 @@ function buildGraph() {
 
 beav.addEventListener("mouseover", () => {
   beav.src = "./assets/images/mascot-eyes-closed-happy.png";
-  clearInterval(blink)
+  clearInterval(blink);
 });
 
 beav.addEventListener("mouseout", () => {
-    beav.src = "./assets/images/mascot.png";
-    blink = setInterval(() => {
-        letsgo();
-      }, 5000);
+  beav.src = "./assets/images/mascot.png";
+  blink = setInterval(() => {
+    letsgo();
+  }, 5000);
+});
+
+let messages = [
+  "Hello <username>",
+  "Welcome to Habitab",
+  "I'm Bucky, your virtual assistant",
+  "Click the question mark then hover over an element for me to tell you what it does",
+];
+
+mesaji.textContent = messages[0];
+
+next.addEventListener("click", () => {
+  let i = messages.indexOf(mesaji.textContent);
+  if (i == messages.length - 1) {
+    mesaji.textContent = messages[0];
+  } else {
+    mesaji.textContent = messages[i + 1];
+  }
+});
+
+what.addEventListener("click", () => {
+  if (looking) {
+    looking = false;
+  } else {
+    looking = true;
+    hold = mesaji.textContent;
+  }
+});
+
+
+habitshere.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent =
+      "Here's where you can view existing habits and add new ones";
+    habitshere.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+addtask.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Click here to create a new habit";
+    addtask.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+graphs.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Here you can view your progress in graphical form";
+    graphs.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+logout.addEventListener("mouseover", () => {
+    if (looking) {
+      mesaji.textContent = "Click here to log out";
+      logout.addEventListener("mouseout", () => {
+        mesaji.textContent = hold;
+      });
+    }
   });
-
-
