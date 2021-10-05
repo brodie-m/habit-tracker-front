@@ -305,15 +305,15 @@ what.addEventListener("click", () => {
 });
 
 
-habitshere.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent =
-      "Here's where you can view existing habits and add new ones";
-    habitshere.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
-});
+// habitshere.addEventListener("mouseover", () => {
+//   if (looking) {
+//     mesaji.textContent =
+//       "Here's where you can view existing habits and add new ones";
+//     habitshere.addEventListener("mouseout", () => {
+//       mesaji.textContent = hold;
+//     });
+//   }
+// });
 const addTaskButton = document.getElementById('addtask')
 
 addTaskButton.addEventListener("mouseover", () => {
@@ -337,7 +337,7 @@ graphs.addEventListener("mouseover", () => {
 logoutButton.addEventListener("mouseover", () => {
     if (looking) {
       mesaji.textContent = "Click here to log out";
-      logoutButton.addEventListener("mouseout", () => {
+      logout.addEventListener("mouseout", () => {
         mesaji.textContent = hold;
       });
     }

@@ -79,10 +79,16 @@
                 <h3 id = "next" style="display: inline-block; float: right; cursor: pointer">▶</h3>
               </hgroup>
             </div>
-            <div class="box" id = "habitshere">
-              <div id="task-holder">
-                <div class="task">
-                  <div class="circle"></div>
+            <div class="display-all">
+              <div class="task">
+                <div class="circle selected"></div>
+                <h1>Display all habits</h1>
+                
+              </div>
+              
+            </div>
+            <div id="task-holder">
+              
 
                   <div class="task-name">Drink Water</div>
 
@@ -325,16 +331,16 @@
               <h1 id="habit-title">Information about all habits here</h1>
               <div class="row">
                 <div class="col">
-                  <div class="current-streak">
-                    🔥 current streak 
+                  <div class="current-streak" id="current-streak-text">
+                   
                   </div>
                   <div class="streak-number" id="current-streak-number">
 
                   </div>
                 </div>
                 <div class="col">
-                  <div class="streak-text">
-                    💎 best streak
+                  <div class="streak-text" id="best-streak-text">
+                    
                   </div>
                   <div class="streak-number" id="best-streak-number">
 
@@ -343,16 +349,16 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <div class="days-completed">
-                    ✔ days completed
+                  <div class="days-completed" id="days-completed-text">
+                   
                   </div>
                   <div class="completed-number" id="days-completed-number">
 
                   </div>
                 </div>
                 <div class="col">
-                  <div class="days-tracked">
-                    🕑 days tracked
+                  <div class="days-tracked" id="days-tracked-text">
+                    
                   </div>
                   <div class="tracked-number" id="days-tracked-number">
 
