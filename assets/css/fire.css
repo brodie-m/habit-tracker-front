@@ -1,0 +1,82 @@
+svg{
+    width: 33px;
+  }
+  
+   @keyframes circles {
+        50% {
+          transform: translateY(-6em) scale(1, 1);
+        }
+        100% {
+          opacity: 0;
+        }
+       } 
+  
+   @keyframes flame {
+     to {
+       transform-origin: bottom center;
+        transform: rotate(4deg);
+     }
+  }
+  
+  @keyframes sideFlame {
+    100% {
+       transform-origin: bottom left;
+        transform: rotate(4deg);
+     }
+  }
+  
+  @keyframes sideFlame1 {
+    100% {
+       transform-origin: bottom right;
+        transform: rotate(4deg);
+  /*       transform: translateY(-.5em); */
+     }
+  }  
+  
+  .cirGroup1 {
+    animation: 1.6s circles infinite;
+    -webkit-animation-name: circles;
+    -webkit-animation-duration: 1.6s;
+  }
+  
+  .cirGroup2{
+    animation: 3s circles infinite;
+    -webkit-animation-name: circles;
+    -webkit-animation-duration: 3s;
+  }
+  
+  .cirGroup3{
+    animation: 6s circles infinite;
+    -webkit-animation-name: circles;
+    -webkit-animation-duration: 6s;
+  }
+  
+  .flame{
+    -webkit-animation-name: flame;
+    -webkit-animation-duration: 2s;
+    animation: flame 2s ease-in-out infinite alternate;
+  }
+  
+  .flame2{
+    -webkit-animation-name: flame;
+    -webkit-animation-duration: 1.6s;
+    animation: flame 1.6s ease-in-out infinite alternate;
+  }
+  
+  .flame3{
+    -webkit-animation-name: flame;
+    -webkit-animation-duration: 1.25s;
+    animation: flame 1.25s ease-in-out infinite alternate;
+  }
+  
+  .sideFlame1{
+    -webkit-animation-name: sideFlame1;
+    -webkit-animation-duration: 2.5s;
+    animation: sideFlame1 2.5s ease-in-out infinite alternate;
+  }
+  
+  .sideFlame{
+    -webkit-animation-name: sideFlame1;
+    -webkit-animation-duration: 1.10s;
+    animation: sideFlame 1.10s ease-in-out infinite alternate;
+  }
