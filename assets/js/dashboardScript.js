@@ -3,6 +3,8 @@
 
 let inc = 0;
 //if its not there (i.e, not "good token"), redirect to index.html
+
+let looking = false;
 window.addEventListener("load", async () => {
     const token = localStorage.getItem("token");
     const registerToken = localStorage.getItem("registerToken");
@@ -285,6 +287,79 @@ beav.addEventListener("mouseout", () => {
     }, 5000);
 });
 
+let messages = [
+  "Hello <username>",
+  "Welcome to Habitab",
+  "I'm Bucky, your virtual assistant",
+  "Click the question mark then hover over an element for me to tell you what it does",
+];
+
+mesaji.textContent = messages[0];
+
+next.addEventListener("click", () => {
+  let i = messages.indexOf(mesaji.textContent);
+  if (i == messages.length - 1) {
+    mesaji.textContent = messages[0];
+  } else {
+    mesaji.textContent = messages[i + 1];
+  }
+});
+
+what.addEventListener("click", () => {
+  if (looking) {
+    looking = false;
+  } else {
+    looking = true;
+    hold = mesaji.textContent;
+  }
+});
+
+
+// habitshere.addEventListener("mouseover", () => {
+//   if (looking) {
+//     mesaji.textContent =
+//       "Here's where you can view existing habits and add new ones";
+//     habitshere.addEventListener("mouseout", () => {
+//       mesaji.textContent = hold;
+//     });
+//   }
+// });
+const addTaskButton = document.getElementById("addtask");
+
+addTaskButton.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Click here to create a new habit";
+    addtask.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+graphs.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Here you can view your progress in graphical form";
+    graphs.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+logoutButton.addEventListener("mouseover", () => {
+    if (looking) {
+      mesaji.textContent = "Click here to log out";
+      logout.addEventListener("mouseout", () => {
+        mesaji.textContent = hold;
+      });
+    }
+  });
+
+beav.addEventListener("mouseout", () => {
+  beav.src = "./assets/images/mascot.png";
+  blink = setInterval(() => {
+    letsgo();
+  }, 5000);
+});
+
 // This functions shows the create modal
 const showCreateHabitModal = () => {
     // Get the modal
@@ -293,7 +368,7 @@ const showCreateHabitModal = () => {
     createHabitModal.style.display = "block";
 };
 
-const addTaskButton = document.getElementById("add-task");
+
 addTaskButton.addEventListener("click", showCreateHabitModal);
 
 const closeModal = () => {
@@ -465,6 +540,9 @@ async function getOptions() {
 }
 async function displayAllHabitInfo() {
     //constants 
+    const beaverDiv = document.getElementById('beaver-div')
+    beaverDiv.classList.remove('hidden')
+
     const title = document.getElementById('habit-title')
     const currentStreak = document.getElementById('current-streak-number')
     const currentStreakText = document.getElementById('current-streak-text')
@@ -493,6 +571,8 @@ async function displayAllHabitInfo() {
     title.textContent = "Welcome to Habitab!"
 }
 async function displaySingleHabit(_id) {
+    const beaverDiv = document.getElementById('beaver-div')
+    beaverDiv.classList.add('hidden')
     const singleHabit = await getHabitById(_id)
     const habitObj = singleHabit.singleHabit[0]
 
@@ -505,12 +585,11 @@ async function displaySingleHabit(_id) {
     const daysCompleteNumber = document.getElementById('days-completed-number')
     const daysCompleteText = document.getElementById('days-completed-text')
 
-
-    const bestStreakNumber = document.getElementById('best-streak-number')
-    const bestStreakText = document.getElementById('best-streak-text')
-
     const daysTrackedNumber = document.getElementById('days-tracked-number')
     const daysTrackedText = document.getElementById('days-tracked-text')
+
+    const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text');
 
     //check if habitObj is there (select all vs single task) - if not, display info for all tasks
     title.textContent = habitObj.name
@@ -621,8 +700,8 @@ async function EditFormHandler(event) {
         monthlyBool = true;
     }
 
-    document.getElementById("habit-target").value;
-    console.log(document.querySelector(".task-name").value);
+    // document.getElementById("habit-target").value;
+    // console.log(document.querySelector(".task-name").value);
 
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
