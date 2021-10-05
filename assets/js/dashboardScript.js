@@ -257,6 +257,7 @@ async function submitHabitHandler(event) {
     }
     const result = await fetch('http://localhost:3000/api/habits/add',options)
     console.log(await result.json())
+    window.location.href = "./dashboard.html"
 }
 
 function getStreak(i, arr) {
