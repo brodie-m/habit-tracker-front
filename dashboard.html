@@ -26,6 +26,13 @@
       crossorigin="anonymous"
     ></script>
   </head>
+  <!-- Fire CSS -->
+  <link rel="stylesheet" href="./assets/css/fire.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/noselect.css">
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <title>Habitab.com</title>
 
   <body>
     <header>
@@ -42,11 +49,10 @@
               </a>
             </div>
 
-            <div class="col-2">
-              <button type="button" class="btn btn-secondary me-3" id = "logout">
-                Logout
-              </button>
-            </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-secondary me-3" id="logout-button">
+              Logout
+            </button>
           </div>
         </div>
       </nav>
@@ -300,7 +306,7 @@
                 </div>
               </div>
 
-              <div class="add-task" id = "addtask">
+              <div id = "addtask"class="add-task">
                 <div class="add-icon">
                   <i class="fas fa-plus"></i>
                   <span class="noselect">Create</span>
@@ -309,25 +315,53 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-7 col-lg-8 my-4" id = "graphs">
-            <div class="box">
-              <div class="chart">
-                <canvas id="myChart"></canvas>
-              </div>
+        <div class="col-12 col-md-7 col-lg-8 my-4" id = "graphs">
+          <div class="box">
+            <div class="chart">
+              <canvas id="myChart"></canvas>
+            </div>
 
-              <div class="habit-info-holder container">
-                <h1>habit info here</h1>
-                <div class="row">
-                  <div class="col">current streak</div>
-                  <div class="col">best streak</div>
+            <div class="habit-info-holder container" id="habit-info-holder">
+              <h1 id="habit-title">Information about all habits here</h1>
+              <div class="row">
+                <div class="col">
+                  <div class="current-streak">
+                    🔥 current streak 
+                  </div>
+                  <div class="streak-number" id="current-streak-number">
+
+                  </div>
                 </div>
-                <div class="row">
-                  <div class="col">days completed</div>
-                  <div class="col">total days tracked</div>
+                <div class="col">
+                  <div class="streak-text">
+                    💎 best streak
+                  </div>
+                  <div class="streak-number" id="best-streak-number">
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="days-completed">
+                    ✔ days completed
+                  </div>
+                  <div class="completed-number" id="days-completed-number">
+
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="days-tracked">
+                    🕑 days tracked
+                  </div>
+                  <div class="tracked-number" id="days-tracked-number">
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
