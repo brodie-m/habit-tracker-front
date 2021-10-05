@@ -45,7 +45,7 @@ const loginHandler = async (event) => {
     console.log(error.error);
     return;
   }
-
+  console.log(result.headers.get("auth-token"));
   let data = await result.json();
   localStorage.setItem("token", data.token);
   console.log(data);

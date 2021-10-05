@@ -3,6 +3,8 @@
 
 let inc = 0;
 //if its not there (i.e, not "good token"), redirect to index.html
+
+let looking = false;
 window.addEventListener("load", async () => {
     const token = localStorage.getItem("token");
     const registerToken = localStorage.getItem("registerToken");
@@ -19,6 +21,17 @@ window.addEventListener("load", async () => {
         window.location.href = "./index.html";
     }
 });
+//logout button
+const logoutButton = document.getElementById('logout-button');
+logoutButton.addEventListener('click', logoutHandler);
+
+function logoutHandler(e) {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "./index.html"
+}
+
+
 //load habit data
 async function getHabits() {
     //route is protected, need to send token as header
@@ -38,7 +51,8 @@ async function getHabits() {
 }
 
 async function getHabitById(id) {
-    const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
+    const token =
+        localStorage.getItem("token") || localStorage.getItem("registerToken");
     const options = {
         method: "GET",
         headers: {
@@ -46,9 +60,11 @@ async function getHabitById(id) {
             "auth-token": token,
         },
     };
-    const result = await fetch(`http://localhost:3000/api/habits/show/${id}`, options);
-    return await result.json()
-
+    const result = await fetch(
+        `http://localhost:3000/api/habits/show/${id}`,
+        options
+    );
+    return await result.json();
 }
 
 getHabits();
@@ -71,9 +87,9 @@ function drawHabits(data) {
         newTask.classList.add("task");
         topTask.classList.add('top-task')
         bottomTask.classList.add('bottom-task')
-       topTask.setAttribute('id',`${habit._id}`)
+        topTask.setAttribute('id', `${habit._id}`)
         topTask.setAttribute('targetVal', `${habit.completion.targetVal}`)
-        topTask.setAttribute('currentVal',`${habit.completion.currentVal}`)
+        topTask.setAttribute('currentVal', `${habit.completion.currentVal}`)
 
         //create circle div
         const newCircle = document.createElement("div");
@@ -97,22 +113,22 @@ function drawHabits(data) {
         //create fire div
         const fireThing = document.createElement('div')
         fireThing.classList.add('fire-moving')
-        
+
 
         //create increment div
         const increments = document.createElement('div');
         increments.classList.add('increments')
         const incrementPlus = document.createElement('i')
-        incrementPlus.classList.add('fas','fa-plus','plus-button')
+        incrementPlus.classList.add('fas', 'fa-plus', 'plus-button')
         incrementPlus.setAttribute('habit-id', `${habitId}`)
-        incrementPlus.setAttribute('index',index)
+        incrementPlus.setAttribute('index', index)
         const incrementText = document.createElement('input')
-        incrementText.setAttribute('type','text')
+        incrementText.setAttribute('type', 'text')
         incrementText.setAttribute('habit-id', `${habitId}`)
         const incrementMinus = document.createElement('i')
-        incrementMinus.classList.add('fas','fa-minus','minus-button')
+        incrementMinus.classList.add('fas', 'fa-minus', 'minus-button')
         incrementMinus.setAttribute('habit-id', `${habitId}`)
-        incrementMinus.setAttribute('index',index)
+        incrementMinus.setAttribute('index', index)
         increments.appendChild(incrementMinus)
         increments.appendChild(incrementText)
         increments.appendChild(incrementPlus)
@@ -121,6 +137,8 @@ function drawHabits(data) {
         //create options div
         const newOptions = document.createElement("div");
         newOptions.classList.add("options", "noselect");
+        newOptions.setAttribute('index', index)
+        newOptions.setAttribute('habit-id', `${habitId}`)
 
 
 
@@ -129,11 +147,11 @@ function drawHabits(data) {
         newOptions.textContent = "•••"
 
         //background colour
-        
+
         const completionFrac = habit.completion.currentVal / habit.completion.targetVal;
-        
+
         //append 
-        
+
         taskHolder.appendChild(newTask)
         topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
 
@@ -153,7 +171,7 @@ function drawHabits(data) {
         newStreak.appendChild(newStreakNumber);
         newStreak.appendChild(fireThing)
         //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
-        index+= 1
+        index += 1
     });
 
     const circles = document.getElementsByClassName("circle");
@@ -170,6 +188,11 @@ function drawHabits(data) {
     const minuses = document.getElementsByClassName('minus-button');
     for (const minus of minuses) {
         minus.addEventListener('click', minusHandler)
+    }
+
+    const optionsButtons = document.getElementsByClassName('options')
+    for (const option of optionsButtons) {
+        option.addEventListener('click', showEditFormModal)
     }
 }
 
@@ -254,7 +277,7 @@ function buildGraph() {
 
 beav.addEventListener("mouseover", () => {
     beav.src = "./assets/images/mascot-eyes-closed-happy.png";
-    clearInterval(blink)
+    clearInterval(blink);
 });
 
 beav.addEventListener("mouseout", () => {
@@ -264,8 +287,78 @@ beav.addEventListener("mouseout", () => {
     }, 5000);
 });
 
+let messages = [
+  "Hello <username>",
+  "Welcome to Habitab",
+  "I'm Bucky, your virtual assistant",
+  "Click the question mark then hover over an element for me to tell you what it does",
+];
+
+mesaji.textContent = messages[0];
+
+next.addEventListener("click", () => {
+  let i = messages.indexOf(mesaji.textContent);
+  if (i == messages.length - 1) {
+    mesaji.textContent = messages[0];
+  } else {
+    mesaji.textContent = messages[i + 1];
+  }
+});
+
+what.addEventListener("click", () => {
+  if (looking) {
+    looking = false;
+  } else {
+    looking = true;
+    hold = mesaji.textContent;
+  }
+});
 
 
+// habitshere.addEventListener("mouseover", () => {
+//   if (looking) {
+//     mesaji.textContent =
+//       "Here's where you can view existing habits and add new ones";
+//     habitshere.addEventListener("mouseout", () => {
+//       mesaji.textContent = hold;
+//     });
+//   }
+// });
+const addTaskButton = document.getElementById("addtask");
+
+addTaskButton.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Click here to create a new habit";
+    addtask.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+graphs.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent = "Here you can view your progress in graphical form";
+    graphs.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
+
+logoutButton.addEventListener("mouseover", () => {
+    if (looking) {
+      mesaji.textContent = "Click here to log out";
+      logout.addEventListener("mouseout", () => {
+        mesaji.textContent = hold;
+      });
+    }
+  });
+
+beav.addEventListener("mouseout", () => {
+  beav.src = "./assets/images/mascot.png";
+  blink = setInterval(() => {
+    letsgo();
+  }, 5000);
+});
 
 // This functions shows the create modal
 const showCreateHabitModal = () => {
@@ -275,77 +368,69 @@ const showCreateHabitModal = () => {
     createHabitModal.style.display = "block";
 };
 
-const addTaskButton = document.getElementById('add-task')
-addTaskButton.addEventListener('click', showCreateHabitModal)
+
+addTaskButton.addEventListener("click", showCreateHabitModal);
 
 const closeModal = () => {
     // Get the modals
     const createHabitModal = document.getElementById("create-habit-modal");
 
-
     createHabitModal.style.display = "none";
-
 };
-
 
 // This functions closes all the modals, in this case there is no need to distinguish which one
 
-const submitNewHabit = document.getElementById('submit-new-habit')
-submitNewHabit.addEventListener('click', submitHabitHandler)
+const submitNewHabit = document.getElementById("submit-new-habit");
+submitNewHabit.addEventListener("click", submitHabitHandler);
 
 async function submitHabitHandler(event) {
     event.preventDefault();
     let dailyBool = false;
     let weeklyBool = false;
     let monthlyBool = false;
-    const radios = document.getElementsByName('flexRadioDefault')
-    const value = getValues(radios)
+    const radios = document.getElementsByName("flexRadioDefault");
+    const value = getValues(radios);
 
     function getValues(arr) {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i].checked)
-                return (arr[i].value)
+            if (arr[i].checked) return arr[i].value;
         }
     }
     if (value === "daily") {
-        dailyBool = true
-    };
+        dailyBool = true;
+    }
     if (value === "weekly") {
-        weeklyBool = true
-    };
+        weeklyBool = true;
+    }
     if (value === "monthly") {
-        monthlyBool = true
-    };
+        monthlyBool = true;
+    }
 
-    const habitTarget = document.getElementById('habit-target').value;
-    const habitName = document.getElementById('habit-name').value;
+    const habitTarget = document.getElementById("habit-target").value;
+    const habitName = document.getElementById("habit-name").value;
     const options = {
-        'method': 'POST',
-        "headers": {
+        method: "POST",
+        headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem('token') || localStorage.getItem('registerToken'),
-
+            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
         },
         body: JSON.stringify({
             name: habitName,
             frequency: {
                 daily: dailyBool,
                 weekly: weeklyBool,
-                monthly: monthlyBool
+                monthly: monthlyBool,
             },
             completion: {
                 currentVal: 0,
                 targetVal: habitTarget,
+            },
+        }),
+    };
 
-            }
-        })
-    }
-
-    const result = await fetch('http://localhost:3000/api/habits/add', options)
-    window.location.href = "./dashboard.html"
+    const result = await fetch("http://localhost:3000/api/habits/add", options);
+    window.location.href = "./dashboard.html";
 }
-
-
 
 function circleHandler(e) {
     e.preventDefault();
@@ -354,86 +439,169 @@ function circleHandler(e) {
         circle.classList.remove('selected');
     }
     this.classList.add('selected')
+    if (!this.getAttribute('habit-id')) {
+        return displayAllHabitInfo()
+    }
     displaySingleHabit(this.getAttribute('habit-id'))
 }
 
 async function plusHandler(e) {
-    e.preventDefault()
-    const id = this.getAttribute('habit-id')
-    const taskBox = document.getElementById(`${id}`)
-    const index = this.getAttribute('index')
-    const targetVal = parseInt(taskBox.getAttribute('targetVal'))
-    const currentVal = taskBox.getAttribute('currentVal')
-    const newCurrent = parseInt(currentVal)+1
-    const newFrac = newCurrent/targetVal
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac*100-5}%, rgba(73,192,203,0.3) ${newFrac*100}%, rgba(244,244,246,1) ${newFrac*100+1}%, rgba(244,244,246,1) 100% )`
-    taskBox.setAttribute('currentVal',`${newCurrent}`)
+    e.preventDefault();
+    const id = this.getAttribute("habit-id");
+    const taskBox = document.getElementById(`${id}`);
+    const index = this.getAttribute("index");
+    const targetVal = parseInt(taskBox.getAttribute("targetVal"));
+    const currentVal = taskBox.getAttribute("currentVal");
+    const newCurrent = parseInt(currentVal) + 1;
+    const newFrac = newCurrent / targetVal;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
+    newFrac * 100 - 5
+  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
+    newFrac * 100 + 1
+  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.setAttribute("currentVal", `${newCurrent}`);
     //update server afterwards
 
     const options = {
-        "method": "PATCH",
-        "headers": {
+        method: "PATCH",
+        headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem('token') || localStorage.getItem('registerToken')
+            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
         },
         body: JSON.stringify({
             completion: {
-                currentVal: newCurrent
-            }
-        })
-        
-    }
+                currentVal: newCurrent,
+            },
+        }),
+    };
 
-
-    const result = await fetch(`http://localhost:3000/api/habits/updatecurrent/${index}`, options)
+    const result = await fetch(
+        `http://localhost:3000/api/habits/updatecurrent/${index}`,
+        options
+    );
 }
 async function minusHandler(e) {
-    e.preventDefault()
-    const id = this.getAttribute('habit-id')
-    const index = this.getAttribute('index')
-    const taskBox = document.getElementById(`${id}`)
-    const targetVal = parseInt(taskBox.getAttribute('targetVal'))
-    const currentVal = taskBox.getAttribute('currentVal')
-    const newCurrent = parseInt(currentVal)-1
-    const newFrac = newCurrent/targetVal
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac*100-5}%, rgba(73,192,203,0.3) ${newFrac*100}%, rgba(244,244,246,1) ${newFrac*100+1}%, rgba(244,244,246,1) 100% )`
-    taskBox.setAttribute('currentVal',`${newCurrent}`)
+    e.preventDefault();
+    const id = this.getAttribute("habit-id");
+    const index = this.getAttribute("index");
+    const taskBox = document.getElementById(`${id}`);
+    const targetVal = parseInt(taskBox.getAttribute("targetVal"));
+    const currentVal = taskBox.getAttribute("currentVal");
+    const newCurrent = parseInt(currentVal) - 1;
+    const newFrac = newCurrent / targetVal;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
+    newFrac * 100 - 5
+  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
+    newFrac * 100 + 1
+  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.setAttribute("currentVal", `${newCurrent}`);
 
     const options = {
-        "method": "PATCH",
-        "headers": {
+        method: "PATCH",
+        headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem('token') || localStorage.getItem('registerToken')
+            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
         },
         body: JSON.stringify({
             completion: {
-                currentVal: newCurrent
-            }
-        })
-        
-    }
+                currentVal: newCurrent,
+            },
+        }),
+    };
 
-
-    const result = await fetch(`http://localhost:3000/api/habits/updatecurrent/${index}`, options)
+    const result = await fetch(
+        `http://localhost:3000/api/habits/updatecurrent/${index}`,
+        options
+    );
 }
 
+async function getOptions() {
+    console.log("clicked");
+    let dailyBool = false;
+    let weeklyBool = false;
+    let monthlyBool = false;
+    const radios = document.getElementsByName("flexRadioDefault");
+    const value = getValues(radios);
+
+    function getValues(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].checked) return arr[i].value;
+        }
+    }
+    if (value === "daily") {
+        dailyBool = true;
+    }
+    if (value === "weekly") {
+        weeklyBool = true;
+    }
+    if (value === "monthly") {
+        monthlyBool = true;
+    }
+}
+async function displayAllHabitInfo() {
+    //constants 
+    const beaverDiv = document.getElementById('beaver-div')
+    beaverDiv.classList.remove('hidden')
+
+    const title = document.getElementById('habit-title')
+    const currentStreak = document.getElementById('current-streak-number')
+    const currentStreakText = document.getElementById('current-streak-text')
+
+    currentStreak.textContent = ""
+    currentStreakText.textContent = ""
+
+    const daysCompleteNumber = document.getElementById('days-completed-number')
+    const daysCompleteText = document.getElementById('days-completed-text')
+
+    daysCompleteNumber.textContent = ""
+    daysCompleteText.textContent = ""
+
+    const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text')
+
+    bestStreakNumber.textContent = ""
+    bestStreakText.textContent = ""
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
+
+    daysTrackedNumber.textContent = ""
+    daysTrackedText.textContent = ""
+
+    title.textContent = "Welcome to Habitab!"
+}
 async function displaySingleHabit(_id) {
+    const beaverDiv = document.getElementById('beaver-div')
+    beaverDiv.classList.add('hidden')
     const singleHabit = await getHabitById(_id)
     const habitObj = singleHabit.singleHabit[0]
 
     const holder = document.getElementById('habit-info-holder')
-
+    //constants 
     const title = document.getElementById('habit-title')
-    title.textContent = habitObj.name
-
     const currentStreak = document.getElementById('current-streak-number')
-    currentStreak.textContent = getStreak(0,habitObj.completion.daysComplete)
+    const currentStreakText = document.getElementById('current-streak-text')
 
     const daysCompleteNumber = document.getElementById('days-completed-number')
-    const daysComplete = habitObj.completion.daysComplete.filter(x=> x===1).length;
-    daysCompleteNumber.textContent = daysComplete
+    const daysCompleteText = document.getElementById('days-completed-text')
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
 
     const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text');
+
+    //check if habitObj is there (select all vs single task) - if not, display info for all tasks
+    title.textContent = habitObj.name
+
+    currentStreakText.textContent = " 🔥 current streak  "
+    currentStreak.textContent = getStreak(0, habitObj.completion.daysComplete)
+
+
+    const daysComplete = habitObj.completion.daysComplete.filter(x => x === 1).length;
+    daysCompleteNumber.textContent = daysComplete
+    daysCompleteText.textContent = " ✔ days completed"
+
     const bestStreak = habitObj.completion.daysComplete.join('').split('0')
     let max = 0
     for (streak of bestStreak) {
@@ -442,24 +610,121 @@ async function displaySingleHabit(_id) {
         }
     }
     bestStreakNumber.textContent = max
+    bestStreakText.textContent = "💎 best streak"
 
-    const daysTrackedNumber = document.getElementById('days-tracked-number')
     daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
+    daysTrackedText.textContent = "🕑 days tracked"
 
 
 }
 
 function getStreak(i, arr) {
     let streak = 0;
-    calcluateStreak(i)
+    calcluateStreak(i);
 
     function calcluateStreak(i) {
-        if (arr.length - 1 - i < 0) return streak
-        let last = arr[arr.length - 1 - i]
-        if (last !== 1) return streak
-        streak += 1
-        calcluateStreak(i + 1)
+        if (arr.length - 1 - i < 0) return streak;
+        let last = arr[arr.length - 1 - i];
+        if (last !== 1) return streak;
+        streak += 1;
+        calcluateStreak(i + 1);
     }
-    return streak
+    return streak;
+}
 
+async function showEditFormModal() {
+    const index = this.getAttribute('index')
+    const id = this.getAttribute('habit-id')
+    localStorage.setItem('habit-index', index)
+    localStorage.setItem('habit-id', id)
+    const editFormModal = document.getElementById("edit-habit-modal");
+    //   document.getElementById("edit-habit-name").value;
+    editFormModal.style.display = "block";
+    //retrieve single habit info
+    const habitData = await getHabitById(id);
+    const singleHabit = habitData.singleHabit[0]
+    console.log(singleHabit.frequency)
+    let freqValue;
+    for (const [key,value] of Object.entries(singleHabit.frequency)) {
+        if (value===true) {
+            freqValue = key
+        }
+    }
+    console.log(freqValue)
+    //change placeholders
+    const habitNameBox = document.getElementById('edit-habit-name');
+    habitNameBox.setAttribute('value', `${singleHabit.name}`)
+
+    const targetBox = document.getElementById('edit-habit-target');
+    targetBox.setAttribute('value', `${singleHabit.completion.targetVal}`)
+
+    const editRadios = document.getElementsByName("edit-flexRadioDefault");
+    for (const editRadio of editRadios) {
+        if (editRadio.value === freqValue) {
+            editRadio.setAttribute('checked',"")
+        }
+        else editRadio.removeAttribute('checked')
+    }
+
+    const editButton = document.getElementById("edit-new-habit");
+
+    editButton.addEventListener("click", EditFormHandler)
+}
+////
+async function EditFormHandler(event) {
+    event.preventDefault();
+    const index = localStorage.getItem('habit-index');
+    const id = localStorage.getItem('habit-id')
+
+
+
+    //   const targethabitData = fetch(`http://localhost:3000/${}`)
+    let dailyBool = false;
+    let weeklyBool = false;
+    let monthlyBool = false;
+    const radios = document.getElementsByName("edit-flexRadioDefault");
+    const value = getValues(radios);
+
+    function getValues(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].checked) return arr[i].value;
+        }
+    }
+    if (value === "daily") {
+        dailyBool = true;
+    }
+    if (value === "weekly") {
+        weeklyBool = true;
+    }
+    if (value === "monthly") {
+        monthlyBool = true;
+    }
+
+    // document.getElementById("habit-target").value;
+    // console.log(document.querySelector(".task-name").value);
+
+    const habitTarget = document.getElementById("edit-habit-target").value;
+    const habitName = document.getElementById("edit-habit-name").value;
+    const options = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
+        },
+        body: JSON.stringify({
+            name: habitName,
+            frequency: {
+                daily: dailyBool,
+                weekly: weeklyBool,
+                monthly: monthlyBool,
+            },
+            completion: {
+                currentVal: 0,
+                targetVal: habitTarget,
+            },
+        }),
+    };
+
+    const result = await fetch(`http://localhost:3000/api/habits/update/${index}`, options);
+    window.location.href = "./dashboard.html";
 }
