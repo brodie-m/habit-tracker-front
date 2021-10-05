@@ -47,7 +47,7 @@
  * TASKS
 */
 
-.task {
+.task, .top-task {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -241,4 +241,9 @@ footer {
 .task .task-name {
     text-align: center;
     font-weight: bolder;
+    mix-blend-mode: normal;
+}
+
+.task .top-task {
+    width: 100%;
 }

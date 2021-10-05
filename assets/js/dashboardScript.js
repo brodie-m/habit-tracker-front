@@ -64,10 +64,16 @@ function drawHabits(data) {
 
         //create top level task div
         const newTask = document.createElement("div");
+        const topTask = document.createElement('div')
+        const bottomTask = document.createElement('div')
+        newTask.appendChild(topTask)
+        newTask.appendChild(bottomTask)
         newTask.classList.add("task");
-        newTask.setAttribute('id',`${habit._id}`)
-        newTask.setAttribute('targetVal', `${habit.completion.targetVal}`)
-        newTask.setAttribute('currentVal',`${habit.completion.currentVal}`)
+        topTask.classList.add('top-task')
+        bottomTask.classList.add('bottom-task')
+       topTask.setAttribute('id',`${habit._id}`)
+        topTask.setAttribute('targetVal', `${habit.completion.targetVal}`)
+        topTask.setAttribute('currentVal',`${habit.completion.currentVal}`)
 
         //create circle div
         const newCircle = document.createElement("div");
@@ -131,21 +137,21 @@ function drawHabits(data) {
         //append 
         
         taskHolder.appendChild(newTask)
-        newTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
+        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
 
         // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
-        newTask.appendChild(newCircle)
-        newTask.appendChild(newTaskName)
+        topTask.appendChild(newCircle)
+        topTask.appendChild(newTaskName)
 
-        newTask.appendChild(newStreak)
+        topTask.appendChild(newStreak)
         // newTask.appendChild(newFire)
-        newTask.appendChild(newOptions)
+        topTask.appendChild(newOptions)
         newStreak.appendChild(newStreakNumber)
 
 
-        newTask.appendChild(newStreak);
-        newTask.appendChild(newOptions);
-        newTask.appendChild(increments)
+        topTask.appendChild(newStreak);
+        topTask.appendChild(newOptions);
+        bottomTask.appendChild(increments)
         newStreak.appendChild(newStreakNumber);
         //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
         index+= 1
