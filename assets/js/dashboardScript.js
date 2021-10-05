@@ -95,7 +95,7 @@ async function letsgo() {
     beav.src = "./assets/images/mascot.png";
   }, 200);
 }
-setInterval(() => {
+let blink = setInterval(() => {
   letsgo();
 }, 5000);
 function buildGraph() {
@@ -163,10 +163,14 @@ function buildGraph() {
 
 beav.addEventListener("mouseover", () => {
   beav.src = "./assets/images/mascot-eyes-closed-happy.png";
+  clearInterval(blink)
 });
 
 beav.addEventListener("mouseout", () => {
     beav.src = "./assets/images/mascot.png";
+    blink = setInterval(() => {
+        letsgo();
+      }, 5000);
   });
 
 
