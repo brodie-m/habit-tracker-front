@@ -47,7 +47,7 @@
  * TASKS
 */
 
-.task {
+.task, .top-task {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -241,4 +241,16 @@ footer {
 .task .task-name {
     text-align: center;
     font-weight: bolder;
+    mix-blend-mode: normal;
+}
+
+.task .top-task {
+    width: 100%;
+}
+
+.fire-moving {
+    margin-left: 1px;
+    width: 30px;
+    height: 40px;
+    background-image: url('../images/svg/fire-moving.svg')
 }

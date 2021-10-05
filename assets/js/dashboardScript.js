@@ -19,6 +19,17 @@ window.addEventListener("load", async () => {
     window.location.href = "./index.html";
   }
 });
+//logout button
+const logoutButton = document.getElementById('logout-button');
+logoutButton.addEventListener('click',logoutHandler);
+
+function logoutHandler(e) {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "./index.html"
+}
+
+
 //load habit data
 async function getHabits() {
   //route is protected, need to send token as header
@@ -57,126 +68,123 @@ async function getHabitById(id) {
 getHabits();
 
 function drawHabits(data) {
-  //data is passed as an array of objects, so need to draw
-  //a new section for each element of the array
-  let index = 0;
-  data.forEach((habit) => {
-    const habitId = habit._id;
-    //get the task holder to append new tasks to
-    const taskHolder = document.getElementById("task-holder");
+    //data is passed as an array of objects, so need to draw
+    //a new section for each element of the array
+    let index = 0;
+    data.forEach((habit) => {
+        const habitId = habit._id
+        //get the task holder to append new tasks to
+        const taskHolder = document.getElementById("task-holder");
 
-    //create top level task div
-    const newTask = document.createElement("div");
-    newTask.classList.add("task");
-    newTask.setAttribute("id", `${habit._id}`);
-    newTask.setAttribute("targetVal", `${habit.completion.targetVal}`);
-    newTask.setAttribute("currentVal", `${habit.completion.currentVal}`);
+        //create top level task div
+        const newTask = document.createElement("div");
+        const topTask = document.createElement('div')
+        const bottomTask = document.createElement('div')
+        newTask.appendChild(topTask)
+        newTask.appendChild(bottomTask)
+        newTask.classList.add("task");
+        topTask.classList.add('top-task')
+        bottomTask.classList.add('bottom-task')
+       topTask.setAttribute('id',`${habit._id}`)
+        topTask.setAttribute('targetVal', `${habit.completion.targetVal}`)
+        topTask.setAttribute('currentVal',`${habit.completion.currentVal}`)
 
-    //create circle div
-    const newCircle = document.createElement("div");
-    newCircle.classList.add("circle");
-    newCircle.setAttribute("habit-id", `${habitId}`);
+        //create circle div
+        const newCircle = document.createElement("div");
+        newCircle.classList.add("circle");
+        newCircle.setAttribute('habit-id', `${habitId}`)
 
-    //create task name div
-    const newTaskName = document.createElement("div");
-    newTaskName.classList.add("task-name");
+        //create task name div
+        const newTaskName = document.createElement("div");
+        newTaskName.classList.add("task-name");
 
-    //create streak div
-    const newStreak = document.createElement("div");
-    newStreak.classList.add("streak");
+        //create streak div
+        const newStreak = document.createElement("div");
+        newStreak.classList.add("streak");
 
-    //create streak number div
-    const newStreakNumber = document.createElement("div");
-    newStreakNumber.classList.add("streak-number");
+        //create streak number div
+        const newStreakNumber = document.createElement('div')
+        newStreakNumber.classList.add('streak-number')
 
-    newStreakNumber.textContent = getStreak(0, habit.completion.daysComplete);
+        newStreakNumber.textContent = getStreak(0, habit.completion.daysComplete)
 
-    // //create fire div
-    // const fireThing = document.getElementsByClassName('fire-svg')
-    // const fireArray = new Array(...fireThing)
-    // console.log(fireArray)
-    // const newFire = document.cloneNode(fireArray[0])
+        //create fire div
+        const fireThing = document.createElement('div')
+        fireThing.classList.add('fire-moving')
+        
 
-    //create increment div
-    const increments = document.createElement("div");
-    increments.classList.add("increments");
-    const incrementPlus = document.createElement("i");
-    incrementPlus.classList.add("fas", "fa-plus", "plus-button");
-    incrementPlus.setAttribute("habit-id", `${habitId}`);
-    incrementPlus.setAttribute("index", index);
-    const incrementText = document.createElement("input");
-    incrementText.setAttribute("type", "text");
-    incrementText.setAttribute("habit-id", `${habitId}`);
-    const incrementMinus = document.createElement("i");
-    incrementMinus.classList.add("fas", "fa-minus", "minus-button");
-    incrementMinus.setAttribute("habit-id", `${habitId}`);
-    incrementMinus.setAttribute("index", index);
-    increments.appendChild(incrementMinus);
-    increments.appendChild(incrementText);
-    increments.appendChild(incrementPlus);
+        //create increment div
+        const increments = document.createElement('div');
+        increments.classList.add('increments')
+        const incrementPlus = document.createElement('i')
+        incrementPlus.classList.add('fas','fa-plus','plus-button')
+        incrementPlus.setAttribute('habit-id', `${habitId}`)
+        incrementPlus.setAttribute('index',index)
+        const incrementText = document.createElement('input')
+        incrementText.setAttribute('type','text')
+        incrementText.setAttribute('habit-id', `${habitId}`)
+        const incrementMinus = document.createElement('i')
+        incrementMinus.classList.add('fas','fa-minus','minus-button')
+        incrementMinus.setAttribute('habit-id', `${habitId}`)
+        incrementMinus.setAttribute('index',index)
+        increments.appendChild(incrementMinus)
+        increments.appendChild(incrementText)
+        increments.appendChild(incrementPlus)
 
-    //create options div
-    const newOptions = document.createElement("div");
-    newOptions.classList.add("options", "noselect");
 
-    //fill each element with proper content
-    newTaskName.textContent = habit.name;
-    newOptions.textContent = "•••";
+        //create options div
+        const newOptions = document.createElement("div");
+        newOptions.classList.add("options", "noselect");
 
-    //background colour
 
-    const completionFrac =
-      habit.completion.currentVal / habit.completion.targetVal;
 
-    //append
+        //fill each element with proper content
+        newTaskName.textContent = habit.name
+        newOptions.textContent = "•••"
 
-    taskHolder.appendChild(newTask);
-    newTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${
-      completionFrac * 100 - 5
-    }%, rgba(73,192,203,0.3) ${completionFrac * 100}%, rgba(244,244,246,1) ${
-      completionFrac * 100 + 1
-    }%, rgba(244,244,246,1) 100% )`;
+        //background colour
+        
+        const completionFrac = habit.completion.currentVal / habit.completion.targetVal;
+        
+        //append 
+        
+        taskHolder.appendChild(newTask)
+        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
 
-    // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
-    newTask.appendChild(newCircle);
-    newTask.appendChild(newTaskName);
+        // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
+        topTask.appendChild(newCircle)
+        topTask.appendChild(newTaskName)
 
-    newTask.appendChild(newStreak);
-    // newTask.appendChild(newFire)
-    newTask.appendChild(newOptions);
-    newStreak.appendChild(newStreakNumber);
+        topTask.appendChild(newStreak)
+        // newTask.appendChild(newFire)
+        topTask.appendChild(newOptions)
+        newStreak.appendChild(newStreakNumber)
 
-    newTask.appendChild(newStreak);
-    newTask.appendChild(newOptions);
-    newTask.appendChild(increments);
-    newStreak.appendChild(newStreakNumber);
-    //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`)
-    index += 1;
-  });
 
-  const circles = document.getElementsByClassName("circle");
-  console.log(circles);
-  for (const circle of circles) {
-    circle.addEventListener("click", circleHandler);
-  }
+        topTask.appendChild(newStreak);
+        topTask.appendChild(newOptions);
+        bottomTask.appendChild(increments)
+        newStreak.appendChild(newStreakNumber);
+        newStreak.appendChild(fireThing)
+        //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
+        index+= 1
+    });
 
-  const plusses = document.getElementsByClassName("plus-button");
-  for (const plus of plusses) {
-    plus.addEventListener("click", plusHandler);
-  }
+    const circles = document.getElementsByClassName("circle");
+    console.log(circles)
+    for (const circle of circles) {
+        circle.addEventListener("click", circleHandler);
+    }
 
-  const minuses = document.getElementsByClassName("minus-button");
-  for (const minus of minuses) {
-    minus.addEventListener("click", minusHandler);
-  }
+    const plusses = document.getElementsByClassName('plus-button');
+    for (const plus of plusses) {
+        plus.addEventListener('click', plusHandler)
+    }
 
-  //Call edit habit form
-
-  const optionsButton = document.getElementsByClassName("options");
-
-  for (const option of optionsButton) {
-    option.addEventListener("click", showEditFormModal);
-  }
+    const minuses = document.getElementsByClassName('minus-button');
+    for (const minus of minuses) {
+        minus.addEventListener('click', minusHandler)
+    }
 }
 
 async function letsgo() {
@@ -344,13 +352,14 @@ async function submitHabitHandler(event) {
 }
 
 function circleHandler(e) {
-  e.preventDefault();
-  const circles = document.getElementsByClassName("circle");
-  for (const circle of circles) {
-    circle.classList.remove("selected");
-  }
-  this.classList.add("selected");
-  displaySingleHabit(this.getAttribute("habit-id"));
+    e.preventDefault();
+    const circles = document.getElementsByClassName("circle");
+    for (const circle of circles) {
+        circle.classList.remove('selected');
+    }
+    this.classList.add('selected')
+    if(!this.getAttribute('habit-id')) {return displayAllHabitInfo()}
+    displaySingleHabit(this.getAttribute('habit-id'))
 }
 
 async function plusHandler(e) {
@@ -448,8 +457,37 @@ async function getOptions() {
     monthlyBool = true;
   }
 }
+async function displayAllHabitInfo() {
+    //constants 
+    const title = document.getElementById('habit-title')
+    const currentStreak = document.getElementById('current-streak-number')
+    const currentStreakText = document.getElementById('current-streak-text')
+    
+    currentStreak.textContent = ""
+    currentStreakText.textContent = ""
 
+    const daysCompleteNumber = document.getElementById('days-completed-number')
+    const daysCompleteText = document.getElementById('days-completed-text')
+
+    daysCompleteNumber.textContent = ""
+    daysCompleteText.textContent = ""
+
+    const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text')
+
+    bestStreakNumber.textContent = ""
+    bestStreakText.textContent = ""
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
+
+    daysTrackedNumber.textContent = ""
+    daysTrackedText.textContent = ""
+    
+    title.textContent = "Welcome to Habitab!"
+}
 async function displaySingleHabit(_id) {
+<<<<<<< HEAD
   const singleHabit = await getHabitById(_id);
   const habitObj = singleHabit.singleHabit[0];
 
@@ -476,6 +514,50 @@ async function displaySingleHabit(_id) {
     }
   }
   bestStreakNumber.textContent = max;
+=======
+    const singleHabit = await getHabitById(_id)
+    const habitObj = singleHabit.singleHabit[0]
+    
+    const holder = document.getElementById('habit-info-holder')
+    //constants 
+    const title = document.getElementById('habit-title')
+    const currentStreak = document.getElementById('current-streak-number')
+    const currentStreakText = document.getElementById('current-streak-text')
+    
+    const daysCompleteNumber = document.getElementById('days-completed-number')
+    const daysCompleteText = document.getElementById('days-completed-text')
+
+
+    const bestStreakNumber = document.getElementById('best-streak-number')
+    const bestStreakText = document.getElementById('best-streak-text')
+
+    const daysTrackedNumber = document.getElementById('days-tracked-number')
+    const daysTrackedText = document.getElementById('days-tracked-text')
+    
+    //check if habitObj is there (select all vs single task) - if not, display info for all tasks
+    title.textContent = habitObj.name
+
+    currentStreakText.textContent = " 🔥 current streak  "
+    currentStreak.textContent = getStreak(0,habitObj.completion.daysComplete)
+
+   
+    const daysComplete = habitObj.completion.daysComplete.filter(x=> x===1).length;
+    daysCompleteNumber.textContent = daysComplete
+    daysCompleteText.textContent = " ✔ days completed"
+    
+    const bestStreak = habitObj.completion.daysComplete.join('').split('0')
+    let max = 0
+    for (streak of bestStreak) {
+        if (streak.length > max) {
+            max = streak.length
+        }
+    }
+    bestStreakNumber.textContent = max
+    bestStreakText.textContent = "💎 best streak"
+    
+    daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
+    daysTrackedText.textContent = "🕑 days tracked"
+>>>>>>> b5a2817e13e88e08cb39a476ae732ae379edfb8d
 
   const daysTrackedNumber = document.getElementById("days-tracked-number");
   daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
