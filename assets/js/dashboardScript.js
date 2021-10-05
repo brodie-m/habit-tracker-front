@@ -324,6 +324,10 @@ async function displaySingleHabit(_id) {
     const habitObj = singleHabit.singleHabit[0]
 
     const holder = document.getElementById('habit-info-holder')
+
+    const title = document.getElementById('habit-title')
+    title.textContent = habitObj.name
+
     const currentStreak = document.getElementById('current-streak-number')
     currentStreak.textContent = getStreak(0,habitObj.completion.daysComplete)
 
