@@ -81,6 +81,7 @@ const updateChart =async (values, frequencies) => {
             }]
         },
         options: {
+            indexAxis:'y',
             scales: {
                 y: {
                     min: 0,

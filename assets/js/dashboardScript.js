@@ -1,7 +1,7 @@
 //check for valid token in local storage
 //either from login or registration
 
-
+let inc = 0;
 //if its not there (i.e, not "good token"), redirect to index.html
 window.addEventListener("load", async () => {
     const token = localStorage.getItem("token");
@@ -56,6 +56,7 @@ getHabits();
 function drawHabits(data) {
     //data is passed as an array of objects, so need to draw
     //a new section for each element of the array
+    let index = 0;
     data.forEach((habit) => {
         const habitId = habit._id
         //get the task holder to append new tasks to
@@ -64,6 +65,9 @@ function drawHabits(data) {
         //create top level task div
         const newTask = document.createElement("div");
         newTask.classList.add("task");
+        newTask.setAttribute('id',`${habit._id}`)
+        newTask.setAttribute('targetVal', `${habit.completion.targetVal}`)
+        newTask.setAttribute('currentVal',`${habit.completion.currentVal}`)
 
         //create circle div
         const newCircle = document.createElement("div");
@@ -91,6 +95,24 @@ function drawHabits(data) {
         // const newFire = document.cloneNode(fireArray[0])
 
 
+        //create increment div
+        const increments = document.createElement('div');
+        increments.classList.add('increments')
+        const incrementPlus = document.createElement('i')
+        incrementPlus.classList.add('fas','fa-plus','plus-button')
+        incrementPlus.setAttribute('habit-id', `${habitId}`)
+        incrementPlus.setAttribute('index',index)
+        const incrementText = document.createElement('input')
+        incrementText.setAttribute('type','text')
+        incrementText.setAttribute('habit-id', `${habitId}`)
+        const incrementMinus = document.createElement('i')
+        incrementMinus.classList.add('fas','fa-minus','minus-button')
+        incrementMinus.setAttribute('habit-id', `${habitId}`)
+        incrementMinus.setAttribute('index',index)
+        increments.appendChild(incrementMinus)
+        increments.appendChild(incrementText)
+        increments.appendChild(incrementPlus)
+
 
         //create options div
         const newOptions = document.createElement("div");
@@ -109,7 +131,7 @@ function drawHabits(data) {
         //append 
         
         taskHolder.appendChild(newTask)
-        newTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.15) ${completionFrac*100-5}%, rgba(73,192,203,0.15) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
+        newTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
 
         // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
         newTask.appendChild(newCircle)
@@ -123,15 +145,26 @@ function drawHabits(data) {
 
         newTask.appendChild(newStreak);
         newTask.appendChild(newOptions);
+        newTask.appendChild(increments)
         newStreak.appendChild(newStreakNumber);
         //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
-        
+        index+= 1
     });
 
     const circles = document.getElementsByClassName("circle");
     console.log(circles)
     for (const circle of circles) {
         circle.addEventListener("click", circleHandler);
+    }
+
+    const plusses = document.getElementsByClassName('plus-button');
+    for (const plus of plusses) {
+        plus.addEventListener('click', plusHandler)
+    }
+
+    const minuses = document.getElementsByClassName('minus-button');
+    for (const minus of minuses) {
+        minus.addEventListener('click', minusHandler)
     }
 }
 
@@ -317,6 +350,66 @@ function circleHandler(e) {
     }
     this.classList.add('selected')
     displaySingleHabit(this.getAttribute('habit-id'))
+}
+
+async function plusHandler(e) {
+    e.preventDefault()
+    const id = this.getAttribute('habit-id')
+    const taskBox = document.getElementById(`${id}`)
+    const index = this.getAttribute('index')
+    const targetVal = parseInt(taskBox.getAttribute('targetVal'))
+    const currentVal = taskBox.getAttribute('currentVal')
+    const newCurrent = parseInt(currentVal)+1
+    const newFrac = newCurrent/targetVal
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac*100-5}%, rgba(73,192,203,0.3) ${newFrac*100}%, rgba(244,244,246,1) ${newFrac*100+1}%, rgba(244,244,246,1) 100% )`
+    taskBox.setAttribute('currentVal',`${newCurrent}`)
+    //update server afterwards
+
+    const options = {
+        "method": "PATCH",
+        "headers": {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem('token') || localStorage.getItem('registerToken')
+        },
+        body: JSON.stringify({
+            completion: {
+                currentVal: newCurrent
+            }
+        })
+        
+    }
+
+
+    const result = await fetch(`http://localhost:3000/api/habits/updatecurrent/${index}`, options)
+}
+async function minusHandler(e) {
+    e.preventDefault()
+    const id = this.getAttribute('habit-id')
+    const index = this.getAttribute('index')
+    const taskBox = document.getElementById(`${id}`)
+    const targetVal = parseInt(taskBox.getAttribute('targetVal'))
+    const currentVal = taskBox.getAttribute('currentVal')
+    const newCurrent = parseInt(currentVal)-1
+    const newFrac = newCurrent/targetVal
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac*100-5}%, rgba(73,192,203,0.3) ${newFrac*100}%, rgba(244,244,246,1) ${newFrac*100+1}%, rgba(244,244,246,1) 100% )`
+    taskBox.setAttribute('currentVal',`${newCurrent}`)
+
+    const options = {
+        "method": "PATCH",
+        "headers": {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem('token') || localStorage.getItem('registerToken')
+        },
+        body: JSON.stringify({
+            completion: {
+                currentVal: newCurrent
+            }
+        })
+        
+    }
+
+
+    const result = await fetch(`http://localhost:3000/api/habits/updatecurrent/${index}`, options)
 }
 
 async function displaySingleHabit(_id) {

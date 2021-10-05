@@ -148,7 +148,9 @@
 */
 
 .chart {
-    background-color: antiquewhite;
+    background-color: rgba(255, 247, 213, 0.5);
+    padding: 1rem;
+    border-radius: 25px;
 }
 
 /* #myChart {
@@ -204,4 +206,39 @@ footer {
 
 .habit-info-holder {
     margin-top: 10%
+}
+
+#habit-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.habit-info-holder .col div {
+    text-align: center;
+    padding: 5px;
+}
+
+.increments {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.increments i {
+    margin-top: 5px;
+}
+
+.increments input{
+    width: 35%;
+    height: 3%;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.task .task-name {
+    text-align: center;
+    font-weight: bolder;
 }
