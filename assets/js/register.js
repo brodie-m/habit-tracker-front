@@ -120,6 +120,7 @@ const registerHandler = async (event) => {
     console.log(errorResult.error);
     return;
   }
+
   console.log("success");
   const data = await result.json();
   console.log(data);

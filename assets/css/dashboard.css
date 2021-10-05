@@ -273,6 +273,12 @@ footer {
     width: 100%;
 }
 
+.task h1 {
+    
+    text-align: center;
+    font-size: 1.5rem;
+}
+
 .fire-moving {
     margin-left: 1px;
     width: 30px;

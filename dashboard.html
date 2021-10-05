@@ -319,6 +319,59 @@
                 </div>
               </div>
             </div>
+
+            <!-- Edit modal  -->
+            <div class="modal" id="edit-habit-modal">
+              <form id="edit-habit-form">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
+                      <label for="edit-habit-name">Habit name</label>
+                      <input type="text" id="edit-habit-name" placeholder="Habit name..">
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center">
+                    <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
+                      <p>Frequency</p>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="edit-flexRadioDefault" id="daily" value="daily" checked>
+                        <label class="form-check-label" for="daily">
+                          Daily
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="edit-flexRadioDefault" id="weekly" value="weekly">
+                        <label class="form-check-label" for="weekly">
+                          Weekly
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="edit-flexRadioDefault" id="monthly" value="monthly" >
+                        <label class="form-check-label" for="monthly">
+                          Monthly
+                        </label>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
+                      <label for="edit-habit-target">Target value</label>
+                      <input type="number" id="edit-habit-target" placeholder="Target value">
+                    </div>
+                    
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
+                        <button id="edit-new-habit">Submit Edited habit</button>
+                    </div>
+                </div>
+                <span class="close">&times;</span>
+
+                </div>
+              </form>
+            </div>
           </div>
 
         <div class="col-12 col-md-7 col-lg-8 my-4" id = "graphs">
@@ -328,7 +381,7 @@
             </div>
 
             <div class="habit-info-holder container" id="habit-info-holder">
-              <h1 id="habit-title">Information about all habits here</h1>
+              <h1 id="habit-title">Welcome to Habitab!</h1>
               <div class="row">
                 <div class="col">
                   <div class="current-streak" id="current-streak-text">
