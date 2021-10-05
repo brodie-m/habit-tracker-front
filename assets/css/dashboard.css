@@ -247,3 +247,10 @@ footer {
 .task .top-task {
     width: 100%;
 }
+
+.fire-moving {
+    margin-left: 1px;
+    width: 30px;
+    height: 40px;
+    background-image: url('../images/svg/fire-moving.svg')
+}

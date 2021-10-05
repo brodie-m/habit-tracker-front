@@ -94,12 +94,10 @@ function drawHabits(data) {
 
         newStreakNumber.textContent = getStreak(0, habit.completion.daysComplete)
 
-        // //create fire div
-        // const fireThing = document.getElementsByClassName('fire-svg')
-        // const fireArray = new Array(...fireThing)
-        // console.log(fireArray)
-        // const newFire = document.cloneNode(fireArray[0])
-
+        //create fire div
+        const fireThing = document.createElement('div')
+        fireThing.classList.add('fire-moving')
+        
 
         //create increment div
         const increments = document.createElement('div');
@@ -153,6 +151,7 @@ function drawHabits(data) {
         topTask.appendChild(newOptions);
         bottomTask.appendChild(increments)
         newStreak.appendChild(newStreakNumber);
+        newStreak.appendChild(fireThing)
         //newTask.setAttribute("style",`background: linear-gradient(90deg), rgba(0,170,184,1) 0%, rgba(73,192,203,1) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100%)`) 
         index+= 1
     });
