@@ -19,6 +19,17 @@ window.addEventListener("load", async () => {
         window.location.href = "./index.html";
     }
 });
+//logout button
+const logoutButton = document.getElementById('logout-button');
+logoutButton.addEventListener('click',logoutHandler);
+
+function logoutHandler(e) {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "./index.html"
+}
+
+
 //load habit data
 async function getHabits() {
     //route is protected, need to send token as header
