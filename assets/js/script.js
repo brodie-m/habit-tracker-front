@@ -49,3 +49,61 @@ for (const button of closeButtons) {
 particlesJS.load('particles-js', './assets/json/futureproof.json', function () {
     console.log('callback - particles.js config loaded');
 });
+function buildGraph(){
+let scores = [],
+scoresonthedoors = [];
+for (let x = 1; x <= 30; x++) {
+let score = Math.round(Math.random() * 10) / 10;
+scores.push({
+  date: [x, 11, 2017],
+  score: score,
+});
+scoresonthedoors.push([x, score]);
+}
+dateExtent = d3.range(1, scores.length);
+scoreExtent = d3.extent([0, 1]);
+xScale = d3.scaleBand().domain(dateExtent).range([0, 900]).padding(1); //
+yScale = d3.scaleLinear().domain(scoreExtent).range([500, 0]);
+x_axis = d3.axisBottom(xScale);
+y_axis = d3.axisLeft(yScale);
+var svg = d3
+.select("body")
+.append("svg")
+.attr("width", 1000)
+.attr("height", 1000)
+.attr("id", "svg");
+svg
+.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(100, 550)")
+.call(x_axis);
+svg
+.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(100, 50)") //50 = indentation
+.call(y_axis);
+svg
+.append("text")
+.attr("text-anchor", "end")
+.attr("x", 600)
+.attr("y", 600)
+.text("Date");
+svg
+.append("text")
+.attr("text-anchor", "end")
+.attr("transform", "rotate(-90)")
+.attr("x", -200)
+.attr("y", 50)
+.text("Score");
+svg
+.append("path")
+.attr("class", "line")
+.datum(scoresonthedoors)
+.attr("d", d3
+.line()
+.x((d) => xScale(d[0]))
+.y((d) => yScale(d[1])))
+.attr("transform", "translate(100, 50)")
+.attr("stroke", "black")
+.attr("fill", "none")
+.attr("stroke-width", "2px")}
