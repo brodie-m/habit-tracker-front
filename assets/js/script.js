@@ -49,7 +49,7 @@ for (const button of closeButtons) {
 particlesJS.load('particles-js', './assets/json/futureproof.json', function () {
     console.log('callback - particles.js config loaded');
 });
-
+function buildGraph(){
 let scores = [],
 scoresonthedoors = [];
 for (let x = 1; x <= 30; x++) {
@@ -106,4 +106,4 @@ svg
 .attr("transform", "translate(100, 50)")
 .attr("stroke", "black")
 .attr("fill", "none")
-.attr("stroke-width", "2px");
+.attr("stroke-width", "2px")}
