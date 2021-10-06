@@ -22,6 +22,7 @@
 // }
 
 async function getHabits() {
+    console.log("Starting to get all the habits");
     //route is protected, need to send token as header
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
@@ -32,11 +33,13 @@ async function getHabits() {
             "auth-token": token,
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show", options);
+    const result = await fetch("http://localhost:3000/api/habits/show-noupdate", options);
     const data = await result.json()
+    console.log("The data at first rendering is", data);
     return data;
 }
 
+// This functions gets the data for a single habit, can be used to draw the line chart
 async function getSingleHabit(id) {
     //route is protected, need to send token as header
     const token =
@@ -53,16 +56,27 @@ async function getSingleHabit(id) {
     return data;
 }
 
+// Empties the canvas before rendering a chart again
+const resetCanvas = () => {
+    // Grabs the chart from the DOM
+    const chartDiv = document.querySelector(".chart");
+    // Sets a new canvas
+    chartDiv.innerHTML = `<canvas id="myChart"></canvas>`
+};
 
 //check if we are on all habits view or single habit view
-const updateChart = async (values, frequencies) => {
+const updateChart = async () => {
     //check if single or all
 
     // Grabbing the all tasks div to check if it is selected
     const allTasksCircle = document.querySelector(".display-all .circle");
     const allTasksCircleSelected = allTasksCircle.classList.contains("selected");
 
-    // Grabbing the chart from the DOM
+    resetCanvas();
+    console.log("Canvas resetted");
+
+    // Grabbing the chart from the DOM and resetting it
+
     const ctx = document.getElementById("myChart").getContext("2d");
 
     // If it is no selected, then will get a single data from all the habits using the id and draw the line graph
@@ -72,17 +86,30 @@ const updateChart = async (values, frequencies) => {
         const taskId = selectedTask[0].attributes["habit-id"].nodeValue;
 
         const taskData = await getSingleHabit(taskId);
-        console.log(taskData);
-        // habitsData.push("");
+        const singleHabit = taskData.singleHabit[0];
+
+        console.log(singleHabit);
+
+        // Emptying
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [singleHabit.name],
+
+            }
+        });
 
         return;
     }
 
+    console.log("Rendering all habits chart");
     const habitsData = await getHabits();
+    console.log(habitsData);
 
     const habitLabels = []
     const habitDataset = []
-    for (habit of habitsData) {
+    for (const habit of habitsData) {
         habitLabels.push(habit.name)
         habitDataset.push(100 * habit.completion.currentVal / habit.completion.targetVal)
     }
@@ -131,3 +158,5 @@ const updateChart = async (values, frequencies) => {
     });
 
 }
+
+updateChart()

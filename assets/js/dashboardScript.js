@@ -448,6 +448,7 @@ function circleHandler(e) {
     }
     this.classList.add('selected')
     if (!this.getAttribute('habit-id')) {
+        updateChart();
         return displayAllHabitInfo()
     }
     displaySingleHabit(this.getAttribute('habit-id'))
