@@ -230,7 +230,7 @@ function buildGraph() {
     x_axis = d3.axisBottom(xScale);
     y_axis = d3.axisLeft(yScale);
     var svg = d3
-        .select("body")
+        .select("canvas")
         .append("svg")
         .attr("width", 1000)
         .attr("height", 1000)
