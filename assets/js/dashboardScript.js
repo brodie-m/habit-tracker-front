@@ -121,7 +121,7 @@ function drawHabits(data) {
         progress.appendChild(progressText)
         progress.classList.add('progress-box')
         progressText.classList.add('progress-text')
-        progressText.setAttribute('id',`progress-text-${habit._id}`)
+        progressText.setAttribute('id', `progress-text-${habit._id}`)
         progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal}`
         //create increment div
         const increments = document.createElement('div');
@@ -161,7 +161,7 @@ function drawHabits(data) {
         //append 
 
         taskHolder.appendChild(newTask)
-        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
+        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac * 100 - 5}%, rgba(73,192,203,0.3) ${completionFrac * 100}%, rgba(244,244,246,1) ${completionFrac * 100 + 1}%, rgba(244,244,246,1) 100% )`
 
         // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
         topTask.appendChild(newCircle)
@@ -206,7 +206,7 @@ function drawHabits(data) {
     const closeButtons = document.getElementsByClassName('close')
     for (const button of closeButtons) {
         button.addEventListener("click", closeModal);
-      }
+    }
 }
 
 async function letsgo() {
@@ -278,9 +278,9 @@ function buildGraph() {
         .attr(
             "d",
             d3
-            .line()
-            .x((d) => xScale(d[0]))
-            .y((d) => yScale(d[1]))
+                .line()
+                .x((d) => xScale(d[0]))
+                .y((d) => yScale(d[1]))
         )
         .attr("transform", "translate(100, 50)")
         .attr("stroke", "black")
@@ -294,30 +294,30 @@ beav.addEventListener("mouseover", () => {
 });
 
 let messages = [
-  "Hello <username>",
-  "Welcome to Habitab",
-  "I'm Bucky, your virtual assistant",
-  "Click the question mark then hover over an element for me to tell you what it does",
+    "Hello <username>",
+    "Welcome to Habitab",
+    "I'm Bucky, your virtual assistant",
+    "Click the question mark then hover over an element for me to tell you what it does",
 ];
 
 mesaji.textContent = messages[0];
 
 next.addEventListener("click", () => {
-  let i = messages.indexOf(mesaji.textContent);
-  if (i == messages.length - 1) {
-    mesaji.textContent = messages[0];
-  } else {
-    mesaji.textContent = messages[i + 1];
-  }
+    let i = messages.indexOf(mesaji.textContent);
+    if (i == messages.length - 1) {
+        mesaji.textContent = messages[0];
+    } else {
+        mesaji.textContent = messages[i + 1];
+    }
 });
 
 what.addEventListener("click", () => {
-  if (looking) {
-    looking = false;
-  } else {
-    looking = true;
-    hold = mesaji.textContent;
-  }
+    if (looking) {
+        looking = false;
+    } else {
+        looking = true;
+        hold = mesaji.textContent;
+    }
 });
 
 
@@ -333,37 +333,37 @@ what.addEventListener("click", () => {
 const addTaskButton = document.getElementById("add-task");
 
 addTaskButton.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Click here to create a new habit";
-    addtask.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Click here to create a new habit";
+        addtask.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 graphs.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Here you can view your progress in graphical form";
-    graphs.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Here you can view your progress in graphical form";
+        graphs.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 logoutButton.addEventListener("mouseover", () => {
     if (looking) {
-      mesaji.textContent = "Click here to log out";
-      logoutButton.addEventListener("mouseout", () => {
-        mesaji.textContent = hold;
-      });
+        mesaji.textContent = "Click here to log out";
+        logoutButton.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
     }
-  });
+});
 
 beav.addEventListener("mouseout", () => {
-  beav.src = "./assets/images/mascot.png";
-  blink = setInterval(() => {
-    letsgo();
-  }, 5000);
+    beav.src = "./assets/images/mascot.png";
+    blink = setInterval(() => {
+        letsgo();
+    }, 5000);
 });
 
 // This functions shows the create modal
@@ -451,6 +451,8 @@ function circleHandler(e) {
         return displayAllHabitInfo()
     }
     displaySingleHabit(this.getAttribute('habit-id'))
+    updateChart();
+    // buildGraph();
 }
 
 async function plusHandler(e) {
@@ -466,11 +468,9 @@ async function plusHandler(e) {
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
     progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
-    newFrac * 100 - 5
-  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
-    newFrac * 100 + 1
-  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
+        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+        }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
     //update server afterwards
 
@@ -501,11 +501,9 @@ async function minusHandler(e) {
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) - 1;
     const newFrac = newCurrent / targetVal;
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
-    newFrac * 100 - 5
-  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
-    newFrac * 100 + 1
-  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
+        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+        }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
 
     const options = {
@@ -656,13 +654,13 @@ async function showEditFormModal() {
     const habitData = await getHabitById(id);
     const singleHabit = habitData.singleHabit[0]
     let freqValue;
-    for (const [key,value] of Object.entries(singleHabit.frequency)) {
-        if (value===true) {
+    for (const [key, value] of Object.entries(singleHabit.frequency)) {
+        if (value === true) {
             freqValue = key
         }
     }
     //keep current value
-    localStorage.setItem('currentVal',`${singleHabit.completion.currentVal}`)
+    localStorage.setItem('currentVal', `${singleHabit.completion.currentVal}`)
     //change placeholders
     const habitNameBox = document.getElementById('edit-habit-name');
     habitNameBox.setAttribute('value', `${singleHabit.name}`)
@@ -673,7 +671,7 @@ async function showEditFormModal() {
     const editRadios = document.getElementsByName("edit-flexRadioDefault");
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
-            editRadio.setAttribute('checked',"")
+            editRadio.setAttribute('checked', "")
         }
         else editRadio.removeAttribute('checked')
     }

@@ -37,20 +37,55 @@ async function getHabits() {
     return data;
 }
 
+async function getSingleHabit(id) {
+    //route is protected, need to send token as header
+    const token =
+        localStorage.getItem("token") || localStorage.getItem("registerToken");
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+        },
+    };
+    const result = await fetch(`http://localhost:3000/api/habits/show/${id}`, options);
+    const data = await result.json()
+    return data;
+}
+
 
 //check if we are on all habits view or single habit view
-const updateChart =async (values, frequencies) => {
+const updateChart = async (values, frequencies) => {
     //check if single or all
-    //if single, call getSingleHabit(id)
-    const habitsData = await getHabits()
+
+    // Grabbing the all tasks div to check if it is selected
+    const allTasksCircle = document.querySelector(".display-all .circle");
+    const allTasksCircleSelected = allTasksCircle.classList.contains("selected");
+
+    // Grabbing the chart from the DOM
+    const ctx = document.getElementById("myChart").getContext("2d");
+
+    // If it is no selected, then will get a single data from all the habits using the id and draw the line graph
+    if (!allTasksCircleSelected) {
+        //if single, call getSingleHabit(id)
+        const selectedTask = document.querySelectorAll("#task-holder .selected");
+        const taskId = selectedTask[0].attributes["habit-id"].nodeValue;
+
+        const taskData = await getSingleHabit(taskId);
+        console.log(taskData);
+        // habitsData.push("");
+
+        return;
+    }
+
+    const habitsData = await getHabits();
+
     const habitLabels = []
     const habitDataset = []
     for (habit of habitsData) {
         habitLabels.push(habit.name)
-        habitDataset.push(100*habit.completion.currentVal/habit.completion.targetVal)
+        habitDataset.push(100 * habit.completion.currentVal / habit.completion.targetVal)
     }
-    // Grabbing the chart from the DOM
-    const ctx = document.getElementById("myChart").getContext("2d");
 
     // const data = formatValues(values);
 
@@ -85,7 +120,7 @@ const updateChart =async (values, frequencies) => {
             }]
         },
         options: {
-            indexAxis:'y',
+            indexAxis: 'y',
             scales: {
                 y: {
                     min: 0,
@@ -96,5 +131,3 @@ const updateChart =async (values, frequencies) => {
     });
 
 }
-
-updateChart([true, true, false]);
