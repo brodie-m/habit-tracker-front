@@ -27,6 +27,9 @@ window.addEventListener("load", async () => {
 }, {
     once: true
 });
+
+
+
 //logout button
 const logoutButton = document.getElementById('logout-button');
 logoutButton.addEventListener('click', logoutHandler);
@@ -90,6 +93,7 @@ async function drawHabits(result) {
 
         //create top level task div
         const newTask = document.createElement("div");
+        newTask.classList.add('box')
         const topTask = document.createElement('div')
         const bottomTask = document.createElement('div')
         newTask.appendChild(topTask)
@@ -296,9 +300,9 @@ function buildGraph() {
         .attr(
             "d",
             d3
-                .line()
-                .x((d) => xScale(d[0]))
-                .y((d) => yScale(d[1]))
+            .line()
+            .x((d) => xScale(d[0]))
+            .y((d) => yScale(d[1]))
         )
         .attr("transform", "translate(100, 50)")
         .attr("stroke", "black")
@@ -321,14 +325,14 @@ let messages = [
 mesaji.textContent = messages[0];
 
 next.addEventListener("click", () => {
-    if(!looking){
-    let i = messages.indexOf(mesaji.textContent);
-    if (i == messages.length - 1) {
-        mesaji.textContent = messages[0];
-    } else {
-        mesaji.textContent = messages[i + 1];
+    if (!looking) {
+        let i = messages.indexOf(mesaji.textContent);
+        if (i == messages.length - 1) {
+            mesaji.textContent = messages[0];
+        } else {
+            mesaji.textContent = messages[i + 1];
+        }
     }
-}
 });
 
 what.addEventListener("click", () => {
@@ -344,13 +348,15 @@ what.addEventListener("click", () => {
 
 
 habitshere.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent =
-      "Here's where you can view existing habits and add new ones";
-    habitshere.addEventListener("mouseout", () => {
-      if(looking){mesaji.textContent = hold};
-    });
-  }
+    if (looking) {
+        mesaji.textContent =
+            "Here's where you can view existing habits and add new ones";
+        habitshere.addEventListener("mouseout", () => {
+            if (looking) {
+                mesaji.textContent = hold
+            };
+        });
+    }
 });
 const addTaskButton = document.getElementById("add-task");
 
@@ -358,7 +364,9 @@ addTaskButton.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Click here to create a new habit";
         addTaskButton.addEventListener("mouseout", () => {
-           if(looking) {mesaji.textContent = hold};
+            if (looking) {
+                mesaji.textContent = hold
+            };
         });
     }
 });
@@ -367,7 +375,9 @@ graphs.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Here you can view your progress in graphical form";
         graphs.addEventListener("mouseout", () => {
-            if(looking) {mesaji.textContent = hold};
+            if (looking) {
+                mesaji.textContent = hold
+            };
         });
     }
 });
@@ -376,7 +386,9 @@ logoutButton.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Click here to log out";
         logoutButton.addEventListener("mouseout", () => {
-            if(looking) {mesaji.textContent = hold};
+            if (looking) {
+                mesaji.textContent = hold
+            };
         });
     }
 });
@@ -461,6 +473,24 @@ async function submitHabitHandler(event) {
     const result = await fetch("http://localhost:3000/api/habits/add", options);
     window.location.href = "./dashboard.html";
 }
+
+const deleteHabitButton = document.getElementById('delete-button')
+deleteHabitButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const habitNameSpaces = document.getElementById("edit-habit-name").value;
+    const habitNameUnderscores = habitNameSpaces.split(' ').join('_')
+    const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
+    console.log(token)
+    const options = {
+        'method': "DELETE",
+        headers: {
+            "auth-token": token,
+        }
+        
+    }
+    await fetch(`http://localhost:3000/api/habits/delete/${habitNameUnderscores}`, options)
+    window.location.href = "./dashboard.html";
+})
 
 function circleHandler(e) {
     e.preventDefault();
@@ -723,8 +753,7 @@ async function showEditFormModal() {
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
             editRadio.setAttribute('checked', "")
-        }
-        else editRadio.removeAttribute('checked')
+        } else editRadio.removeAttribute('checked')
     }
 
     const editButton = document.getElementById("edit-new-habit");
@@ -737,10 +766,10 @@ async function EditFormHandler(event) {
     const index = localStorage.getItem('habit-index');
     const id = localStorage.getItem('habit-id')
     const current = localStorage.getItem('currentVal')
-    
+
 
     const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
-      
+
     const targetHabitData = await fetch(`http://localhost:3000/api/habits/show/${id}`, {
         method: 'GET',
         headers: {
@@ -774,7 +803,7 @@ async function EditFormHandler(event) {
 
     // document.getElementById("habit-target").value;
     // console.log(document.querySelector(".task-name").value);
-    
+
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
     const options = {

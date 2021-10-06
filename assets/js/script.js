@@ -36,6 +36,12 @@ const showRegisterModal = () => {
   registerModal.style.display = "block";
 };
 
+const loginInstead = document.getElementById('register-to-login');
+loginInstead.addEventListener('click',()=> {
+  closeModal();
+  showLoginModal();
+})
+
 // Adding the even listeners to show the modals
 landingLoginButton.addEventListener("click", showLoginModal);
 landingRegisterButton.addEventListener("click", showRegisterModal);

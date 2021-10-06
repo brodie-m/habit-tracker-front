@@ -24,6 +24,7 @@ const displayLoginError = (errors) => {
 const loginButton = document.getElementById("login");
 
 const loginHandler = async (event) => {
+  
   event.preventDefault();
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;

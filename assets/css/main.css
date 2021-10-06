@@ -132,3 +132,8 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+#register-to-login:hover {
+    cursor: pointer;
+}
+
