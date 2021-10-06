@@ -11,7 +11,7 @@ window.addEventListener("load", async () => {
     const options = {
         method: "POST",
         headers: {
-            "Access-Control-Allow-Origin": "*",  
+            "Access-Control-Allow-Origin": "*",
             "auth-token": token || registerToken,
         },
     };
@@ -20,12 +20,13 @@ window.addEventListener("load", async () => {
     console.log('window loaded')
     if (message.message !== "good token") {
         window.location.href = "./index.html";
-    }
-    else {  
+    } else {
         console.log('calling getHabits()')
         await getHabits();
     }
-},{once:true});
+}, {
+    once: true
+});
 //logout button
 const logoutButton = document.getElementById('logout-button');
 logoutButton.addEventListener('click', logoutHandler);
@@ -53,7 +54,7 @@ async function getHabits() {
     };
     const result = await fetch("http://localhost:3000/api/habits/show", options);
     return drawHabits(result);
-    
+
 }
 
 async function getHabitById(id) {
@@ -117,7 +118,7 @@ async function drawHabits(result) {
         const newStreakNumber = document.createElement('div')
         newStreakNumber.classList.add('streak-number')
 
-        newStreakNumber.textContent = getStreak(0, habit.completion.daysComplete)
+        newStreakNumber.textContent = getStreak(0, habit) //habit.completion.daysComplete
 
         //create fire div
         const fireThing = document.createElement('div')
@@ -138,7 +139,7 @@ async function drawHabits(result) {
         progress.appendChild(progressText)
         progress.classList.add('progress-box')
         progressText.classList.add('progress-text')
-        progressText.setAttribute('id',`progress-text-${habit._id}`)
+        progressText.setAttribute('id', `progress-text-${habit._id}`)
         progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal}`
         //create increment div
         const increments = document.createElement('div');
@@ -223,7 +224,7 @@ async function drawHabits(result) {
     const closeButtons = document.getElementsByClassName('close')
     for (const button of closeButtons) {
         button.addEventListener("click", closeModal);
-      }
+    }
 }
 
 async function letsgo() {
@@ -311,30 +312,30 @@ beav.addEventListener("mouseover", () => {
 });
 
 let messages = [
-  "Hello <username>",
-  "Welcome to Habitab",
-  "I'm Bucky, your virtual assistant",
-  "Click the question mark then hover over an element for me to tell you what it does",
+    "Hello <username>",
+    "Welcome to Habitab",
+    "I'm Bucky, your virtual assistant",
+    "Click the question mark then hover over an element for me to tell you what it does",
 ];
 
 mesaji.textContent = messages[0];
 
 next.addEventListener("click", () => {
-  let i = messages.indexOf(mesaji.textContent);
-  if (i == messages.length - 1) {
-    mesaji.textContent = messages[0];
-  } else {
-    mesaji.textContent = messages[i + 1];
-  }
+    let i = messages.indexOf(mesaji.textContent);
+    if (i == messages.length - 1) {
+        mesaji.textContent = messages[0];
+    } else {
+        mesaji.textContent = messages[i + 1];
+    }
 });
 
 what.addEventListener("click", () => {
-  if (looking) {
-    looking = false;
-  } else {
-    looking = true;
-    hold = mesaji.textContent;
-  }
+    if (looking) {
+        looking = false;
+    } else {
+        looking = true;
+        hold = mesaji.textContent;
+    }
 });
 
 
@@ -350,37 +351,37 @@ what.addEventListener("click", () => {
 const addTaskButton = document.getElementById("add-task");
 
 addTaskButton.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Click here to create a new habit";
-    addtask.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Click here to create a new habit";
+        addtask.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 graphs.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Here you can view your progress in graphical form";
-    graphs.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Here you can view your progress in graphical form";
+        graphs.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 logoutButton.addEventListener("mouseover", () => {
     if (looking) {
-      mesaji.textContent = "Click here to log out";
-      logoutButton.addEventListener("mouseout", () => {
-        mesaji.textContent = hold;
-      });
+        mesaji.textContent = "Click here to log out";
+        logoutButton.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
     }
-  });
+});
 
 beav.addEventListener("mouseout", () => {
-  beav.src = "./assets/images/mascot.png";
-  blink = setInterval(() => {
-    letsgo();
-  }, 5000);
+    beav.src = "./assets/images/mascot.png";
+    blink = setInterval(() => {
+        letsgo();
+    }, 5000);
 });
 
 // This functions shows the create modal
@@ -624,7 +625,7 @@ async function displaySingleHabit(_id) {
     title.textContent = habitObj.name
 
     currentStreakText.textContent = " 🔥 current streak  "
-    currentStreak.textContent = getStreak(0, habitObj.completion.daysComplete)
+    currentStreak.textContent = getStreak(0, habitObj) //.completion.daysComplete
 
 
     const daysComplete = habitObj.completion.daysComplete.filter(x => x === 1).length;
@@ -647,15 +648,43 @@ async function displaySingleHabit(_id) {
 
 }
 
-function getStreak(i, arr) {
+function getStreak(i, habitObj) {
+
+    let arr = habitObj.completion.daysComplete
+    //check frequency
+    let frequency;
+    let slicer;
+
+    if (habitObj.frequency.daily === true) {
+        frequency = 'daily'
+        slicer = 1;
+    }
+    if (habitObj.frequency.weekly === true) {
+        frequency = 'weekly'
+        slicer = 7;
+    }
+    if (habitObj.frequency.monthly === true) {
+        frequency = 'monthly'
+        slicer = 30;
+    }
+
     let streak = 0;
+    // console.log(Math.floor(arr.length / slicer))
+    // //push values in current array to new array based on freq value
+    // for (let i = 0; i < Math.floor(arr.length / slicer); i++) {
+    //     console.log(arr.slice(0, slicer - 1))
+
+    // }
+    // // console.log(arr.slice(0,slicer-1))
     calcluateStreak(i);
 
     function calcluateStreak(i) {
         if (arr.length - 1 - i < 0) return streak;
         let last = arr[arr.length - 1 - i];
         if (last !== 1) return streak;
-        streak += 1;
+        if (i % slicer === 0) {
+            streak += 1;
+        }
         calcluateStreak(i + 1);
     }
     return streak;
@@ -673,13 +702,17 @@ async function showEditFormModal() {
     const habitData = await getHabitById(id);
     const singleHabit = habitData.singleHabit[0]
     let freqValue;
-    for (const [key,value] of Object.entries(singleHabit.frequency)) {
-        if (value===true) {
+    for (const [key, value] of Object.entries(singleHabit.frequency)) {
+        if (value === true) {
             freqValue = key
         }
     }
     //keep current value
-    localStorage.setItem('currentVal',`${singleHabit.completion.currentVal}`)
+    localStorage.setItem('currentVal', `${singleHabit.completion.currentVal}`)
+    //keep days complete
+    localStorage.setItem('daysComplete',`${singleHabit.completion.daysComplete}`)
+    //keep daily values
+    localStorage.setItem('dailyValues',`${singleHabit.completion.dailyValues}`)
     //change placeholders
     const habitNameBox = document.getElementById('edit-habit-name');
     habitNameBox.setAttribute('value', `${singleHabit.name}`)
@@ -690,9 +723,8 @@ async function showEditFormModal() {
     const editRadios = document.getElementsByName("edit-flexRadioDefault");
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
-            editRadio.setAttribute('checked',"")
-        }
-        else editRadio.removeAttribute('checked')
+            editRadio.setAttribute('checked', "")
+        } else editRadio.removeAttribute('checked')
     }
 
     const editButton = document.getElementById("edit-new-habit");
@@ -705,9 +737,20 @@ async function EditFormHandler(event) {
     const index = localStorage.getItem('habit-index');
     const id = localStorage.getItem('habit-id')
     const current = localStorage.getItem('currentVal')
+    
 
-
-    //   const targethabitData = fetch(`http://localhost:3000/${}`)
+    const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
+      
+    const targetHabitData = await fetch(`http://localhost:3000/api/habits/show/${id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+        },
+    })
+    const someData = await targetHabitData.json()
+    const data = someData.singleHabit[0]
+    console.log(data)
     let dailyBool = false;
     let weeklyBool = false;
     let monthlyBool = false;
@@ -731,14 +774,14 @@ async function EditFormHandler(event) {
 
     // document.getElementById("habit-target").value;
     // console.log(document.querySelector(".task-name").value);
-
+    
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
     const options = {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
+            "auth-token": token,
         },
         body: JSON.stringify({
             name: habitName,
@@ -750,10 +793,11 @@ async function EditFormHandler(event) {
             completion: {
                 currentVal: current,
                 targetVal: habitTarget,
+                daysComplete: data.completion.daysComplete,
+                dailyValues: data.completion.dailyValues
             },
         }),
     };
-
     const result = await fetch(`http://localhost:3000/api/habits/update/${index}`, options);
     window.location.href = "./dashboard.html";
 }
