@@ -13,6 +13,8 @@ const captchas = {
     12: "5uwv"
 }
 
+// This picks a random captcha from the available captchas
+// Avoids using the same every time
 const getRandomCaptcha = () => {
     const values = Object.keys(captchas);
     console.log(values);
@@ -22,18 +24,26 @@ const getRandomCaptcha = () => {
     return randomCaptcha;
 };
 
+// Gets a new captcha and updates the DOM accordingly
 const refreshCaptcha = () => {
     const captcha = getRandomCaptcha();
     document.getElementById("captcha").innerHTML = `
     <img src="./assets/images/captcha/${captcha}.png" alt="captcha">
+    <p id="refresh-captcha">Refresh the captcha</p>
     <input id="captcha-input" cid="${captcha}" placeholder="Captcha.." />
     `;
+
+    // Adding the event listeners to the refresh captcha
+    const refreshCaptchaElement = document.getElementById("refresh-captcha");
+    refreshCaptchaElement.addEventListener("click", () => refreshCaptcha());
 }
 
+// This verifies if the user has entered the correct captcha
 const verifyCaptcha = (id, captchaInput) => {
     if (captchas[id] == captchaInput)
         return true
     return false;
 }
 
+// Initial capta is added to the DOM
 refreshCaptcha();
