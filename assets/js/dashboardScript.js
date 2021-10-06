@@ -114,7 +114,14 @@ function drawHabits(data) {
         const fireThing = document.createElement('div')
         fireThing.classList.add('fire-moving')
 
-
+        //create progress div
+        const progress = document.createElement('div')
+        const progressText = document.createElement('p')
+        progress.appendChild(progressText)
+        progress.classList.add('progress-box')
+        progressText.classList.add('progress-text')
+        progressText.setAttribute('id',`progress-text-${habit._id}`)
+        progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal}`
         //create increment div
         const increments = document.createElement('div');
         increments.classList.add('increments')
@@ -167,6 +174,7 @@ function drawHabits(data) {
 
         topTask.appendChild(newStreak);
         topTask.appendChild(newOptions);
+        bottomTask.appendChild(progress)
         bottomTask.appendChild(increments)
         newStreak.appendChild(newStreakNumber);
         newStreak.appendChild(fireThing)
@@ -194,6 +202,10 @@ function drawHabits(data) {
     for (const option of optionsButtons) {
         option.addEventListener('click', showEditFormModal)
     }
+    const closeButtons = document.getElementsByClassName('close')
+    for (const button of closeButtons) {
+        button.addEventListener("click", closeModal);
+      }
 }
 
 async function letsgo() {
@@ -324,7 +336,7 @@ what.addEventListener("click", () => {
 //     });
 //   }
 // });
-const addTaskButton = document.getElementById("addtask");
+const addTaskButton = document.getElementById("add-task");
 
 addTaskButton.addEventListener("mouseover", () => {
   if (looking) {
@@ -374,8 +386,9 @@ addTaskButton.addEventListener("click", showCreateHabitModal);
 const closeModal = () => {
     // Get the modals
     const createHabitModal = document.getElementById("create-habit-modal");
-
+    const editHabitModal = document.getElementById('edit-habit-modal')
     createHabitModal.style.display = "none";
+    editHabitModal.style.display = "none";
 };
 
 // This functions closes all the modals, in this case there is no need to distinguish which one
@@ -449,11 +462,15 @@ async function plusHandler(e) {
     e.preventDefault();
     const id = this.getAttribute("habit-id");
     const taskBox = document.getElementById(`${id}`);
+
+    const progressText = document.getElementById(`progress-text-${id}`)
+
     const index = this.getAttribute("index");
     const targetVal = parseInt(taskBox.getAttribute("targetVal"));
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
     taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
     newFrac * 100 - 5
   }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${

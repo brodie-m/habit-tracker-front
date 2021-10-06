@@ -292,3 +292,7 @@ footer {
 .hidden {
     display: none !important;
 }
+
+.progress-box {
+    text-align: center;
+}
