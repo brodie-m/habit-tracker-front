@@ -11,16 +11,21 @@ window.addEventListener("load", async () => {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",  
             "auth-token": token || registerToken,
         },
     };
     const result = await fetch("http://localhost:3000/api/user/verify", options);
     const message = await result.json();
+    console.log('window loaded')
     if (message.message !== "good token") {
         window.location.href = "./index.html";
     }
-});
+    else {  
+        console.log('calling getHabits()')
+        await getHabits();
+    }
+},{once:true});
 //logout button
 const logoutButton = document.getElementById('logout-button');
 logoutButton.addEventListener('click', logoutHandler);
@@ -34,6 +39,7 @@ function logoutHandler(e) {
 
 //load habit data
 async function getHabits() {
+    console.log('getting habits')
     //route is protected, need to send token as header
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
@@ -46,12 +52,12 @@ async function getHabits() {
         },
     };
     const result = await fetch("http://localhost:3000/api/habits/show", options);
-    const data = await result.json();
-
-    drawHabits(data);
+    return drawHabits(result);
+    
 }
 
 async function getHabitById(id) {
+    console.log('getting habits by id')
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
     const options = {
@@ -68,9 +74,11 @@ async function getHabitById(id) {
     return await result.json();
 }
 
-getHabits();
 
-function drawHabits(data) {
+
+async function drawHabits(result) {
+    console.log('drawing habits')
+    const data = await result.json()
     //data is passed as an array of objects, so need to draw
     //a new section for each element of the array
     let index = 0;
