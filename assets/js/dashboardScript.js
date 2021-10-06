@@ -321,12 +321,14 @@ let messages = [
 mesaji.textContent = messages[0];
 
 next.addEventListener("click", () => {
+    if(!looking){
     let i = messages.indexOf(mesaji.textContent);
     if (i == messages.length - 1) {
         mesaji.textContent = messages[0];
     } else {
         mesaji.textContent = messages[i + 1];
     }
+}
 });
 
 what.addEventListener("click", () => {
@@ -346,7 +348,7 @@ habitshere.addEventListener("mouseover", () => {
     mesaji.textContent =
       "Here's where you can view existing habits and add new ones";
     habitshere.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
+      if(looking){mesaji.textContent = hold};
     });
   }
 });
@@ -356,7 +358,7 @@ addTaskButton.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Click here to create a new habit";
         addTaskButton.addEventListener("mouseout", () => {
-            mesaji.textContent = hold;
+           if(looking) {mesaji.textContent = hold};
         });
     }
 });
@@ -365,7 +367,7 @@ graphs.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Here you can view your progress in graphical form";
         graphs.addEventListener("mouseout", () => {
-            mesaji.textContent = hold;
+            if(looking) {mesaji.textContent = hold};
         });
     }
 });
@@ -374,7 +376,7 @@ logoutButton.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Click here to log out";
         logoutButton.addEventListener("mouseout", () => {
-            mesaji.textContent = hold;
+            if(looking) {mesaji.textContent = hold};
         });
     }
 });
