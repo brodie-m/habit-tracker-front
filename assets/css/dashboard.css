@@ -9,10 +9,31 @@
 
     --bg-colour-submit: rgba(16, 130, 211, 0.637);
 }
+/* ::-webkit-scrollbar {
+    width: 20px;
+  } */
 
 /*
  * NAVBAR
 */
+/* 
+::-webkit-scrollbar {
+    height: 10vh;
+  width: 7px;
+  border-radius: 10px;
+} */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* ::-webkit-scrollbar-thumb {
+  background: #888;
+  height: 10vh;
+  width: 7px;
+  border-top: 10px transparent solid;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
 
 .navigation {
     background-color: var(--bg-colour-light);
@@ -147,11 +168,15 @@
 /*
  * CHART
 */
-
+canvas {
+    min-height: 20vh;
+    max-height: 35vh;
+}
 .chart {
     background-color: rgba(255, 247, 213, 0.5);
     padding: 1rem;
     border-radius: 25px;
+    
 }
 
 /* #myChart {
@@ -210,7 +235,8 @@ footer {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: var(--bg-colour-light);
+    background-color: rgba(255,255,255,1);
+    /* background-color: var(--bg-colour-light);*/
 }
 
 .form-item {
@@ -285,17 +311,35 @@ footer {
 }
 
 .habit-info-holder {
-    margin-top: 10%
+    margin-top: 1%
 }
+
+#habitshere {
+    height: 70vh;
+    overflow: auto;
+    padding: 20px;
+}
+#chart-box {
+    height: 70vh;
+}
+
 
 #habit-title {
     margin-bottom: 20px;
     text-align: center;
 }
 
+#mesaji {
+    font-size: 1.5rem;
+}
+
 .habit-info-holder .col div {
     text-align: center;
     padding: 5px;
+}
+
+#task-holder .box {
+    box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1)
 }
 
 .increments {
@@ -358,4 +402,7 @@ footer {
 
 .progress-box {
     text-align: center;
+}
+#delete-button {
+    background-color: red;
 }

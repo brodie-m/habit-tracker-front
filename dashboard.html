@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id = "html">
+<html lang="en" id="html">
 
 <head>
   <meta charset="UTF-8" />
@@ -53,7 +53,7 @@
     <div class="container-fluid">
       <div class="row my-5">
         <div class="col-12 col-md-5 col-lg-4 my-4">
-          <div class="box" id = "habitshere">
+          <div class="box" id="habitshere">
             <div class="add-task" id="add-task">
               <div class="add-icon">
                 <i class="fas fa-plus"></i>
@@ -133,7 +133,7 @@
             </form>
           </div>
           <!-- Edit modal  -->
-          <div class="modal" id="edit-habit-modal">
+          <div class="modal box" id="edit-habit-modal">
             <form id="edit-habit-form">
               <div class="container">
                 <div class="row justify-content-center">
@@ -180,7 +180,12 @@
                 </div>
                 <div class="row justify-content-center">
                   <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
-                    <button id="edit-new-habit">Submit Edited habit</button>
+                    <button id="edit-new-habit">Submit edited habit</button>
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-7 col-md-5 col-xl-4 col-xl-3 form-item">
+                    <button id="delete-button">Delete habit</button>
                   </div>
                 </div>
                 <span class="close">&times;</span>
@@ -191,7 +196,7 @@
         </div>
 
         <div class="col-12 col-md-7 col-lg-8 my-4" id="graphs">
-          <div class="box">
+          <div class="box" id="chart-box">
             <div class="chart">
               <canvas id="myChart"></canvas>
             </div>
@@ -294,7 +299,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"
     integrity="sha256-bC3LCZCwKeehY6T4fFi9VfOU0gztUa+S4cnkIhVPZ5E=" crossorigin="anonymous"></script>
   <script src="./assets/js/chart.js"></script>
-
+  <!-- alerts -->
+  
   <script src="./assets/js/dashboardScript.js"></script>
 </body>
 
