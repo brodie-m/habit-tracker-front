@@ -88,46 +88,77 @@ const updateChart = async () => {
         const taskData = await getSingleHabit(taskId);
         const singleHabit = taskData.singleHabit[0];
 
-        console.log(singleHabit);
-
+        //getting frequency
+        let freqValue;
+        for (const [key, value] of Object.entries(singleHabit.frequency)) {
+            if (value === true) {
+                freqValue = key
+            }
+        }
+        console.log(freqValue)
+        let lineColour
+        if (freqValue == 'daily') {
+            lineColour = 'rgba(255,100,0,1)'
+        }
+        if (freqValue == 'weekly') {
+            lineColour = 'rgba(50,255,0,1)'
+        }
+        if (freqValue == 'monthly') {
+            lineColour = 'rgba(255,10,255,1)'
+        }
         // Emptying
-        const labels = singleHabit.completion.dailyValues.map((x,index) =>{return index} )
+        const labels = singleHabit.completion.dailyValues.map((x, index) => {
+            return index
+        })
         console.log(labels)
         const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: `${singleHabit.name}`,
+                        label: `Tracking habit: ${singleHabit.name}`,
                         // label: '# of Votes',
                         // data: [12, 19, 3, 5, 2, 3],
                         // data: [100*singleHabit.completion.currentVal/singleHabit.completion.targetVal],
-                        data: singleHabit.completion.dailyValues,
+                        data: singleHabit.completion.dailyValues.map(x => 100 * x),
                         fill: false,
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            
-                        ],
-                        tension: 0.1
+                        borderColor: lineColour,
+                        tension: 0.01
                     }]
                 },
-                // options: {
-                //     indexAxis: 'y',
-                //     scales: {
-                //         x: {
-                //             min: 0,
-                //             max: 100
-                //         }
-                //     }
-                // }
+                options: {
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Day'
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Percentage of task completed'
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        },
+                    }
+                }
+            }
 
-            })
-    
-            return;
-        }
+        )
+        return;
 
-        
-    
+    }
+
+
+
 
     console.log("Rendering all habits chart");
     const token =

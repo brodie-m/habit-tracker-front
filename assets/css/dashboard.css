@@ -169,6 +169,7 @@
  * CHART
 */
 canvas {
+    min-height: 20vh;
     max-height: 35vh;
 }
 .chart {

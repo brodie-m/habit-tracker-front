@@ -183,7 +183,8 @@ async function drawHabits(result) {
         //append 
 
         taskHolder.appendChild(newTask)
-        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac * 100 - 5}%, rgba(73,192,203,0.3) ${completionFrac * 100}%, rgba(244,244,246,1) ${completionFrac * 100 + 1}%, rgba(244,244,246,1) 100% )`
+        topTask.style.background = `linear-gradient(90deg, rgba(${255-completionFrac*255},50,${completionFrac*255},0.3) ${completionFrac * 100 - 5}%, rgba(${255-completionFrac*255},50,${completionFrac*255},0.3)  ${completionFrac * 100}%, rgba(244,244,246,1) ${completionFrac * 100 + 1}%, rgba(244,244,246,1) 100% )`
+        
 
         // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
         topTask.appendChild(newCircle)
@@ -476,6 +477,7 @@ async function submitHabitHandler(event) {
 
 const deleteHabitButton = document.getElementById('delete-button')
 deleteHabitButton.addEventListener("click", async (e) => {
+    
     e.preventDefault();
     const habitNameSpaces = document.getElementById("edit-habit-name").value;
     const habitNameUnderscores = habitNameSpaces.split(' ').join('_')
@@ -521,8 +523,8 @@ async function plusHandler(e) {
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
     progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
-        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+    taskBox.style = `background: linear-gradient(90deg, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100 - 5
+        }%, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
         }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
     //update server afterwards
@@ -549,14 +551,16 @@ async function minusHandler(e) {
     e.preventDefault();
     const id = this.getAttribute("habit-id");
     const index = this.getAttribute("index");
+    const progressText = document.getElementById(`progress-text-${id}`)
     const taskBox = document.getElementById(`${id}`);
     const targetVal = parseInt(taskBox.getAttribute("targetVal"));
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) - 1;
     const newFrac = newCurrent / targetVal;
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
-        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
-        }%, rgba(244,244,246,1) 100% )`;
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
+    taskBox.style = `background: linear-gradient(90deg, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100 - 5
+    }%, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+    }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
 
     const options = {
