@@ -285,3 +285,10 @@ footer {
     height: 40px;
     background-image: url('../images/svg/fire-moving.svg')
 }
+
+#beaver-div {
+
+}
+.hidden {
+    display: none !important;
+}
