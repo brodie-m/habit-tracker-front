@@ -122,6 +122,15 @@ async function drawHabits(result) {
         //create fire div
         const fireThing = document.createElement('div')
         fireThing.classList.add('fire-moving')
+        if (habit.frequency.daily === true) {
+            fireThing.classList.add('fire-daily')
+        }
+        if (habit.frequency.weekly === true) {
+            fireThing.classList.add('fire-weekly')
+        }
+        if (habit.frequency.monthly === true) {
+            fireThing.classList.add('fire-monthly')
+        }
 
         //create progress div
         const progress = document.createElement('div')
