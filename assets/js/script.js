@@ -1,3 +1,21 @@
+window.addEventListener("load", async () => {
+  const token = localStorage.getItem("token");
+  const registerToken = localStorage.getItem("registerToken");
+  const options = {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "auth-token": token || registerToken,
+      },
+  };
+  const result = await fetch("http://localhost:3000/api/user/verify", options);
+  const message = await result.json();
+  if (message.message === "good token") {
+      window.location.href = "./dashboard.html";
+  }
+});
+
+
 // Grabbing the login and registration button from the landing page
 const landingLoginButton = document.getElementById("login-button");
 const landingRegisterButton = document.getElementById("register-button");
@@ -21,9 +39,9 @@ const showRegisterModal = () => {
 // Adding the even listeners to show the modals
 landingLoginButton.addEventListener("click", showLoginModal);
 landingRegisterButton.addEventListener("click", showRegisterModal);
-const optionsButton = document.querySelector(".options");
+// const optionsButton = document.querySelector(".options");
 
-optionsButton.addEventListener("click", showEditFormModal);
+// optionsButton.addEventListener("click", showEditFormModal);
 
 // Closing the modals
 // Getting the close buttons
