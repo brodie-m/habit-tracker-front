@@ -37,7 +37,11 @@ async function getHabits() {
     return data;
 }
 
+
+//check if we are on all habits view or single habit view
 const updateChart =async (values, frequencies) => {
+    //check if single or all
+    //if single, call getSingleHabit(id)
     const habitsData = await getHabits()
     const habitLabels = []
     const habitDataset = []
