@@ -660,14 +660,14 @@ async function showEditFormModal() {
     //retrieve single habit info
     const habitData = await getHabitById(id);
     const singleHabit = habitData.singleHabit[0]
-    console.log(singleHabit.frequency)
     let freqValue;
     for (const [key,value] of Object.entries(singleHabit.frequency)) {
         if (value===true) {
             freqValue = key
         }
     }
-    console.log(freqValue)
+    //keep current value
+    localStorage.setItem('currentVal',`${singleHabit.completion.currentVal}`)
     //change placeholders
     const habitNameBox = document.getElementById('edit-habit-name');
     habitNameBox.setAttribute('value', `${singleHabit.name}`)
@@ -692,7 +692,7 @@ async function EditFormHandler(event) {
     event.preventDefault();
     const index = localStorage.getItem('habit-index');
     const id = localStorage.getItem('habit-id')
-
+    const current = localStorage.getItem('currentVal')
 
 
     //   const targethabitData = fetch(`http://localhost:3000/${}`)
@@ -736,7 +736,7 @@ async function EditFormHandler(event) {
                 monthly: monthlyBool,
             },
             completion: {
-                currentVal: 0,
+                currentVal: current,
                 targetVal: habitTarget,
             },
         }),
