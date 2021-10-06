@@ -11,15 +11,21 @@ window.addEventListener("load", async () => {
     const options = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "auth-token": token || registerToken,
         },
     };
     const result = await fetch("http://localhost:3000/api/user/verify", options);
     const message = await result.json();
+    console.log('window loaded')
     if (message.message !== "good token") {
         window.location.href = "./index.html";
+    } else {
+        console.log('calling getHabits()')
+        await getHabits();
     }
+}, {
+    once: true
 });
 //logout button
 const logoutButton = document.getElementById('logout-button');
@@ -34,6 +40,7 @@ function logoutHandler(e) {
 
 //load habit data
 async function getHabits() {
+    console.log('getting habits')
     //route is protected, need to send token as header
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
@@ -42,15 +49,16 @@ async function getHabits() {
         headers: {
             "Content-Type": "application/json",
             "auth-token": token,
+            "Access-Control-Allow-Origin": "*",
         },
     };
     const result = await fetch("http://localhost:3000/api/habits/show", options);
-    const data = await result.json();
+    return drawHabits(result);
 
-    drawHabits(data);
 }
 
 async function getHabitById(id) {
+    console.log('getting habits by id')
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
     const options = {
@@ -67,9 +75,11 @@ async function getHabitById(id) {
     return await result.json();
 }
 
-getHabits();
 
-function drawHabits(data) {
+
+async function drawHabits(result) {
+    console.log('drawing habits')
+    const data = await result.json()
     //data is passed as an array of objects, so need to draw
     //a new section for each element of the array
     let index = 0;
@@ -108,13 +118,29 @@ function drawHabits(data) {
         const newStreakNumber = document.createElement('div')
         newStreakNumber.classList.add('streak-number')
 
-        newStreakNumber.textContent = getStreak(0, habit.completion.daysComplete)
+        newStreakNumber.textContent = getStreak(0, habit) //habit.completion.daysComplete
 
         //create fire div
         const fireThing = document.createElement('div')
         fireThing.classList.add('fire-moving')
+        if (habit.frequency.daily === true) {
+            fireThing.classList.add('fire-daily')
+        }
+        if (habit.frequency.weekly === true) {
+            fireThing.classList.add('fire-weekly')
+        }
+        if (habit.frequency.monthly === true) {
+            fireThing.classList.add('fire-monthly')
+        }
 
-
+        //create progress div
+        const progress = document.createElement('div')
+        const progressText = document.createElement('p')
+        progress.appendChild(progressText)
+        progress.classList.add('progress-box')
+        progressText.classList.add('progress-text')
+        progressText.setAttribute('id', `progress-text-${habit._id}`)
+        progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal}`
         //create increment div
         const increments = document.createElement('div');
         increments.classList.add('increments')
@@ -167,6 +193,7 @@ function drawHabits(data) {
 
         topTask.appendChild(newStreak);
         topTask.appendChild(newOptions);
+        bottomTask.appendChild(progress)
         bottomTask.appendChild(increments)
         newStreak.appendChild(newStreakNumber);
         newStreak.appendChild(fireThing)
@@ -193,6 +220,10 @@ function drawHabits(data) {
     const optionsButtons = document.getElementsByClassName('options')
     for (const option of optionsButtons) {
         option.addEventListener('click', showEditFormModal)
+    }
+    const closeButtons = document.getElementsByClassName('close')
+    for (const button of closeButtons) {
+        button.addEventListener("click", closeModal);
     }
 }
 
@@ -281,30 +312,30 @@ beav.addEventListener("mouseover", () => {
 });
 
 let messages = [
-  "Hello <username>",
-  "Welcome to Habitab",
-  "I'm Bucky, your virtual assistant",
-  "Click the question mark then hover over an element for me to tell you what it does",
+    "Hello <username>",
+    "Welcome to Habitab",
+    "I'm Bucky, your virtual assistant",
+    "Click the question mark then hover over an element for me to tell you what it does",
 ];
 
 mesaji.textContent = messages[0];
 
 next.addEventListener("click", () => {
-  let i = messages.indexOf(mesaji.textContent);
-  if (i == messages.length - 1) {
-    mesaji.textContent = messages[0];
-  } else {
-    mesaji.textContent = messages[i + 1];
-  }
+    let i = messages.indexOf(mesaji.textContent);
+    if (i == messages.length - 1) {
+        mesaji.textContent = messages[0];
+    } else {
+        mesaji.textContent = messages[i + 1];
+    }
 });
 
 what.addEventListener("click", () => {
-  if (looking) {
-    looking = false;
-  } else {
-    looking = true;
-    hold = mesaji.textContent;
-  }
+    if (looking) {
+        looking = false;
+    } else {
+        looking = true;
+        hold = mesaji.textContent;
+    }
 });
 
 
@@ -317,40 +348,40 @@ what.addEventListener("click", () => {
 //     });
 //   }
 // });
-const addTaskButton = document.getElementById("addtask");
+const addTaskButton = document.getElementById("add-task");
 
 addTaskButton.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Click here to create a new habit";
-    addtask.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Click here to create a new habit";
+        addtask.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 graphs.addEventListener("mouseover", () => {
-  if (looking) {
-    mesaji.textContent = "Here you can view your progress in graphical form";
-    graphs.addEventListener("mouseout", () => {
-      mesaji.textContent = hold;
-    });
-  }
+    if (looking) {
+        mesaji.textContent = "Here you can view your progress in graphical form";
+        graphs.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
+    }
 });
 
 logoutButton.addEventListener("mouseover", () => {
     if (looking) {
-      mesaji.textContent = "Click here to log out";
-      logoutButton.addEventListener("mouseout", () => {
-        mesaji.textContent = hold;
-      });
+        mesaji.textContent = "Click here to log out";
+        logoutButton.addEventListener("mouseout", () => {
+            mesaji.textContent = hold;
+        });
     }
-  });
+});
 
 beav.addEventListener("mouseout", () => {
-  beav.src = "./assets/images/mascot.png";
-  blink = setInterval(() => {
-    letsgo();
-  }, 5000);
+    beav.src = "./assets/images/mascot.png";
+    blink = setInterval(() => {
+        letsgo();
+    }, 5000);
 });
 
 // This functions shows the create modal
@@ -367,8 +398,9 @@ addTaskButton.addEventListener("click", showCreateHabitModal);
 const closeModal = () => {
     // Get the modals
     const createHabitModal = document.getElementById("create-habit-modal");
-
+    const editHabitModal = document.getElementById('edit-habit-modal')
     createHabitModal.style.display = "none";
+    editHabitModal.style.display = "none";
 };
 
 // This functions closes all the modals, in this case there is no need to distinguish which one
@@ -418,6 +450,7 @@ async function submitHabitHandler(event) {
                 currentVal: 0,
                 targetVal: habitTarget,
             },
+            updatedAt: Date.now()
         }),
     };
 
@@ -442,11 +475,15 @@ async function plusHandler(e) {
     e.preventDefault();
     const id = this.getAttribute("habit-id");
     const taskBox = document.getElementById(`${id}`);
+
+    const progressText = document.getElementById(`progress-text-${id}`)
+
     const index = this.getAttribute("index");
     const targetVal = parseInt(taskBox.getAttribute("targetVal"));
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
     taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
     newFrac * 100 - 5
   }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
@@ -588,7 +625,7 @@ async function displaySingleHabit(_id) {
     title.textContent = habitObj.name
 
     currentStreakText.textContent = " 🔥 current streak  "
-    currentStreak.textContent = getStreak(0, habitObj.completion.daysComplete)
+    currentStreak.textContent = getStreak(0, habitObj) //.completion.daysComplete
 
 
     const daysComplete = habitObj.completion.daysComplete.filter(x => x === 1).length;
@@ -611,15 +648,43 @@ async function displaySingleHabit(_id) {
 
 }
 
-function getStreak(i, arr) {
+function getStreak(i, habitObj) {
+
+    let arr = habitObj.completion.daysComplete
+    //check frequency
+    let frequency;
+    let slicer;
+
+    if (habitObj.frequency.daily === true) {
+        frequency = 'daily'
+        slicer = 1;
+    }
+    if (habitObj.frequency.weekly === true) {
+        frequency = 'weekly'
+        slicer = 7;
+    }
+    if (habitObj.frequency.monthly === true) {
+        frequency = 'monthly'
+        slicer = 30;
+    }
+
     let streak = 0;
+    // console.log(Math.floor(arr.length / slicer))
+    // //push values in current array to new array based on freq value
+    // for (let i = 0; i < Math.floor(arr.length / slicer); i++) {
+    //     console.log(arr.slice(0, slicer - 1))
+
+    // }
+    // // console.log(arr.slice(0,slicer-1))
     calcluateStreak(i);
 
     function calcluateStreak(i) {
         if (arr.length - 1 - i < 0) return streak;
         let last = arr[arr.length - 1 - i];
         if (last !== 1) return streak;
-        streak += 1;
+        if (i % slicer === 0) {
+            streak += 1;
+        }
         calcluateStreak(i + 1);
     }
     return streak;
@@ -636,14 +701,18 @@ async function showEditFormModal() {
     //retrieve single habit info
     const habitData = await getHabitById(id);
     const singleHabit = habitData.singleHabit[0]
-    console.log(singleHabit.frequency)
     let freqValue;
-    for (const [key,value] of Object.entries(singleHabit.frequency)) {
-        if (value===true) {
+    for (const [key, value] of Object.entries(singleHabit.frequency)) {
+        if (value === true) {
             freqValue = key
         }
     }
-    console.log(freqValue)
+    //keep current value
+    localStorage.setItem('currentVal', `${singleHabit.completion.currentVal}`)
+    //keep days complete
+    localStorage.setItem('daysComplete',`${singleHabit.completion.daysComplete}`)
+    //keep daily values
+    localStorage.setItem('dailyValues',`${singleHabit.completion.dailyValues}`)
     //change placeholders
     const habitNameBox = document.getElementById('edit-habit-name');
     habitNameBox.setAttribute('value', `${singleHabit.name}`)
@@ -654,9 +723,8 @@ async function showEditFormModal() {
     const editRadios = document.getElementsByName("edit-flexRadioDefault");
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
-            editRadio.setAttribute('checked',"")
-        }
-        else editRadio.removeAttribute('checked')
+            editRadio.setAttribute('checked', "")
+        } else editRadio.removeAttribute('checked')
     }
 
     const editButton = document.getElementById("edit-new-habit");
@@ -668,10 +736,21 @@ async function EditFormHandler(event) {
     event.preventDefault();
     const index = localStorage.getItem('habit-index');
     const id = localStorage.getItem('habit-id')
+    const current = localStorage.getItem('currentVal')
+    
 
-
-
-    //   const targethabitData = fetch(`http://localhost:3000/${}`)
+    const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
+      
+    const targetHabitData = await fetch(`http://localhost:3000/api/habits/show/${id}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": token,
+        },
+    })
+    const someData = await targetHabitData.json()
+    const data = someData.singleHabit[0]
+    console.log(data)
     let dailyBool = false;
     let weeklyBool = false;
     let monthlyBool = false;
@@ -695,14 +774,14 @@ async function EditFormHandler(event) {
 
     // document.getElementById("habit-target").value;
     // console.log(document.querySelector(".task-name").value);
-
+    
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
     const options = {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
+            "auth-token": token,
         },
         body: JSON.stringify({
             name: habitName,
@@ -712,12 +791,13 @@ async function EditFormHandler(event) {
                 monthly: monthlyBool,
             },
             completion: {
-                currentVal: 0,
+                currentVal: current,
                 targetVal: habitTarget,
+                daysComplete: data.completion.daysComplete,
+                dailyValues: data.completion.dailyValues
             },
         }),
     };
-
     const result = await fetch(`http://localhost:3000/api/habits/update/${index}`, options);
     window.location.href = "./dashboard.html";
 }
