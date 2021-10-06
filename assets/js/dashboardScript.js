@@ -312,7 +312,7 @@ beav.addEventListener("mouseover", () => {
 });
 
 let messages = [
-    "Hello <username>",
+    `Hello USERNAME`,
     "Welcome to Habitab",
     "I'm Bucky, your virtual assistant",
     "Click the question mark then hover over an element for me to tell you what it does",
