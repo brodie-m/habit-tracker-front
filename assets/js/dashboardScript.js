@@ -42,6 +42,7 @@ async function getHabits() {
         headers: {
             "Content-Type": "application/json",
             "auth-token": token,
+            "Access-Control-Allow-Origin": "*",
         },
     };
     const result = await fetch("http://localhost:3000/api/habits/show", options);
@@ -438,6 +439,7 @@ async function submitHabitHandler(event) {
                 currentVal: 0,
                 targetVal: habitTarget,
             },
+            updatedAt: Date.now()
         }),
     };
 
