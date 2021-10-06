@@ -179,7 +179,7 @@ async function drawHabits(result) {
         //append 
 
         taskHolder.appendChild(newTask)
-        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac*100-5}%, rgba(73,192,203,0.3) ${completionFrac*100}%, rgba(244,244,246,1) ${completionFrac*100+1}%, rgba(244,244,246,1) 100% )`
+        topTask.style.background = `linear-gradient(90deg, rgba(0,170,184,0.3) ${completionFrac * 100 - 5}%, rgba(73,192,203,0.3) ${completionFrac * 100}%, rgba(244,244,246,1) ${completionFrac * 100 + 1}%, rgba(244,244,246,1) 100% )`
 
         // background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
         topTask.appendChild(newCircle)
@@ -296,9 +296,9 @@ function buildGraph() {
         .attr(
             "d",
             d3
-            .line()
-            .x((d) => xScale(d[0]))
-            .y((d) => yScale(d[1]))
+                .line()
+                .x((d) => xScale(d[0]))
+                .y((d) => yScale(d[1]))
         )
         .attr("transform", "translate(100, 50)")
         .attr("stroke", "black")
@@ -466,9 +466,12 @@ function circleHandler(e) {
     }
     this.classList.add('selected')
     if (!this.getAttribute('habit-id')) {
+        updateChart();
         return displayAllHabitInfo()
     }
     displaySingleHabit(this.getAttribute('habit-id'))
+    updateChart();
+    // buildGraph();
 }
 
 async function plusHandler(e) {
@@ -484,11 +487,9 @@ async function plusHandler(e) {
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
     progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
-    newFrac * 100 - 5
-  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
-    newFrac * 100 + 1
-  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
+        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+        }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
     //update server afterwards
 
@@ -519,11 +520,9 @@ async function minusHandler(e) {
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) - 1;
     const newFrac = newCurrent / targetVal;
-    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${
-    newFrac * 100 - 5
-  }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${
-    newFrac * 100 + 1
-  }%, rgba(244,244,246,1) 100% )`;
+    taskBox.style = `background: linear-gradient(90deg, rgba(0,170,184,0.3) ${newFrac * 100 - 5
+        }%, rgba(73,192,203,0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+        }%, rgba(244,244,246,1) 100% )`;
     taskBox.setAttribute("currentVal", `${newCurrent}`);
 
     const options = {
@@ -709,10 +708,6 @@ async function showEditFormModal() {
     }
     //keep current value
     localStorage.setItem('currentVal', `${singleHabit.completion.currentVal}`)
-    //keep days complete
-    localStorage.setItem('daysComplete',`${singleHabit.completion.daysComplete}`)
-    //keep daily values
-    localStorage.setItem('dailyValues',`${singleHabit.completion.dailyValues}`)
     //change placeholders
     const habitNameBox = document.getElementById('edit-habit-name');
     habitNameBox.setAttribute('value', `${singleHabit.name}`)
@@ -724,7 +719,8 @@ async function showEditFormModal() {
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
             editRadio.setAttribute('checked', "")
-        } else editRadio.removeAttribute('checked')
+        }
+        else editRadio.removeAttribute('checked')
     }
 
     const editButton = document.getElementById("edit-new-habit");
