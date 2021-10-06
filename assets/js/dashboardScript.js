@@ -273,12 +273,6 @@ beav.addEventListener("mouseover", () => {
   clearInterval(blink);
 });
 
-beav.addEventListener("mouseout", () => {
-  beav.src = "./assets/images/mascot.png";
-  blink = setInterval(() => {
-    letsgo();
-  }, 5000);
-});
 
 let messages = [
   "Hello <username>",
@@ -340,7 +334,7 @@ graphs.addEventListener("mouseover", () => {
 logoutButton.addEventListener("mouseover", () => {
     if (looking) {
       mesaji.textContent = "Click here to log out";
-      logout.addEventListener("mouseout", () => {
+      logoutButton.addEventListener("mouseout", () => {
         mesaji.textContent = hold;
       });
     }
