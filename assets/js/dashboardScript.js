@@ -332,28 +332,30 @@ next.addEventListener("click", () => {
 what.addEventListener("click", () => {
     if (looking) {
         looking = false;
+        html.style = ""
     } else {
         looking = true;
         hold = mesaji.textContent;
+        html.style = "cursor: help"
     }
 });
 
 
-// habitshere.addEventListener("mouseover", () => {
-//   if (looking) {
-//     mesaji.textContent =
-//       "Here's where you can view existing habits and add new ones";
-//     habitshere.addEventListener("mouseout", () => {
-//       mesaji.textContent = hold;
-//     });
-//   }
-// });
+habitshere.addEventListener("mouseover", () => {
+  if (looking) {
+    mesaji.textContent =
+      "Here's where you can view existing habits and add new ones";
+    habitshere.addEventListener("mouseout", () => {
+      mesaji.textContent = hold;
+    });
+  }
+});
 const addTaskButton = document.getElementById("add-task");
 
 addTaskButton.addEventListener("mouseover", () => {
     if (looking) {
         mesaji.textContent = "Click here to create a new habit";
-        addtask.addEventListener("mouseout", () => {
+        addTaskButton.addEventListener("mouseout", () => {
             mesaji.textContent = hold;
         });
     }
