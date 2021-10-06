@@ -212,6 +212,60 @@ footer {
     background-color: var(--bg-colour-light);
 }
 
+.form-item {
+    display: flex;
+    flex-direction: column;
+
+    margin: 15px;
+}
+
+.form-item label {
+    text-align: center;
+    font-size: 17px;
+}
+
+.form-item input {
+    background-color: var(--bg-colour-dark-transparent);
+    color: var(--text-colour-light);
+
+    border: none;
+    border-radius: 25px;
+    
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    padding-left: 15px;
+}
+
+.form-item input::placeholder {
+    color: var(--text-colour-light);
+}
+
+.form-item input:focus {
+    outline: none;
+
+    background-color: var(--bg-colour-dark-transparent-hover);
+}
+
+.form-item button {
+    border: none;
+    border-radius: 25px;
+
+    color: var(--bg-colour-light);
+
+    font-size: 20px;
+    padding: 10px;
+
+    background-color: var(--bg-colour-submit);
+}
+.form-item p {
+    text-align: center;
+}
+
+.form-item h1 {
+    text-align: center;
+}
+
 .close {
     color: #aaaaaa;
     float: right;
