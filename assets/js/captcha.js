@@ -17,9 +17,8 @@ const captchas = {
 // Avoids using the same every time
 const getRandomCaptcha = () => {
     const values = Object.keys(captchas);
-    console.log(values);
+
     const randomCaptcha = values[Math.floor(Math.random() * values.length)];
-    console.log(randomCaptcha);
 
     return randomCaptcha;
 };
