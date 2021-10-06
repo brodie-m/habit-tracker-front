@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/brodie-m/habit-tracker-front#readme",
   "devDependencies": {
-    "jest": "^27.2.4"
+    "jest": "^27.2.4",
+    "jest-fetch-mock": "^3.0.3"
   }
 }
