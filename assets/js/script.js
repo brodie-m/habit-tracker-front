@@ -39,9 +39,9 @@ const showRegisterModal = () => {
 // Adding the even listeners to show the modals
 landingLoginButton.addEventListener("click", showLoginModal);
 landingRegisterButton.addEventListener("click", showRegisterModal);
-const optionsButton = document.querySelector(".options");
+// const optionsButton = document.querySelector(".options");
 
-optionsButton.addEventListener("click", showEditFormModal);
+// optionsButton.addEventListener("click", showEditFormModal);
 
 // Closing the modals
 // Getting the close buttons
