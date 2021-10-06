@@ -335,6 +335,7 @@ what.addEventListener("click", () => {
     if (looking) {
         looking = false;
         html.style = ""
+        mesaji.textContent = hold
     } else {
         looking = true;
         hold = mesaji.textContent;
