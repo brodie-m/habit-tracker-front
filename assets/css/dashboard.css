@@ -224,12 +224,8 @@ footer {
     text-align: center;
     margin-left: 2em;
     border-width: 0pt;
-<<<<<<< HEAD
-    border-color: black
-=======
     border-color: black;
     padding: 0px 10px;
->>>>>>> 37dca594b9bb7e7dec6d8f20c272e8440ab5defd
 }
 
 .speech-bubble:after {
@@ -348,13 +344,13 @@ footer {
 }
 
 #habitshere {
-    height: 70vh;
+    height:80vh;
     overflow: auto;
     padding: 20px;
 }
 
 #chart-box {
-    height: 70vh;
+    height: 80vh;
 }
 
 
