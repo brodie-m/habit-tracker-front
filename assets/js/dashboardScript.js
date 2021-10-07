@@ -185,7 +185,8 @@ async function drawHabits(result) {
         progress.classList.add('progress-box')
         progressText.classList.add('progress-text')
         progressText.setAttribute('id', `progress-text-${habit._id}`)
-        progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal}`
+        progressText.setAttribute('units',`${habit.completion.units}`)
+        progressText.textContent = `Progress: ${habit.completion.currentVal}/${habit.completion.targetVal} ${habit.completion.units}`
         //create increment div
         const increments = document.createElement('div');
         increments.classList.add('increments')
@@ -515,7 +516,9 @@ async function submitHabitHandler(event) {
 
     const habitTarget = document.getElementById("habit-target").value;
     const habitName = document.getElementById("habit-name").value;
-    const habitNotes = document.getElementById('habit-notes').value
+    const habitNotes = document.getElementById('habit-notes').value;
+    const habitUnits = document.getElementById('habit-units').value | "";
+    console.log(habitUnits)
     const options = {
         method: "POST",
         headers: {
@@ -530,6 +533,7 @@ async function submitHabitHandler(event) {
                 monthly: monthlyBool,
             },
             completion: {
+                units: habitUnits,
                 currentVal: 0,
                 targetVal: habitTarget,
             },
@@ -596,7 +600,8 @@ async function incrementHandler(e) {
     const newCurrent = this.value;
     this.value = ""
     const newFrac = newCurrent / targetVal;
-    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
+    const units = progressText.getAttribute('units')
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal} ${units}`
     taskBox.style = `background: linear-gradient(90deg, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100 - 5
         }%, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
         }%, rgba(244,244,246,1) 100% )`;
@@ -634,7 +639,8 @@ async function plusHandler(e) {
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) + 1;
     const newFrac = newCurrent / targetVal;
-    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
+    const units = progressText.getAttribute('units')
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal} ${units}`
     taskBox.style = `background: linear-gradient(90deg, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100 - 5
         }%, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
         }%, rgba(244,244,246,1) 100% )`;
@@ -673,7 +679,8 @@ async function minusHandler(e) {
     const currentVal = taskBox.getAttribute("currentVal");
     const newCurrent = parseInt(currentVal) - 1;
     const newFrac = newCurrent / targetVal;
-    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
+    const units = progressText.getAttribute('units')
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal} ${units}`
     taskBox.style = `background: linear-gradient(90deg, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100 - 5
         }%, rgba(${255 - newFrac * 255},50,${newFrac * 255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
         }%, rgba(244,244,246,1) 100% )`;
@@ -945,6 +952,11 @@ async function EditFormHandler(event) {
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
     const habitNotes = document.getElementById('edit-habit-notes').value;
+    const habitUnits = document.getElementById('edit-habit-units').value;
+    if(!habitUnits) {
+        const habitUnits = ""
+    }
+    console.log(habitUnits)
     const options = {
         method: "PATCH",
         headers: {
@@ -959,6 +971,7 @@ async function EditFormHandler(event) {
                 monthly: monthlyBool,
             },
             completion: {
+                units: habitUnits,
                 currentVal: current,
                 targetVal: habitTarget,
                 daysComplete: data.completion.daysComplete,

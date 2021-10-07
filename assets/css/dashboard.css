@@ -260,10 +260,13 @@ footer {
 .form-item {
     display: flex;
     flex-direction: column;
-
+    
     margin: 15px;
 }
 
+.radios-holder {
+    align-items: center;
+}
 .form-item label {
     text-align: center;
     font-size: 17px;
@@ -310,6 +313,12 @@ footer {
 
 .form-item h1 {
     text-align: center;
+}
+
+.edit-habit-target-units {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50% ;
 }
 
 .close {
