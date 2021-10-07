@@ -208,7 +208,9 @@ footer {
     float:none;
     display:inline-block;
     text-align: center;
-    margin: auto
+    margin-left: 2em;
+    border-width: 1pt;
+    border-color: black;
 }
 
 .speech-bubble:after {
