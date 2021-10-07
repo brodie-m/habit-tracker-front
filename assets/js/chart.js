@@ -222,7 +222,11 @@ const updateChart = async () => {
                     scales: {
                         x: {
                             min: 0,
-                            max: 100
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Percentage of task completed'
+                            }
                         }
                     }
                 }
