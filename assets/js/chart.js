@@ -178,9 +178,28 @@ const updateChart = async () => {
             console.log(habitsData);
             const habitLabels = []
             const habitDataset = []
+            const habitColours=[]
             for (const habit of habitsData) {
                 habitLabels.push(habit.name)
                 habitDataset.push(100 * habit.completion.currentVal / habit.completion.targetVal)
+                //colours
+                let freqValue;
+                for (const [key, value] of Object.entries(habit.frequency)) {
+                    if (value === true) {
+                        freqValue = key
+                    }
+                }
+                
+                if (freqValue == 'daily') {
+                    habitColours.push('rgba(255,100,0,0.5)') 
+                }
+                if (freqValue == 'weekly') {
+                    habitColours.push('rgba(50,255,0,0.5)')
+                }
+                if (freqValue == 'monthly') {
+                    habitColours.push('rgba(255,10,255,0.5)')
+                }
+
             }
             console.log('skipped')
             const chart = new Chart(ctx, {
@@ -193,22 +212,8 @@ const updateChart = async () => {
                         // label: '# of Votes',
                         // data: [12, 19, 3, 5, 2, 3],
                         data: habitDataset,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: habitColours,
+                        borderColor: habitColours,
                         borderWidth: 1
                     }]
                 },
