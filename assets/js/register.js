@@ -25,13 +25,14 @@ const displayError = (errors) => {
   errorsElement.textContent = "";
 
   for (const error of errors) {
-    const element = document.createElement("p");
-    element.textContent = error;
-    element.style.color = "red";
-    element.style.textAlign = "center";
+    //const element = document.createElement("p");
+    // element.textContent = error;
+    // element.style.color = "red";
+    // element.style.textAlign = "center";
 
     // Appending the error
-    errorsElement.appendChild(element);
+    // errorsElement.appendChild(element);
+    showNotification(error)
   }
 };
 
@@ -124,9 +125,12 @@ const registerHandler = async (event) => {
 
   console.log("success");
   const data = await result.json();
-  console.log(data);
+
   localStorage.setItem("registerToken", data.token);
-  window.location.href = "./dashboard.html";
+  showNotification('Succesfully registered')
+  setTimeout(() => {
+    window.location.href = "./dashboard.html";
+  }, 1000)
 
   // API call here
 };
