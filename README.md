@@ -1,9 +1,9 @@
 # Team Habitab Lap 2 Project-Front End
 
 ## Installation
-* -Site has been deployed on netlify, therefore if using for viewing purposes, to be accessed on the following address
-* -Otherwise, please fork and clone repo
-* -Run npm install in the terminal to install all of the dependencies
+* Site has been deployed on netlify, therefore if using for viewing purposes, to be accessed on the following address
+* Otherwise, please fork and clone repo
+* Run npm install in the terminal to install all of the dependencies
 
 ## Usage
 -npm test, to launch all test suites (use npm run coverage to obtain coverage)
@@ -48,18 +48,18 @@
 
 ## Wins & Challenges
 ### Wins
-* -Managed to implement all features in the spec
-* -Extra features include: 
-   * - Bar fill displaying percentrage of target completed
-   * - Graph allowing user to compare the progress of habits
-   * - Use of cookies
-   * - Habit information zoom feature- more in deoth look   into specific habit
-   * -Email reminder?
-* -Working in team of 5 was hard, however effectively distrubuted the weeks tasks through clear and open communication
-* -Learnt more about svg's and how to use graph's, interactive mascot
-* -Very few issues with conflicts as everyone workd on seperate feauture branches
+* Managed to implement all features in the spec
+* Extra features include: 
+   * Bar fill displaying percentrage of target completed
+   * Graph allowing user to compare the progress of habits
+   * Use of cookies
+   * Habit information zoom feature- more in deoth look   into specific habit
+   * Email reminder?
+* Working in team of 5 was hard, however effectively distrubuted the weeks tasks through clear and open communication
+* Learnt more about svg's and how to use graph's, interactive mascot
+* Very few issues with conflicts as everyone workd on seperate feauture branches
 
 ### Challenges
-* -Getting the progress percentage bar to update without having to wait for server to load
-* -Incorporating the fire svg which displays the streak into newly created habits
-* -Finding working style which suited the team best
+* Getting the progress percentage bar to update without having to wait for server to load
+* Incorporating the fire svg which displays the streak into newly created habits
+* Finding working style which suited the team best
