@@ -22,7 +22,7 @@
 // }
 
 async function getHabits() {
-    console.log("Starting to get all the habits");
+    
     //route is protected, need to send token as header
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
@@ -35,7 +35,7 @@ async function getHabits() {
     };
     const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show-noupdate", options);
     const data = await result.json()
-    console.log("The data at first rendering is", data);
+    
     return data;
 }
 
@@ -73,7 +73,7 @@ const updateChart = async () => {
     const allTasksCircleSelected = allTasksCircle.classList.contains("selected");
 
     resetCanvas();
-    console.log("Canvas resetted");
+    
 
     // Grabbing the chart from the DOM and resetting it
 
@@ -110,7 +110,7 @@ const updateChart = async () => {
         const labels = singleHabit.completion.dailyValues.map((x, index) => {
             return index
         })
-        console.log(singleHabit.completion)
+        
         const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -160,7 +160,7 @@ const updateChart = async () => {
 
 
 
-    console.log("Rendering all habits chart");
+    
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
     const options = {
@@ -175,7 +175,7 @@ const updateChart = async () => {
 
 
         .then(habitsData => {
-            console.log(habitsData);
+            
             const habitLabels = []
             const habitDataset = []
             const habitColours=[]
@@ -201,7 +201,7 @@ const updateChart = async () => {
                 }
 
             }
-            console.log('skipped')
+           
             const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {

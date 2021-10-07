@@ -1,6 +1,6 @@
 :root {
     --bg-colour-light: #f6f6f6;
-    --bg-colour-light-ish: rgba(0,0,0,0.1);
+    --bg-colour-light-ish: rgba(0, 0, 0, 0.1);
     --text-colour-light: white;
 
     --bg-colour-dark-transparent: #252525a6;
@@ -9,31 +9,37 @@
 
     --bg-colour-submit: rgba(16, 130, 211, 0.637);
 }
-/* ::-webkit-scrollbar {
-    width: 20px;
-  } */
 
-/*
- * NAVBAR
-*/
-/* 
+
 ::-webkit-scrollbar {
-    height: 10vh;
-  width: 7px;
-  border-radius: 10px;
-} */
+    width: 12px;
+}
+
+#habitshere::-webkit-scrollbar {
+    width: 7px;
+}
+
 ::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
-/* ::-webkit-scrollbar-thumb {
-  background: #888;
-  height: 10vh;
-  width: 7px;
-  border-top: 10px transparent solid;
+
+#habitshere::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block: 20px;
 }
+
+::-webkit-scrollbar-thumb {
+    background: rgb(141, 141, 141);
+}
+
+#habitshere::-webkit-scrollbar-thumb {
+    border-radius: 100vw;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-} */
+    background: #555;
+}
+
 
 .navigation {
     background-color: var(--bg-colour-light);
@@ -59,7 +65,7 @@
     margin: 5px;
     /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.158); */
     /* alt shadow style */
-    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.15);
 
     height: 100%;
 }
@@ -68,7 +74,8 @@
  * TASKS
 */
 
-.task, .top-task {
+.task,
+.top-task {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -98,16 +105,21 @@
     animation-duration: 0.1s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
-   
+
 }
 
 @keyframes gradient {
-    from {background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(255, 145, 0) 100%);
+    from {
+        background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(255, 145, 0) 100%);
 
-        box-shadow: 0px 0px 5px 5px rgba(255, 251, 0, 0.1)}
-    to { background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(21, 255, 0) 100%);
+        box-shadow: 0px 0px 5px 5px rgba(255, 251, 0, 0.1)
+    }
+
+    to {
+        background: radial-gradient(circle, rgb(217, 243, 255) 20%, rgb(21, 255, 0) 100%);
         box-shadow: 0px 0px 5px 5px rgba(0, 174, 255, 0.1);
-    transform: scale(1.25)}
+        transform: scale(1.25)
+    }
 }
 
 .task .task-name {
@@ -115,7 +127,7 @@
 }
 
 .task-gradient {
-    background: linear-gradient(90deg, rgba(0,170,184,1) 0%, rgba(73,192,203,1) 90%, rgba(244,244,246,1) 100%, rgba(244,244,246,1) 100%);
+    background: linear-gradient(90deg, rgba(0, 170, 184, 1) 0%, rgba(73, 192, 203, 1) 90%, rgba(244, 244, 246, 1) 100%, rgba(244, 244, 246, 1) 100%);
 }
 
 /* .task .streak {
@@ -139,7 +151,8 @@
 .task .streak-number {
     position: relative;
     text-align: center;
-    width: 33px; /* Same width as the fire */
+    width: 33px;
+    /* Same width as the fire */
     top: 40px;
     z-index: 1;
 }
@@ -172,11 +185,12 @@ canvas {
     min-height: 20vh;
     max-height: 35vh;
 }
+
 .chart {
     background-color: rgba(255, 247, 213, 0.5);
     padding: 1rem;
     border-radius: 25px;
-    
+
 }
 
 /* #myChart {
@@ -201,32 +215,34 @@ footer {
 }
 
 .speech-bubble {
-	position: relative;
-	background: #fffcce;
-	border-radius: .4em;
+    position: relative;
+    background: #fffcce;
+    border-radius: .4em;
     vertical-align: center;
-    float:none;
-    display:inline-block;
+    float: none;
+    display: inline-block;
     text-align: center;
     margin-left: 2em;
     border-width: 0pt;
     border-color: black;
+    padding: 0px 10px;
 }
 
 .speech-bubble:after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 1.5em solid transparent;
-	border-right-color: #fffcce;
-	border-left: 0;
-	border-bottom: 0;
-	margin-top: -0.75em;
-	margin-left: -1.5em
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 1.5em solid transparent;
+    border-right-color: #fffcce;
+    border-left: 0;
+    border-bottom: 0;
+    margin-top: -0.75em;
+    margin-left: -1.5em
 }
+
 .modal {
     display: none;
     position: fixed;
@@ -237,7 +253,7 @@ footer {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(255, 255, 255, 1);
     /* background-color: var(--bg-colour-light);*/
 }
 
@@ -259,7 +275,7 @@ footer {
 
     border: none;
     border-radius: 25px;
-    
+
     font-size: 20px;
     text-align: center;
     padding: 10px;
@@ -287,6 +303,7 @@ footer {
 
     background-color: var(--bg-colour-submit);
 }
+
 .form-item p {
     text-align: center;
 }
@@ -306,7 +323,8 @@ footer {
     font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -321,6 +339,7 @@ footer {
     overflow: auto;
     padding: 20px;
 }
+
 #chart-box {
     height: 70vh;
 }
@@ -341,7 +360,7 @@ footer {
 }
 
 #task-holder .box {
-    box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.1)
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1)
 }
 
 .increments {
@@ -355,10 +374,10 @@ footer {
     margin-top: 5px;
 }
 
-.increments input{
+.increments input {
     width: 35%;
     height: 3%;
-    border: 1px solid rgba(200,200,200,0.8);
+    border: 1px solid rgba(200, 200, 200, 0.8);
     border-radius: 10px;
     margin-left: 10px;
     margin-right: 10px;
@@ -378,7 +397,7 @@ footer {
 }
 
 .task h1 {
-    
+
     text-align: center;
     font-size: 1.5rem;
 }
@@ -394,13 +413,13 @@ footer {
 .fire-weekly {
     filter: hue-rotate(120deg)
 }
-.fire-monthly{ 
+
+.fire-monthly {
     filter: hue-rotate(240deg)
 }
 
-#beaver-div {
+#beaver-div {}
 
-}
 .hidden {
     display: none !important;
 }
@@ -408,6 +427,7 @@ footer {
 .progress-box {
     text-align: center;
 }
+
 #delete-button {
     background-color: red;
 }

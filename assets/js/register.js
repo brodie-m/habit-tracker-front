@@ -115,15 +115,15 @@ const registerHandler = async (event) => {
     "https://fp-habitab.herokuapp.com/api/user/register",
     options
   );
-  console.log(result);
+  
   if (result.status !== 201 || result.status === 400) {
     const errorResult = await result.json();
     displayError([errorResult.error]);
-    console.log(errorResult.error);
+    
     return;
   }
 
-  console.log("success");
+  
   const data = await result.json();
 
   localStorage.setItem("registerToken", data.token);
