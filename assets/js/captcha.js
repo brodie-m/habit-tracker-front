@@ -10,7 +10,10 @@ const captchas = {
     9: "ts4a",
     10: "11x1",
     11: "yffc",
-    12: "5uwv"
+    12: "5uwv",
+    13: "academy2268",
+    14: "experimentalgoat",
+    15: "veterancontribution"
 }
 
 // This picks a random captcha from the available captchas
