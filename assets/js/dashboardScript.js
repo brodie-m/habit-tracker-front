@@ -472,6 +472,7 @@ async function submitHabitHandler(event) {
 
     const habitTarget = document.getElementById("habit-target").value;
     const habitName = document.getElementById("habit-name").value;
+    const habitNotes = document.getElementById('habit-notes').value
     const options = {
         method: "POST",
         headers: {
@@ -489,7 +490,8 @@ async function submitHabitHandler(event) {
                 currentVal: 0,
                 targetVal: habitTarget,
             },
-            updatedAt: Date.now()
+            updatedAt: Date.now(),
+            notes: habitNotes
         }),
     };
 
@@ -880,6 +882,7 @@ async function EditFormHandler(event) {
 
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
+    const habitNotes = document.getElementById('edit-habit-notes').value;
     const options = {
         method: "PATCH",
         headers: {
@@ -899,6 +902,7 @@ async function EditFormHandler(event) {
                 daysComplete: data.completion.daysComplete,
                 dailyValues: data.completion.dailyValues
             },
+            notes: habitNotes
         }),
     };
     const result = await fetch(`https://fp-habitab.herokuapp.com/api/habits/update/${index}`, options);
