@@ -863,7 +863,7 @@ function getStreak(i, habitObj) {
         if (last !== 1) return streak;
         if (i % slicer === 0) {
             if(i===0 && (slicer = 7 || 30)) {
-                continue
+                streak += 0
             }
             else {streak += 1;}
         }
