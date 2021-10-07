@@ -155,7 +155,7 @@ async function drawHabits(result) {
         incrementPlus.setAttribute('habit-id', `${habitId}`)
         incrementPlus.setAttribute('index', index)
         const incrementText = document.createElement('input')
-        incrementText.setAttribute('type', 'text')
+        incrementText.setAttribute('type', 'number')
         incrementText.setAttribute('habit-id', `${habitId}`)
         incrementText.setAttribute('index',index)
         incrementText.classList.add('increment-text')
@@ -730,10 +730,20 @@ async function displaySingleHabit(_id) {
     daysCompleteText.textContent = " ✔ days completed"
 
     const bestStreak = habitObj.completion.daysComplete.join('').split('0')
+    let freqValue;
+    let slicer;
+        for (const [key, value] of Object.entries(habitObj.frequency)) {
+            if (value === true) {
+                freqValue = key
+            }
+        }
+    if(freqValue === 'daily') {slicer = 1}
+    if(freqValue === 'weekly') {slicer = 7}
+    if(freqValue === 'monthly') {slicer = 30}
     let max = 0
     for (streak of bestStreak) {
         if (streak.length > max) {
-            max = streak.length
+            max = Math.floor(streak.length/slicer)
         }
     }
     bestStreakNumber.textContent = max

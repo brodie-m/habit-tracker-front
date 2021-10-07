@@ -208,7 +208,7 @@ const updateChart = async () => {
                     labels: habitLabels,
                     // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                     datasets: [{
-                        label: "percent of task completed",
+                        label: "Percentage of task completed",
                         // label: '# of Votes',
                         // data: [12, 19, 3, 5, 2, 3],
                         data: habitDataset,
