@@ -30,7 +30,7 @@ const getRandomCaptcha = () => {
 const refreshCaptcha = () => {
     const captcha = getRandomCaptcha();
     document.getElementById("captcha").innerHTML = `
-    <img src="./assets/images/captcha/${captcha}.png" alt="captcha">
+    <img src="./assets/images/captcha/${captcha}.jpg" alt="captcha">
     <p id="refresh-captcha">Refresh the captcha</p>
     <input id="captcha-input" cid="${captcha}" placeholder="Captcha.." />
     `;
