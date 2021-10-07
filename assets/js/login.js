@@ -7,7 +7,17 @@ const displayLoginError = (errors) => {
   const errorsElement = document.querySelector(".login-errors");
 
   // Clearing previous errors
-  errorsElement.textContent = "";
+  errorsElement.innerHTML = "";
+
+  // Appending the errors gif
+  errorsElement.innerHTML = `
+    <center>
+      <img src="./assets/images/shiba/errors.gif?a=${Math.random()}"
+        style="height: 90px; margin-top: -60px"
+        alt="errors image">
+    </center>
+  `;
+
 
   for (const error of errors) {
     const element = document.createElement("p");
@@ -27,7 +37,7 @@ const displayLoginError = (errors) => {
 const loginButton = document.getElementById("login");
 
 const loginHandler = async (event) => {
-  
+
   event.preventDefault();
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
