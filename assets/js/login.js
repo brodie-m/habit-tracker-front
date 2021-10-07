@@ -18,6 +18,9 @@ const displayLoginError = (errors) => {
     // Appending the error
     errorsElement.appendChild(element);
   }
+
+  refreshCaptcha();
+
 };
 
 // Getting the login button from the form
@@ -29,6 +32,14 @@ const loginHandler = async (event) => {
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
   console.log(email);
+
+  const captchaInput = document.getElementById("captcha-input").value;
+  const captchaId = document.getElementById("captcha-input").getAttribute("cid");
+
+  if (!verifyCaptcha(captchaId, captchaInput)) {
+    return displayLoginError(["Invalid captcha"]);
+  }
+
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
