@@ -25,13 +25,14 @@ const displayError = (errors) => {
   errorsElement.textContent = "";
 
   for (const error of errors) {
-    const element = document.createElement("p");
-    element.textContent = error;
-    element.style.color = "red";
-    element.style.textAlign = "center";
+    // const element = document.createElement("p");
+    // element.textContent = error;
+    // element.style.color = "red";
+    // element.style.textAlign = "center";
 
-    // Appending the error
-    errorsElement.appendChild(element);
+    // // Appending the error
+    // errorsElement.appendChild(element);
+    showNotification(error);
   }
 };
 
@@ -110,14 +111,15 @@ const registerHandler = async (event) => {
     }),
   };
   const result = await fetch(
-    "http://localhost:3000/api/user/register",
+    "https://fp-habitab.herokuapp.com/api/user/register",
     options
   );
   console.log(result);
   if (result.status !== 201 || result.status === 400) {
     const errorResult = await result.json();
-    displayError([errorResult.error]);
-    console.log(errorResult.error);
+    // displayError([errorResult.error]);
+    // console.log(errorResult.error);
+    showNotification(errorResult.error);
     return;
   }
 
@@ -125,7 +127,9 @@ const registerHandler = async (event) => {
   const data = await result.json();
   console.log(data);
   localStorage.setItem("registerToken", data.token);
-  window.location.href = "./dashboard.html";
+  setTimeout(() => {
+    window.location.href = "./dashboard.html";
+  }, 1000);
 
   // API call here
 };

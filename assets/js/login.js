@@ -24,7 +24,6 @@ const displayLoginError = (errors) => {
 const loginButton = document.getElementById("login");
 
 const loginHandler = async (event) => {
-  
   event.preventDefault();
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
@@ -38,21 +37,43 @@ const loginHandler = async (event) => {
     }),
   };
 
-  const result = await fetch("http://localhost:3000/api/user/login", options);
+  const result = await fetch(
+    "https://fp-habitab.herokuapp.com/api/user/login",
+    options
+  );
   console.log("i got here");
   if (!result.status === 200 || result.status === 400) {
     const error = await result.json();
-    displayLoginError([error.error]);
-    console.log(error.error);
-    return;
+    // displayLoginError([error.error]);
+    // console.log(error.error);
+    // return;
+    showNotification(error.error);
   }
-  console.log(result.headers.get("auth-token"));
+  //console.log(result.headers.get("auth-token"));
   let data = await result.json();
-  localStorage.setItem("token", data.token);
-  console.log(data);
 
-  window.location.href = "./dashboard.html";
+  localStorage.setItem("token", data.token);
+  showNotification("Login Success");
+  setTimeout(() => {
+    window.location.href = "./dashboard.html";
+  }, 1000);
 };
 
 // Adding the event handler to the listener
 loginButton.addEventListener("click", loginHandler);
+
+function showNotification(message) {
+  return Toastify({
+    text: message,
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "center", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+  }).showToast();
+}
