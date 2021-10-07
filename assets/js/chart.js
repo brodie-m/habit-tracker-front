@@ -95,7 +95,7 @@ const updateChart = async () => {
                 freqValue = key
             }
         }
-        console.log(freqValue)
+       
         let lineColour
         if (freqValue == 'daily') {
             lineColour = 'rgba(255,100,0,1)'
@@ -110,7 +110,7 @@ const updateChart = async () => {
         const labels = singleHabit.completion.dailyValues.map((x, index) => {
             return index
         })
-        console.log(labels)
+        
         const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -130,7 +130,7 @@ const updateChart = async () => {
                     scales: {
                         x: {
                             min: 0,
-                            max: 100,
+                            max: (singleHabit.completion.dailyValues.map(x => 100 * x)).length,
                             title: {
                                 display: true,
                                 text: 'Day'
@@ -191,13 +191,13 @@ const updateChart = async () => {
                 }
                 
                 if (freqValue == 'daily') {
-                    habitColours.push('rgba(255,100,0,0.5)') 
+                    habitColours.push('rgba(255,100,0,0.3)') 
                 }
                 if (freqValue == 'weekly') {
-                    habitColours.push('rgba(50,255,0,0.5)')
+                    habitColours.push('rgba(50,255,0,0.3)')
                 }
                 if (freqValue == 'monthly') {
-                    habitColours.push('rgba(255,10,255,0.5)')
+                    habitColours.push('rgba(255,10,255,0.3)')
                 }
 
             }
