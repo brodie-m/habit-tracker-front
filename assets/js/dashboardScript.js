@@ -720,6 +720,8 @@ async function displaySingleHabit(_id) {
     const bestStreakNumber = document.getElementById('best-streak-number')
     const bestStreakText = document.getElementById('best-streak-text');
 
+    const habitNotes = document.getElementById('single-habit-notes')
+
     //check if habitObj is there (select all vs single task) - if not, display info for all tasks
     title.textContent = habitObj.name
 
@@ -753,6 +755,9 @@ async function displaySingleHabit(_id) {
 
     daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
     daysTrackedText.textContent = "🕑 days tracked"
+    console.log(habitObj.notes)
+    console.log(habitNotes)
+    habitNotes.textContent = habitObj.notes;
 
 
 }
