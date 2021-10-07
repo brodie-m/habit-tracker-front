@@ -215,21 +215,16 @@ footer {
 }
 
 .speech-bubble {
-    position: relative;
+    position: absolute;
     background: #fffcce;
     border-radius: .4em;
     vertical-align: center;
-    float: none;
-    display: inline-block;
+    display: inline-block; 
     text-align: center;
-    margin-left: 2em;
+    margin-left: 2%;
     border-width: 0pt;
-<<<<<<< HEAD
-    border-color: black
-=======
     border-color: black;
     padding: 0px 10px;
->>>>>>> 37dca594b9bb7e7dec6d8f20c272e8440ab5defd
 }
 
 .speech-bubble:after {
