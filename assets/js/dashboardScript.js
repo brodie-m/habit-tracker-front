@@ -19,7 +19,8 @@ window.addEventListener(
     };
     const result = await fetch(`${baseUrl}/api/user/verify`, options);
     const message = await result.json();
-    localStorage.setItem('username', message.name)
+    localStorage.setItem("username", message.name);
+    console.log(localStorage.getItem);
     console.log("window loaded");
     if (message.message !== "good token") {
       window.location.href = "./index.html";
@@ -321,7 +322,7 @@ const decoded = jwt_decode(
 console.log(decode);
 
 let messages = [
-  `Hello ${localStorage.getItem('username')}`,
+  `Hello ${localStorage.getItem("username")}`,
   "Welcome to Habitab",
   "I'm Bucky, your virtual assistant",
   "Click the question mark then hover over an element for me to tell you what it does",
@@ -415,13 +416,13 @@ const showCreateHabitModal = () => {
 
 addTaskButton.addEventListener("click", showCreateHabitModal);
 
-const closeModal = () => {
+function closeModal() {
   // Get the modals
   const createHabitModal = document.getElementById("create-habit-modal");
   const editHabitModal = document.getElementById("edit-habit-modal");
   createHabitModal.style.display = "none";
   editHabitModal.style.display = "none";
-};
+}
 
 // This functions closes all the modals, in this case there is no need to distinguish which one
 
