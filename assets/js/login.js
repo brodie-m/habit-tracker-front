@@ -32,7 +32,7 @@ const loginHandler = async (event) => {
   event.preventDefault();
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
-  console.log(email);
+ 
 
   const captchaInput = document.getElementById("captcha-input").value;
   const captchaId = document.getElementById("captcha-input").getAttribute("cid");
@@ -53,14 +53,14 @@ const loginHandler = async (event) => {
   };
 
   const result = await fetch("https://fp-habitab.herokuapp.com/api/user/login", options);
-  console.log("i got here");
+  
   if (!result.status === 200 || result.status === 400) {
     const error = await result.json();
     displayLoginError([error.error]);
-    console.log(error.error);
+    
     return;
   }
-  console.log(result.headers.get("auth-token"));
+  
   let data = await result.json();
   localStorage.setItem("token", data.token);
   showNotification('Successfully logged in');

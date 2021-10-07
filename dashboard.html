@@ -18,7 +18,7 @@
   <title>Document</title>
 
   <!-- font awesome-->
-  <script src="https://kit.fontawesome.com/2d1fe27aec.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/2d1fe27aec.js" crossorigin="anonymous" defer></script>
 </head>
 <!-- Fire CSS -->
 <link rel="stylesheet" href="./assets/css/fire.css">
@@ -68,7 +68,7 @@ href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
 
 
             <div class="display-all">
-              <div class="task">
+              <div class="task" id="display-all">
                 <div class="circle selected"></div>
                 <h1>Display all habits</h1>
 
@@ -268,8 +268,12 @@ href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
                   </div>
                 </div>
               </div>
+              <br>
               <div class="row">
                 <div class="col">
+                  <div class="habit-notes-title">
+                    <h2 id="habit-notes-title"></h2>
+                  </div>
                  <div class="habit-notes" id="single-habit-notes"></div>
                 </div>
               </div>

@@ -755,6 +755,9 @@ async function displayAllHabitInfo() {
     const habitNotes = document.getElementById('single-habit-notes')
     habitNotes.textContent = ""
 
+    const habitNotesTitle = document.getElementById('habit-notes-title')
+    habitNotesTitle.textContent = ""
+
     title.textContent = "Welcome to Habitab!"
 }
 async function displaySingleHabit(_id) {
@@ -779,6 +782,8 @@ async function displaySingleHabit(_id) {
     const bestStreakText = document.getElementById('best-streak-text');
 
     const habitNotes = document.getElementById('single-habit-notes')
+    const habitNotesTitle = document.getElementById('habit-notes-title')
+    
 
     //check if habitObj is there (select all vs single task) - if not, display info for all tasks
     title.textContent = habitObj.name
@@ -815,7 +820,7 @@ async function displaySingleHabit(_id) {
     daysTrackedText.textContent = "🕑 days tracked"
     
     habitNotes.textContent = habitObj.notes;
-
+    habitNotesTitle.textContent = "Notes"
 
 }
 
@@ -881,6 +886,8 @@ async function showEditFormModal() {
     const targetBox = document.getElementById('edit-habit-target');
     targetBox.setAttribute('value', `${singleHabit.completion.targetVal}`)
 
+    const notesBox = document.getElementById('edit-habit-notes')
+    notesBox.setAttribute('value',`${singleHabit.notes}`)
     const editRadios = document.getElementsByName("edit-flexRadioDefault");
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
