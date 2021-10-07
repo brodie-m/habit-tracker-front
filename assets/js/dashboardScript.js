@@ -517,7 +517,7 @@ async function submitHabitHandler(event) {
     const habitTarget = document.getElementById("habit-target").value;
     const habitName = document.getElementById("habit-name").value;
     const habitNotes = document.getElementById('habit-notes').value;
-    const habitUnits = document.getElementById('edit-habit-units').value;
+    const habitUnits = document.getElementById('habit-units').value;
     if(!habitUnits) {
         const habitUnits = ""
     }
