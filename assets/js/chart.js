@@ -110,7 +110,7 @@ const updateChart = async () => {
         const labels = singleHabit.completion.dailyValues.map((x, index) => {
             return index
         })
-        
+        console.log(singleHabit.completion)
         const chart = new Chart(ctx, {
                 type: 'line',
                 data: {

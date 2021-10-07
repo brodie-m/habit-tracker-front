@@ -697,6 +697,9 @@ async function displayAllHabitInfo() {
     daysTrackedNumber.textContent = ""
     daysTrackedText.textContent = ""
 
+    const habitNotes = document.getElementById('single-habit-notes')
+    habitNotes.textContent = ""
+
     title.textContent = "Welcome to Habitab!"
 }
 async function displaySingleHabit(_id) {
