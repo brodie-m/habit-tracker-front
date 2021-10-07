@@ -862,10 +862,7 @@ function getStreak(i, habitObj) {
         let last = arr[arr.length - 1 - i];
         if (last !== 1) return streak;
         if (i % slicer === 0) {
-            if(i===0 && (slicer = 7 || 30)) {
-                streak += 0
-            }
-            else {streak += 1;}
+            streak += 1;
         }
         calcluateStreak(i + 1);
     }
