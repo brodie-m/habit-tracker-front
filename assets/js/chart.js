@@ -33,7 +33,7 @@ async function getHabits() {
             "auth-token": token,
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show-noupdate", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show-noupdate", options);
     const data = await result.json()
     console.log("The data at first rendering is", data);
     return data;
@@ -51,7 +51,7 @@ async function getSingleHabit(id) {
             "auth-token": token,
         },
     };
-    const result = await fetch(`http://localhost:3000/api/habits/show/${id}`, options);
+    const result = await fetch(`https://fp-habitab.herokuapp.com/api/habits/show/${id}`, options);
     const data = await result.json()
     return data;
 }
@@ -170,7 +170,7 @@ const updateChart = async () => {
             "auth-token": token,
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show-noupdate", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show-noupdate", options);
     const data = result.json()
 
 

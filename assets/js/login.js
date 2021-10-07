@@ -38,7 +38,7 @@ const loginHandler = async (event) => {
     }),
   };
 
-  const result = await fetch("http://localhost:3000/api/user/login", options);
+  const result = await fetch("https://fp-habitab.herokuapp.com/api/user/login", options);
   console.log("i got here");
   if (!result.status === 200 || result.status === 400) {
     const error = await result.json();

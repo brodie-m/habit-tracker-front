@@ -111,7 +111,7 @@ const registerHandler = async (event) => {
     }),
   };
   const result = await fetch(
-    "http://localhost:3000/api/user/register",
+    "https://fp-habitab.herokuapp.com/api/user/register",
     options
   );
   console.log(result);
