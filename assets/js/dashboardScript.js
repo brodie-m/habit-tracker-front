@@ -2,10 +2,12 @@
 //either from login or registration
 
 let inc = 0;
+const addTaskButton = document.getElementById("add-task");
 //if its not there (i.e, not "good token"), redirect to index.html
 const host = `https://fp-habitab.herokuapp.com/api`
 let looking = false;
 window.addEventListener("load", async () => {
+    
     const token = localStorage.getItem("token");
     const registerToken = localStorage.getItem("registerToken");
     const options = {
@@ -18,14 +20,14 @@ window.addEventListener("load", async () => {
     const result = await fetch("https://fp-habitab.herokuapp.com/api/user/verify", options);
     const message = await result.json();
     
-    localStorage.setItem('username', message.name)
-    console.log(message)
-    console.log('window loaded')
+    // localStorage.setItem('username', message.name)
+    await beaverStuff(message.name)
+   
     if (message.message !== "good token") {
         window.location.href = "./index.html";
     } else {
         localStorage.setItem('user-id', message._id)
-        console.log('calling getHabits()')
+        
         await getHabits();
     }
 }, {
@@ -51,7 +53,7 @@ function logoutHandler(e) {
 
 //load habit data
 async function getHabits() {
-    console.log('getting habits')
+    
     //route is protected, need to send token as header
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
@@ -69,7 +71,7 @@ async function getHabits() {
 }
 
 async function getHabitById(id) {
-    console.log('getting habits by id')
+    
     const token =
         localStorage.getItem("token") || localStorage.getItem("registerToken");
     const options = {
@@ -89,7 +91,7 @@ async function getHabitById(id) {
 
 
 async function drawHabits(result) {
-    console.log('drawing habits')
+    
     const data = await result.json()
     //data is passed as an array of objects, so need to draw
     //a new section for each element of the array
@@ -248,7 +250,7 @@ async function drawHabits(result) {
     });
 
     const circles = document.getElementsByClassName("circle");
-    console.log(circles)
+    
     for (const circle of circles) {
         circle.addEventListener("click", circleHandler);
     }
@@ -296,169 +298,173 @@ let blink = setInterval(() => {
     letsgo();
 }, 5000);
 
-function buildGraph() {
-    let scores = [],
-        scoresonthedoors = [];
-    for (let x = 1; x <= 30; x++) {
-        let score = Math.round(Math.random() * 10) / 10;
-        scores.push({
-            date: [x, 11, 2017],
-            score: score,
-        });
-        scoresonthedoors.push([x, score]);
-    }
-    dateExtent = d3.range(1, scores.length);
-    scoreExtent = d3.extent([0, 1]);
-    xScale = d3.scaleBand().domain(dateExtent).range([0, 900]).padding(1); //
-    yScale = d3.scaleLinear().domain(scoreExtent).range([500, 0]);
-    x_axis = d3.axisBottom(xScale);
-    y_axis = d3.axisLeft(yScale);
-    var svg = d3
-        .select("canvas")
-        .append("svg")
-        .attr("width", 1000)
-        .attr("height", 1000)
-        .attr("id", "svg");
-    svg
-        .append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(100, 550)")
-        .call(x_axis);
-    svg
-        .append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(100, 50)") //50 = indentation
-        .call(y_axis);
-    svg
-        .append("text")
-        .attr("text-anchor", "end")
-        .attr("x", 600)
-        .attr("y", 600)
-        .text("Date");
-    svg
-        .append("text")
-        .attr("text-anchor", "end")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -200)
-        .attr("y", 50)
-        .text("Score");
-    svg
-        .append("path")
-        .attr("class", "line")
-        .datum(scoresonthedoors)
-        .attr(
-            "d",
-            d3
-                .line()
-                .x((d) => xScale(d[0]))
-                .y((d) => yScale(d[1]))
-        )
-        .attr("transform", "translate(100, 50)")
-        .attr("stroke", "black")
-        .attr("fill", "none")
-        .attr("stroke-width", "2px");
+// function buildGraph() {
+//     let scores = [],
+//         scoresonthedoors = [];
+//     for (let x = 1; x <= 30; x++) {
+//         let score = Math.round(Math.random() * 10) / 10;
+//         scores.push({
+//             date: [x, 11, 2017],
+//             score: score,
+//         });
+//         scoresonthedoors.push([x, score]);
+//     }
+//     dateExtent = d3.range(1, scores.length);
+//     scoreExtent = d3.extent([0, 1]);
+//     xScale = d3.scaleBand().domain(dateExtent).range([0, 900]).padding(1); //
+//     yScale = d3.scaleLinear().domain(scoreExtent).range([500, 0]);
+//     x_axis = d3.axisBottom(xScale);
+//     y_axis = d3.axisLeft(yScale);
+//     var svg = d3
+//         .select("canvas")
+//         .append("svg")
+//         .attr("width", 1000)
+//         .attr("height", 1000)
+//         .attr("id", "svg");
+//     svg
+//         .append("g")
+//         .attr("class", "x axis")
+//         .attr("transform", "translate(100, 550)")
+//         .call(x_axis);
+//     svg
+//         .append("g")
+//         .attr("class", "y axis")
+//         .attr("transform", "translate(100, 50)") //50 = indentation
+//         .call(y_axis);
+//     svg
+//         .append("text")
+//         .attr("text-anchor", "end")
+//         .attr("x", 600)
+//         .attr("y", 600)
+//         .text("Date");
+//     svg
+//         .append("text")
+//         .attr("text-anchor", "end")
+//         .attr("transform", "rotate(-90)")
+//         .attr("x", -200)
+//         .attr("y", 50)
+//         .text("Score");
+//     svg
+//         .append("path")
+//         .attr("class", "line")
+//         .datum(scoresonthedoors)
+//         .attr(
+//             "d",
+//             d3
+//                 .line()
+//                 .x((d) => xScale(d[0]))
+//                 .y((d) => yScale(d[1]))
+//         )
+//         .attr("transform", "translate(100, 50)")
+//         .attr("stroke", "black")
+//         .attr("fill", "none")
+//         .attr("stroke-width", "2px");
+// }
+
+
+
+// const theToken = localStorage.getItem('token') || localStorage.getItem('registerToken')
+// const userData = fetch("https://fp-habitab.herokuapp.com/api", {
+//     "method": 'GET',
+//     "headers": {
+//         "auth-token": theToken
+//     }
+// })
+
+async function beaverStuff(user) {
+    let messages = [
+        `Hello ${user}`,
+        "Welcome to Habitab",
+        "I'm Bucky, your virtual assistant",
+        "Click the question mark then hover over an element for me to tell you what it does",
+    ];
+    
+    mesaji.textContent = messages[0];
+    
+    beav.addEventListener("mouseover", () => {
+        beav.src = "./assets/images/mascot-eyes-closed-happy.png";
+        clearInterval(blink);
+    });
+
+    next.addEventListener("click", () => {
+        if (!looking) {
+            let i = messages.indexOf(mesaji.textContent);
+            if (i == messages.length - 1) {
+                mesaji.textContent = messages[0];
+            } else {
+                mesaji.textContent = messages[i + 1];
+            }
+        }
+    });
+    
+    what.addEventListener("click", () => {
+        if (looking) {
+            looking = false;
+            html.style = ""
+            mesaji.textContent = hold
+        } else {
+            looking = true;
+            hold = mesaji.textContent;
+            html.style = "cursor: help"
+        }
+    });
+    
+    
+    habitshere.addEventListener("mouseover", () => {
+        if (looking) {
+            mesaji.textContent =
+                "Here's where you can view existing habits and add new ones";
+            habitshere.addEventListener("mouseout", () => {
+                if (looking) {
+                    mesaji.textContent = hold
+                };
+            });
+        }
+    });
+    
+    
+    addTaskButton.addEventListener("mouseover", () => {
+        if (looking) {
+            mesaji.textContent = "Click here to create a new habit";
+            addTaskButton.addEventListener("mouseout", () => {
+                if (looking) {
+                    mesaji.textContent = hold
+                };
+            });
+        }
+    });
+    
+    graphs.addEventListener("mouseover", () => {
+        if (looking) {
+            mesaji.textContent = "Here you can view your progress in graphical form";
+            graphs.addEventListener("mouseout", () => {
+                if (looking) {
+                    mesaji.textContent = hold
+                };
+            });
+        }
+    });
+    
+    logoutButton.addEventListener("mouseover", () => {
+        if (looking) {
+            mesaji.textContent = "Click here to log out";
+            logoutButton.addEventListener("mouseout", () => {
+                if (looking) {
+                    mesaji.textContent = hold
+                };
+            });
+        }
+    });
+    
+    beav.addEventListener("mouseout", () => {
+        beav.src = "./assets/images/mascot.png";
+        blink = setInterval(() => {
+            letsgo();
+        }, 5000);
+    });
+    
 }
 
-beav.addEventListener("mouseover", () => {
-    beav.src = "./assets/images/mascot-eyes-closed-happy.png";
-    clearInterval(blink);
-});
-
-const theToken = localStorage.getItem('token') || localStorage.getItem('registerToken')
-const userData = fetch("https://fp-habitab.herokuapp.com/api", {
-    "method": 'GET',
-    "headers": {
-        "auth-token": theToken
-    }
-})
-
-
-
-let messages = [
-    `Hello ${username}`,
-    "Welcome to Habitab",
-    "I'm Bucky, your virtual assistant",
-    "Click the question mark then hover over an element for me to tell you what it does",
-];
-
-mesaji.textContent = messages[0];
-
-next.addEventListener("click", () => {
-    if (!looking) {
-        let i = messages.indexOf(mesaji.textContent);
-        if (i == messages.length - 1) {
-            mesaji.textContent = messages[0];
-        } else {
-            mesaji.textContent = messages[i + 1];
-        }
-    }
-});
-
-what.addEventListener("click", () => {
-    if (looking) {
-        looking = false;
-        html.style = ""
-        mesaji.textContent = hold
-    } else {
-        looking = true;
-        hold = mesaji.textContent;
-        html.style = "cursor: help"
-    }
-});
-
-
-habitshere.addEventListener("mouseover", () => {
-    if (looking) {
-        mesaji.textContent =
-            "Here's where you can view existing habits and add new ones";
-        habitshere.addEventListener("mouseout", () => {
-            if (looking) {
-                mesaji.textContent = hold
-            };
-        });
-    }
-});
-const addTaskButton = document.getElementById("add-task");
-
-addTaskButton.addEventListener("mouseover", () => {
-    if (looking) {
-        mesaji.textContent = "Click here to create a new habit";
-        addTaskButton.addEventListener("mouseout", () => {
-            if (looking) {
-                mesaji.textContent = hold
-            };
-        });
-    }
-});
-
-graphs.addEventListener("mouseover", () => {
-    if (looking) {
-        mesaji.textContent = "Here you can view your progress in graphical form";
-        graphs.addEventListener("mouseout", () => {
-            if (looking) {
-                mesaji.textContent = hold
-            };
-        });
-    }
-});
-
-logoutButton.addEventListener("mouseover", () => {
-    if (looking) {
-        mesaji.textContent = "Click here to log out";
-        logoutButton.addEventListener("mouseout", () => {
-            if (looking) {
-                mesaji.textContent = hold
-            };
-        });
-    }
-});
-
-beav.addEventListener("mouseout", () => {
-    beav.src = "./assets/images/mascot.png";
-    blink = setInterval(() => {
-        letsgo();
-    }, 5000);
-});
 
 // This functions shows the create modal
 const showCreateHabitModal = () => {
@@ -546,7 +552,7 @@ deleteHabitButton.addEventListener("click", async (e) => {
     const habitNameSpaces = document.getElementById("edit-habit-name").value;
     const habitNameUnderscores = habitNameSpaces.split(' ').join('_')
     const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
-    console.log(token)
+    
     const options = {
         'method': "DELETE",
         headers: {
@@ -694,7 +700,7 @@ async function minusHandler(e) {
 }
 
 async function getOptions() {
-    console.log("clicked");
+    
     let dailyBool = false;
     let weeklyBool = false;
     let monthlyBool = false;
@@ -749,6 +755,9 @@ async function displayAllHabitInfo() {
     const habitNotes = document.getElementById('single-habit-notes')
     habitNotes.textContent = ""
 
+    const habitNotesTitle = document.getElementById('habit-notes-title')
+    habitNotesTitle.textContent = ""
+
     title.textContent = "Welcome to Habitab!"
 }
 async function displaySingleHabit(_id) {
@@ -773,6 +782,8 @@ async function displaySingleHabit(_id) {
     const bestStreakText = document.getElementById('best-streak-text');
 
     const habitNotes = document.getElementById('single-habit-notes')
+    const habitNotesTitle = document.getElementById('habit-notes-title')
+    
 
     //check if habitObj is there (select all vs single task) - if not, display info for all tasks
     title.textContent = habitObj.name
@@ -807,10 +818,9 @@ async function displaySingleHabit(_id) {
 
     daysTrackedNumber.textContent = habitObj.completion.daysComplete.length;
     daysTrackedText.textContent = "🕑 days tracked"
-    console.log(habitObj.notes)
-    console.log(habitNotes)
+    
     habitNotes.textContent = habitObj.notes;
-
+    habitNotesTitle.textContent = "Notes"
 
 }
 
@@ -835,13 +845,7 @@ function getStreak(i, habitObj) {
     }
 
     let streak = 0;
-    // console.log(Math.floor(arr.length / slicer))
-    // //push values in current array to new array based on freq value
-    // for (let i = 0; i < Math.floor(arr.length / slicer); i++) {
-    //     console.log(arr.slice(0, slicer - 1))
-
-    // }
-    // // console.log(arr.slice(0,slicer-1))
+    
     calcluateStreak(i);
 
     function calcluateStreak(i) {
@@ -882,6 +886,8 @@ async function showEditFormModal() {
     const targetBox = document.getElementById('edit-habit-target');
     targetBox.setAttribute('value', `${singleHabit.completion.targetVal}`)
 
+    const notesBox = document.getElementById('edit-habit-notes')
+    notesBox.setAttribute('value',`${singleHabit.notes}`)
     const editRadios = document.getElementsByName("edit-flexRadioDefault");
     for (const editRadio of editRadios) {
         if (editRadio.value === freqValue) {
@@ -912,7 +918,7 @@ async function EditFormHandler(event) {
     })
     const someData = await targetHabitData.json()
     const data = someData.singleHabit[0]
-    console.log(data)
+    
     let dailyBool = false;
     let weeklyBool = false;
     let monthlyBool = false;
@@ -934,8 +940,7 @@ async function EditFormHandler(event) {
         monthlyBool = true;
     }
 
-    // document.getElementById("habit-target").value;
-    // console.log(document.querySelector(".task-name").value);
+    
 
     const habitTarget = document.getElementById("edit-habit-target").value;
     const habitName = document.getElementById("edit-habit-name").value;
