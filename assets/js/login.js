@@ -10,14 +10,15 @@ const displayLoginError = (errors) => {
   errorsElement.textContent = "";
 
   for (const error of errors) {
-    const element = document.createElement("p");
-    element.textContent = error;
-    element.style.color = "red";
-    element.style.textAlign = "center";
-
-    // Appending the error
-    errorsElement.appendChild(element);
+    // const element = document.createElement("p");
+    // element.textContent = error;
+    // element.style.color = "red";
+    // element.style.textAlign = "center";
+    showNotification(error);
   }
+  // Appending the error
+  //   errorsElement.appendChild(element);
+  // }
 
   refreshCaptcha();
 
@@ -27,7 +28,7 @@ const displayLoginError = (errors) => {
 const loginButton = document.getElementById("login");
 
 const loginHandler = async (event) => {
-  
+
   event.preventDefault();
   const email = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
@@ -42,7 +43,9 @@ const loginHandler = async (event) => {
 
   const options = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       email: email,
       password: password,
@@ -60,10 +63,28 @@ const loginHandler = async (event) => {
   console.log(result.headers.get("auth-token"));
   let data = await result.json();
   localStorage.setItem("token", data.token);
-  console.log(data);
+  showNotification('Successfully logged in');
+  setTimeout(() => {
+    window.location.href = "./dashboard.html";
+  }, 1000)
 
-  window.location.href = "./dashboard.html";
 };
 
 // Adding the event handler to the listener
 loginButton.addEventListener("click", loginHandler);
+
+function showNotification(message) {
+  return Toastify({
+    text: message,
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "center", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+  }).showToast();
+}

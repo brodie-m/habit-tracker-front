@@ -17,6 +17,8 @@ window.addEventListener("load", async () => {
     };
     const result = await fetch("https://fp-habitab.herokuapp.com/api/user/verify", options);
     const message = await result.json();
+    
+    localStorage.setItem('username', message.name)
     console.log(message)
     console.log('window loaded')
     if (message.message !== "good token") {
@@ -29,6 +31,7 @@ window.addEventListener("load", async () => {
 }, {
     once: true
 });
+const username = localStorage.getItem('username')
 
 
 
@@ -39,7 +42,10 @@ logoutButton.addEventListener('click', logoutHandler);
 function logoutHandler(e) {
     e.preventDefault();
     localStorage.clear();
-    window.location.href = "./index.html"
+    showNotification("Successfully logged out")
+    setTimeout(() => {
+        window.location.href = "./index.html";
+      }, 1000)
 }
 
 
@@ -369,7 +375,7 @@ const userData = fetch("https://fp-habitab.herokuapp.com/api", {
 
 
 let messages = [
-    `Hello ${userData.name}`,
+    `Hello ${username}`,
     "Welcome to Habitab",
     "I'm Bucky, your virtual assistant",
     "Click the question mark then hover over an element for me to tell you what it does",
@@ -527,7 +533,10 @@ async function submitHabitHandler(event) {
     };
 
     const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/add", options);
-    window.location.href = "./dashboard.html";
+    showNotification("Habit added successfully")
+    setTimeout(() => {
+        window.location.href = "./dashboard.html";
+      }, 1000)
 }
 
 const deleteHabitButton = document.getElementById('delete-button')
@@ -546,7 +555,10 @@ deleteHabitButton.addEventListener("click", async (e) => {
 
     }
     await fetch(`https://fp-habitab.herokuapp.com/api/habits/delete/${habitNameUnderscores}`, options)
-    window.location.href = "./dashboard.html";
+    showNotification("Habit deleted successfully")
+    setTimeout(() => {
+        window.location.href = "./dashboard.html";
+      }, 1000)
 })
 
 function circleHandler(e) {
@@ -951,5 +963,24 @@ async function EditFormHandler(event) {
         }),
     };
     const result = await fetch(`https://fp-habitab.herokuapp.com/api/habits/update/${index}`, options);
-    window.location.href = "./dashboard.html";
+    showNotification("Habit edited successfully")
+    setTimeout(() => {
+        window.location.href = "./dashboard.html";
+      }, 1000)
 }
+
+function showNotification(message) {
+    return Toastify({
+      text: message,
+      duration: 3000,
+      destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "center", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+    }).showToast();
+  }
