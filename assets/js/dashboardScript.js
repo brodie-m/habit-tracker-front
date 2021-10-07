@@ -17,10 +17,12 @@ window.addEventListener("load", async () => {
     };
     const result = await fetch("http://localhost:3000/api/user/verify", options);
     const message = await result.json();
+    console.log(message)
     console.log('window loaded')
     if (message.message !== "good token") {
         window.location.href = "./index.html";
     } else {
+        localStorage.setItem('user-id',message._id)
         console.log('calling getHabits()')
         await getHabits();
     }
@@ -315,9 +317,18 @@ beav.addEventListener("mouseover", () => {
     beav.src = "./assets/images/mascot-eyes-closed-happy.png";
     clearInterval(blink);
 });
+const theToken = localStorage.getItem('token') || localStorage.getItem('registerToken')
+const userData =  fetch("http://localhost:3000/api",{
+    "method": 'GET',
+    "headers": {
+        "auth-token": theToken
+    }
+})
+
+
 
 let messages = [
-    `Hello USERNAME`,
+    `Hello ${userData.name}`,
     "Welcome to Habitab",
     "I'm Bucky, your virtual assistant",
     "Click the question mark then hover over an element for me to tell you what it does",
