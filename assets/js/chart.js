@@ -33,7 +33,7 @@ async function getHabits() {
             "auth-token": token,
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show-noupdate", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show-noupdate", options);
     const data = await result.json()
     console.log("The data at first rendering is", data);
     return data;
@@ -51,7 +51,7 @@ async function getSingleHabit(id) {
             "auth-token": token,
         },
     };
-    const result = await fetch(`http://localhost:3000/api/habits/show/${id}`, options);
+    const result = await fetch(`https://fp-habitab.herokuapp.com/api/habits/show/${id}`, options);
     const data = await result.json()
     return data;
 }
@@ -95,7 +95,7 @@ const updateChart = async () => {
                 freqValue = key
             }
         }
-        console.log(freqValue)
+       
         let lineColour
         if (freqValue == 'daily') {
             lineColour = 'rgba(255,100,0,1)'
@@ -110,7 +110,7 @@ const updateChart = async () => {
         const labels = singleHabit.completion.dailyValues.map((x, index) => {
             return index
         })
-        console.log(labels)
+        
         const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -130,7 +130,7 @@ const updateChart = async () => {
                     scales: {
                         x: {
                             min: 0,
-                            max: 100,
+                            max: (singleHabit.completion.dailyValues.map(x => 100 * x)).length,
                             title: {
                                 display: true,
                                 text: 'Day'
@@ -170,7 +170,7 @@ const updateChart = async () => {
             "auth-token": token,
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show-noupdate", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show-noupdate", options);
     const data = result.json()
 
 
@@ -178,9 +178,28 @@ const updateChart = async () => {
             console.log(habitsData);
             const habitLabels = []
             const habitDataset = []
+            const habitColours=[]
             for (const habit of habitsData) {
                 habitLabels.push(habit.name)
                 habitDataset.push(100 * habit.completion.currentVal / habit.completion.targetVal)
+                //colours
+                let freqValue;
+                for (const [key, value] of Object.entries(habit.frequency)) {
+                    if (value === true) {
+                        freqValue = key
+                    }
+                }
+                
+                if (freqValue == 'daily') {
+                    habitColours.push('rgba(255,100,0,0.3)') 
+                }
+                if (freqValue == 'weekly') {
+                    habitColours.push('rgba(50,255,0,0.3)')
+                }
+                if (freqValue == 'monthly') {
+                    habitColours.push('rgba(255,10,255,0.3)')
+                }
+
             }
             console.log('skipped')
             const chart = new Chart(ctx, {
@@ -189,26 +208,12 @@ const updateChart = async () => {
                     labels: habitLabels,
                     // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                     datasets: [{
-                        label: "percent of task completed",
+                        label: "Percentage of task completed",
                         // label: '# of Votes',
                         // data: [12, 19, 3, 5, 2, 3],
                         data: habitDataset,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: habitColours,
+                        borderColor: habitColours,
                         borderWidth: 1
                     }]
                 },
@@ -217,7 +222,11 @@ const updateChart = async () => {
                     scales: {
                         x: {
                             min: 0,
-                            max: 100
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Percentage of task completed'
+                            }
                         }
                     }
                 }

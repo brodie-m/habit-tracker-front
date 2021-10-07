@@ -74,6 +74,7 @@ const validatePassword = (password, confirmedPassword) => {
 // Getting the register button from the form
 const registerButton = document.getElementById("register");
 
+
 // This function handles the registration process
 const registerHandler = async (event) => {
   event.preventDefault();
@@ -110,7 +111,7 @@ const registerHandler = async (event) => {
     }),
   };
   const result = await fetch(
-    "http://localhost:3000/api/user/register",
+    "https://fp-habitab.herokuapp.com/api/user/register",
     options
   );
   console.log(result);

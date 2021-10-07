@@ -8,7 +8,7 @@ window.addEventListener("load", async () => {
           "auth-token": token || registerToken,
       },
   };
-  const result = await fetch("http://localhost:3000/api/user/verify", options);
+  const result = await fetch("https://fp-habitab.herokuapp.com/api/user/verify", options);
   const message = await result.json();
   if (message.message === "good token") {
       window.location.href = "./dashboard.html";

@@ -356,11 +356,14 @@ footer {
 .increments input{
     width: 35%;
     height: 3%;
+    border: 1px solid rgba(200,200,200,0.8);
     border-radius: 10px;
     margin-left: 10px;
     margin-right: 10px;
     text-align: center;
 }
+
+
 
 .task .task-name {
     text-align: center;

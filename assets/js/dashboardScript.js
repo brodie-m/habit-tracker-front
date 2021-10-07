@@ -3,7 +3,7 @@
 
 let inc = 0;
 //if its not there (i.e, not "good token"), redirect to index.html
-
+const host = `https://fp-habitab.herokuapp.com/api`
 let looking = false;
 window.addEventListener("load", async () => {
     const token = localStorage.getItem("token");
@@ -15,12 +15,14 @@ window.addEventListener("load", async () => {
             "auth-token": token || registerToken,
         },
     };
-    const result = await fetch("http://localhost:3000/api/user/verify", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/user/verify", options);
     const message = await result.json();
+    console.log(message)
     console.log('window loaded')
     if (message.message !== "good token") {
         window.location.href = "./index.html";
     } else {
+        localStorage.setItem('user-id',message._id)
         console.log('calling getHabits()')
         await getHabits();
     }
@@ -55,7 +57,7 @@ async function getHabits() {
             "Access-Control-Allow-Origin": "*",
         },
     };
-    const result = await fetch("http://localhost:3000/api/habits/show", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/show", options);
     return drawHabits(result);
 
 }
@@ -72,7 +74,7 @@ async function getHabitById(id) {
         },
     };
     const result = await fetch(
-        `http://localhost:3000/api/habits/show/${id}`,
+        `https://fp-habitab.herokuapp.com/api/habits/show/${id}`,
         options
     );
     return await result.json();
@@ -153,8 +155,10 @@ async function drawHabits(result) {
         incrementPlus.setAttribute('habit-id', `${habitId}`)
         incrementPlus.setAttribute('index', index)
         const incrementText = document.createElement('input')
-        incrementText.setAttribute('type', 'text')
+        incrementText.setAttribute('type', 'number')
         incrementText.setAttribute('habit-id', `${habitId}`)
+        incrementText.setAttribute('index',index)
+        incrementText.classList.add('increment-text')
         const incrementMinus = document.createElement('i')
         incrementMinus.classList.add('fas', 'fa-minus', 'minus-button')
         incrementMinus.setAttribute('habit-id', `${habitId}`)
@@ -230,6 +234,13 @@ async function drawHabits(result) {
     for (const button of closeButtons) {
         button.addEventListener("click", closeModal);
     }
+
+    const incrementTexts = document.getElementsByClassName('increment-text')
+    for (const input of incrementTexts) {
+        input.addEventListener('keydown', incrementHandler)
+            
+        } 
+    
 }
 
 async function letsgo() {
@@ -315,9 +326,19 @@ beav.addEventListener("mouseover", () => {
     beav.src = "./assets/images/mascot-eyes-closed-happy.png";
     clearInterval(blink);
 });
+ 
+const theToken = localStorage.getItem('token') || localStorage.getItem('registerToken')
+const userData =  fetch("https://fp-habitab.herokuapp.com/api",{
+    "method": 'GET',
+    "headers": {
+        "auth-token": theToken
+    }
+})
+
+
 
 let messages = [
-    `Hello USERNAME`,
+    `Hello ${userData.name}`,
     "Welcome to Habitab",
     "I'm Bucky, your virtual assistant",
     "Click the question mark then hover over an element for me to tell you what it does",
@@ -472,7 +493,7 @@ async function submitHabitHandler(event) {
         }),
     };
 
-    const result = await fetch("http://localhost:3000/api/habits/add", options);
+    const result = await fetch("https://fp-habitab.herokuapp.com/api/habits/add", options);
     window.location.href = "./dashboard.html";
 }
 
@@ -491,7 +512,7 @@ deleteHabitButton.addEventListener("click", async (e) => {
         }
         
     }
-    await fetch(`http://localhost:3000/api/habits/delete/${habitNameUnderscores}`, options)
+    await fetch(`https://fp-habitab.herokuapp.com/api/habits/delete/${habitNameUnderscores}`, options)
     window.location.href = "./dashboard.html";
 })
 
@@ -509,6 +530,44 @@ function circleHandler(e) {
     displaySingleHabit(this.getAttribute('habit-id'))
     updateChart();
     // buildGraph();
+}
+
+async function incrementHandler(e) {
+    if(e.keyCode !== 13) {
+        return
+    }
+    const id = this.getAttribute("habit-id");
+    const progressText = document.getElementById(`progress-text-${id}`)
+    const taskBox = document.getElementById(`${id}`);
+    const index = this.getAttribute('index');
+    const targetVal = parseInt(taskBox.getAttribute("targetVal"));
+    const currentVal = taskBox.getAttribute("currentVal");
+    const newCurrent = this.value;
+    this.value = ""
+    const newFrac = newCurrent / targetVal;
+    progressText.textContent = `Progress: ${newCurrent}/${targetVal}`
+    taskBox.style = `background: linear-gradient(90deg, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100 - 5
+        }%, rgba(${255-newFrac*255},50,${newFrac*255},0.3) ${newFrac * 100}%, rgba(244,244,246,1) ${newFrac * 100 + 1
+        }%, rgba(244,244,246,1) 100% )`;
+    taskBox.setAttribute("currentVal", `${newCurrent}`);
+    const options = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token") || localStorage.getItem("registerToken"),
+        },
+        body: JSON.stringify({
+            completion: {
+                currentVal: newCurrent,
+            },
+        }),
+    };
+
+    const result = await fetch(
+        `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
+        options
+    );
+    
 }
 
 async function plusHandler(e) {
@@ -544,7 +603,7 @@ async function plusHandler(e) {
     };
 
     const result = await fetch(
-        `http://localhost:3000/api/habits/updatecurrent/${index}`,
+        `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
         options
     );
 }
@@ -578,7 +637,7 @@ async function minusHandler(e) {
     };
 
     const result = await fetch(
-        `http://localhost:3000/api/habits/updatecurrent/${index}`,
+        `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
         options
     );
 }
@@ -671,10 +730,20 @@ async function displaySingleHabit(_id) {
     daysCompleteText.textContent = " ✔ days completed"
 
     const bestStreak = habitObj.completion.daysComplete.join('').split('0')
+    let freqValue;
+    let slicer;
+        for (const [key, value] of Object.entries(habitObj.frequency)) {
+            if (value === true) {
+                freqValue = key
+            }
+        }
+    if(freqValue === 'daily') {slicer = 1}
+    if(freqValue === 'weekly') {slicer = 7}
+    if(freqValue === 'monthly') {slicer = 30}
     let max = 0
     for (streak of bestStreak) {
         if (streak.length > max) {
-            max = streak.length
+            max = Math.floor(streak.length/slicer)
         }
     }
     bestStreakNumber.textContent = max
@@ -775,7 +844,7 @@ async function EditFormHandler(event) {
 
     const token = localStorage.getItem('token') || localStorage.getItem('registerToken')
 
-    const targetHabitData = await fetch(`http://localhost:3000/api/habits/show/${id}`, {
+    const targetHabitData = await fetch(`https://fp-habitab.herokuapp.com/api/habits/show/${id}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
@@ -832,6 +901,6 @@ async function EditFormHandler(event) {
             },
         }),
     };
-    const result = await fetch(`http://localhost:3000/api/habits/update/${index}`, options);
+    const result = await fetch(`https://fp-habitab.herokuapp.com/api/habits/update/${index}`, options);
     window.location.href = "./dashboard.html";
 }
