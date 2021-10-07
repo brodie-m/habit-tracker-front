@@ -16,35 +16,24 @@
 /*
  * NAVBAR
 */
-
+/* 
 ::-webkit-scrollbar {
-  width: 12px;
-}
-
-#habitshere::-webkit-scrollbar {
-    width: 7px;
-}
-
+    height: 10vh;
+  width: 7px;
+  border-radius: 10px;
+} */
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
-#habitshere::-webkit-scrollbar-track {
-    background: transparent;
-    margin-block: 20px;
+/* ::-webkit-scrollbar-thumb {
+  background: #888;
+  height: 10vh;
+  width: 7px;
+  border-top: 10px transparent solid;
 }
-
-::-webkit-scrollbar-thumb {
-  background: rgb(141, 141, 141);
-}
-
-#habitshere::-webkit-scrollbar-thumb {
-    border-radius: 100vw;
-}
-
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+} */
 
 .navigation {
     background-color: var(--bg-colour-light);
@@ -151,7 +140,7 @@
     position: relative;
     text-align: center;
     width: 33px; /* Same width as the fire */
-    top: 43px;
+    top: 40px;
     z-index: 1;
 }
 
@@ -220,7 +209,7 @@ footer {
     display:inline-block;
     text-align: center;
     margin-left: 2em;
-    border-width: 1pt;
+    border-width: 0pt;
     border-color: black;
 }
 
@@ -398,7 +387,7 @@ footer {
     margin-left: 1px;
     width: 30px;
     height: 40px;
-    /* background-image: url('../images/svg/fire-moving.svg'); */
+    background-image: url('../images/svg/fire-moving.svg');
     z-index: 0;
 }
 
@@ -409,9 +398,9 @@ footer {
     filter: hue-rotate(240deg)
 }
 
-/* #beaver-div {
+#beaver-div {
 
-} */
+}
 .hidden {
     display: none !important;
 }
