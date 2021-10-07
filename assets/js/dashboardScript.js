@@ -124,8 +124,8 @@ async function drawHabits(result) {
         const newStreakNumber = document.createElement('div')
         newStreakNumber.classList.add('streak-number')
 
-        newStreakNumber.textContent = getStreak(0, habit) //habit.completion.daysComplete
-
+        const streak = getStreak(0, habit) //habit.completion.daysComplete
+        newStreakNumber.textContent = streak
         //create fire div
         const fireThing = document.createElement('div')
         // fireThing.classList.add('fire-moving')
@@ -169,7 +169,7 @@ async function drawHabits(result) {
                 </g>
             </svg>
         `;
-
+        // fireThing.style = `transform: scale(1+${streak/20})`
         //create progress div
         const progress = document.createElement('div')
         const progressText = document.createElement('p')
@@ -600,6 +600,7 @@ async function incrementHandler(e) {
         `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
         options
     );
+    await updateChart()
 
 }
 
@@ -634,11 +635,15 @@ async function plusHandler(e) {
             },
         }),
     };
-
+    
+    
     const result = await fetch(
         `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
         options
     );
+    const chart = await updateChart()
+    
+    
 }
 async function minusHandler(e) {
     e.preventDefault();
@@ -673,6 +678,7 @@ async function minusHandler(e) {
         `https://fp-habitab.herokuapp.com/api/habits/updatecurrent/${index}`,
         options
     );
+    const chart = await updateChart()
 }
 
 async function getOptions() {
