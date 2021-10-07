@@ -851,10 +851,10 @@ async function EditFormHandler(event) {
   };
   const result = await fetch(`${baseUrl}/api/habits/update/${index}`, options);
   setTimeout(() => {
-    showNotification("Habit edited successfully");
+    window.location.href = "./dashboard.html";
   }, 1000);
 
-  window.location.href = "./dashboard.html";
+  showNotification("Habit edited successfully");
 }
 
 function showNotification(message) {
